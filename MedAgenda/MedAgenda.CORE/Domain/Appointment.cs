@@ -17,6 +17,7 @@ namespace MedAgenda.CORE.Domain
          
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
+        public virtual ExamRoom ExamRoom { get; set; }
         
     }
 }

@@ -13,5 +13,8 @@ namespace MedAgenda.CORE.Domain
         public int ExamRoomID { get; set; }
         public DateTime CheckinDateTime { get; set; }
         public Nullable<DateTime> CheckoutDateTime { get; set; }
+
+        public virtual Doctor Doctor { get; set; }
+        public virtual ExamRoom ExamRoom { get; set; }
     }
 }

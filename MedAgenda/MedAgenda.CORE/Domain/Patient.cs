@@ -20,5 +20,7 @@ namespace MedAgenda.CORE.Domain
         public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; }
+
+        public virtual ICollection<PatientCheck> PatientChecks { get; set; }
     }
 }

@@ -10,5 +10,8 @@ namespace MedAgenda.CORE.Domain
     {
         public int ExamRoomID { get; set; }
         public string ExamRoomName { get; set; }
+
+        public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<DoctorCheck> DoctorChecks { get; set; }
     }
 }

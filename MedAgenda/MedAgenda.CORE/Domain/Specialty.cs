@@ -11,5 +11,8 @@ namespace MedAgenda.CORE.Domain
         public int SpecialtyID { get; set; }
         public string SpecialtyName { get; set; }
 
+        public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual ICollection<PatientCheck> PatientChecks { get; set; }
+
     }
 }
