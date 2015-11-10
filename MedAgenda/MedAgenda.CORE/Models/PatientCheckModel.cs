@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace MedAgenda.CORE.Models
 {
-    class PatientCheckModel
+    public class PatientCheckModel
     {
+        public int PatientCheckID { get; set; }
+        public int PatientID { get; set; }
+        public int SpecialtyID { get; set; }
+        public DateTime CheckinDateTime { get; set; }
+        public Nullable<DateTime> CheckoutDateTime { get; set; }
     }
 }
