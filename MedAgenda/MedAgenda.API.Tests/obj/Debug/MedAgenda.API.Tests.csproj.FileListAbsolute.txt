@@ -27,7 +27,6 @@ C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAg
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API.Tests\bin\Debug\Microsoft.Owin.Security.OAuth.dll
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API.Tests\bin\Debug\Newtonsoft.Json.dll
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API.Tests\bin\Debug\Owin.dll
-C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API.Tests\bin\Debug\System.Web.Http.dll
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API.Tests\bin\Debug\System.Web.Http.WebHost.dll
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API.Tests\bin\Debug\System.Net.Http.Formatting.dll
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API.Tests\bin\Debug\MedAgenda.API.pdb

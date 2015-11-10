@@ -93,19 +93,24 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerTests\DoctorControllerTests.cs" />
-    <Compile Include="Infastructure\BaseTest.cs" />
+    <Compile Include="Infrastructure\BaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MedAgenda.API\MedAgenda.API.csproj">
       <Project>{66693394-D0FC-4404-BF39-E9CDE0249CB9}</Project>
       <Name>MedAgenda.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedAgenda.CORE\MedAgenda.CORE.csproj">
+      <Project>{828eeacf-75d5-4eb1-a7c6-704ac0ccd222}</Project>
+      <Name>MedAgenda.CORE</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
