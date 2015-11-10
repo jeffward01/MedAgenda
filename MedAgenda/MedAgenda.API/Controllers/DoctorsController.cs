@@ -19,13 +19,13 @@ namespace MedAgenda.API.Controllers
     {
         private MedAgendaDbContext db = new MedAgendaDbContext();
 
-        // GET: api/Doctors
+        // GET: api/Doctors || Controller Method [0]
         public IEnumerable<DoctorModel> GetDoctors()
         {
             return Mapper.Map<IEnumerable<DoctorModel>>(db.Doctors);
         }
 
-        // GET: api/Doctors/5
+        // GET: api/Doctors/5 || Get By ID [1]
         [ResponseType(typeof(DoctorModel))]
         public IHttpActionResult GetDoctor(int id)
         {
@@ -39,7 +39,7 @@ namespace MedAgenda.API.Controllers
             return Ok(doctor);
         }
 
-        // PUT: api/Doctors/5
+        // PUT: api/Doctors/5 //Update Doctor [2]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutDoctor(int id, DoctorModel doctor)
         {
@@ -77,7 +77,7 @@ namespace MedAgenda.API.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Doctors
+        // POST: api/Doctors //New Doctor [3]
         [ResponseType(typeof(DoctorModel))]
         public IHttpActionResult PostDoctor(DoctorModel doctor)
         {
@@ -104,7 +104,7 @@ namespace MedAgenda.API.Controllers
             return CreatedAtRoute("DefaultApi", new { id = doctor.DoctorID }, doctor);
         }
 
-        // DELETE: api/Doctors/5
+        // DELETE: api/Doctors/5 Delete Doctor [4]
         [ResponseType(typeof(DoctorModel))]
         public IHttpActionResult DeleteDoctor(int id)
         {

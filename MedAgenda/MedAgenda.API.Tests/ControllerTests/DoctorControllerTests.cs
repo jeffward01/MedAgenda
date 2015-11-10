@@ -3,6 +3,11 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MedAgenda.API.Tests.Infrastructure;
+using MedAgenda.API.Controllers;
+using MedAgenda.CORE.Models;
+using System.Linq;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace MedAgenda.API.Tests.ControllerTests
 {
@@ -12,59 +17,201 @@ namespace MedAgenda.API.Tests.ControllerTests
     [TestClass]
     public class DoctorControllerTests : BaseTest
     {
-        public DoctorControllerTests()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
 
-        private TestContext testContextInstance;
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        [TestMethod] // Get all Doctors | [0]
+        public void GetDoctorsReturnDoctors()
         {
-            get
+            //Arrange
+            using (var DoctorController = new DoctorsController())
             {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
+
+                //Act: Call the GetDoctors Method
+                IEnumerable<DoctorModel> doctors = DoctorController.GetDoctors();
+
+                //Assert
+                Assert.IsTrue(doctors.Count() > 0);
             }
         }
 
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        [TestMethod]
-        public void TestMethod1()
+        [TestMethod] //Get Doctor by ID | [1]
+        public void GetDoctorReturnDoctor()
         {
-            //
-            // TODO: Add test logic here
-            //
+            //Arrange
+            using (var doctorController = new DoctorsController())
+            {
+                //Act
+                IHttpActionResult result = doctorController.GetDoctor(1);
+
+                //Assert
+                Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorModel>));
+
+                OkNegotiatedContentResult<DoctorModel> contentResult = (OkNegotiatedContentResult<DoctorModel>)result;
+
+                Assert.IsTrue(contentResult.Content.DoctorID == 1);
+            }
+
         }
+
+        [TestMethod] // Create Doctor [2]
+        public void PostDoctorCreateDoctor()
+        {
+            //Arrange
+            using (var DoctorController = new DoctorsController())
+            {
+                //Create Doctor
+                var newDoctor = new DoctorModel
+                {
+                    FirstName = "Alex",
+                    LastName = "Smith",
+                    Email = "example@example.com",
+                    SpecialtyID = 2,
+                    Telephone = "111-111-1111",
+                    CreatedDate = DateTime.Today
+                };
+
+                //Act
+                IHttpActionResult result = DoctorController.PostDoctor(newDoctor);
+
+                //Assert
+                Assert.IsInstanceOfType(result, typeof(CreatedAtRouteNegotiatedContentResult<DoctorModel>));
+
+                CreatedAtRouteNegotiatedContentResult<DoctorModel> contentResult = (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+
+                Assert.IsTrue(contentResult.Content.DoctorID != 0);
+
+                //Delete the Test Doctor
+                result = DoctorController.DeleteDoctor(contentResult.Content.DoctorID);
+            }
+        }
+
+
+        [TestMethod] //Update Doctor [3]
+        public void PutDoctorUpdateDoctor()
+        {
+            //Test Properties
+            IHttpActionResult result;
+            CreatedAtRouteNegotiatedContentResult<DoctorModel> contentResult;
+            OkNegotiatedContentResult<DoctorModel> doctorResult;
+            OkNegotiatedContentResult<DoctorModel> readContentResult;
+
+
+            using (var DoctorController = new DoctorsController())
+            {
+                //Create Doctor
+                var newDoctor = new DoctorModel
+                {
+                    FirstName = "Alex",
+                    LastName = "Smith",
+                    Email = "example@example.com",
+                    SpecialtyID = 2,
+                    Telephone = "111-111-1111",
+                    CreatedDate = DateTime.Today
+                };
+                //Insert DoctorModelObject into Database so 
+                //that I can take it out and test for update.
+                result = DoctorController.PostDoctor(newDoctor);
+
+                //Cast result as Content Result so that I can gather information from ContentResult
+                contentResult = (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+            }
+
+            using (var SecondDoctorController = new DoctorsController())
+            {
+                //Result contains the Doctor I had JUST createad
+                result = SecondDoctorController.GetDoctor(contentResult.Content.DoctorID);
+
+                Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorModel>));
+
+                //Get DoctorModel from 'result'
+                doctorResult = (OkNegotiatedContentResult<DoctorModel>)result;
+
+            }
+
+            using (var ThirdDoctorController = new DoctorsController())
+            {
+                var modifiedDoctor = doctorResult.Content;
+
+                modifiedDoctor.FirstName = "John";
+
+                //Act
+                //The result of the Put Request
+                result = ThirdDoctorController.PutDoctor(doctorResult.Content.DoctorID, modifiedDoctor);
+
+                //Assert
+                Assert.IsInstanceOfType(result, typeof(StatusCodeResult));
+            }
+
+            using (var FourthDoctorController = new DoctorsController())
+            {
+                //Act
+                IHttpActionResult resultAlteredDoctor = FourthDoctorController.GetDoctor(doctorResult.Content.DoctorID);
+
+                OkNegotiatedContentResult<DoctorModel> alteredResult = (OkNegotiatedContentResult<DoctorModel>)resultAlteredDoctor;
+                DoctorModel updatedDoctor = (DoctorModel)alteredResult.Content;
+
+                //Assert
+                Assert.IsInstanceOfType(resultAlteredDoctor, typeof(OkNegotiatedContentResult<DoctorModel>));
+
+                readContentResult =
+                    (OkNegotiatedContentResult<DoctorModel>)resultAlteredDoctor;
+
+                Assert.IsTrue(readContentResult.Content.FirstName == "John");
+            }
+
+            using (var FifthDoctorController = new DoctorsController())
+            {
+                //Delete the Test Doctor
+                result = FifthDoctorController.DeleteDoctor(readContentResult.Content.DoctorID);
+            }
+        }
+
+        [TestMethod] // Delete Doctor [4]
+        public void DeleteDoctor()
+        {
+            CreatedAtRouteNegotiatedContentResult<DoctorModel> contentResult;
+        
+
+            using (var DoctorController = new DoctorsController())
+            {
+                //Create Doctor
+                var newDoctor = new DoctorModel
+                {
+                    FirstName = "Alex",
+                    LastName = "Smith",
+                    Email = "example@example.com",
+                    SpecialtyID = 2,
+                    Telephone = "111-111-1111",
+                    CreatedDate = DateTime.Today
+                };
+                //Insert DoctorModelObject into Database so 
+                //that I can take it out and test for update.
+               var result = DoctorController.PostDoctor(newDoctor);
+
+                //Cast result as Content Result so that I can gather information from ContentResult
+               contentResult = (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+            }
+
+            using (var secondDocController = new DoctorsController())
+            {
+                //Delete the Test Doctor
+                var result = secondDocController.DeleteDoctor(contentResult.Content.DoctorID);
+
+                //Assert
+                Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorModel>));
+            }
+            using (var thirdDocController = new DoctorsController())
+            {
+                var result = thirdDocController.GetDoctor(contentResult.Content.DoctorID);
+
+                //Assert
+                Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+            }
+
+
+        }
+
+
+
     }
 }
