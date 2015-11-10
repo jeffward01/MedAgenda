@@ -13,5 +13,9 @@ namespace MedAgenda.CORE.Domain
         public int SpecialtyID { get; set; }
         public DateTime CheckinDateTime { get; set; }
         public Nullable<DateTime> CheckoutDateTime { get; set; }
+
+        public virtual Patient Patient { get; set; }
+        public virtual Specialty Specialty { get; set; }
+
     }
 }
