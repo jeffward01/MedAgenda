@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using AutoMapper;
+using MedAgenda.CORE.Domain;
+using MedAgenda.CORE.Models;
 
 namespace MedAgenda.API
 {
@@ -20,6 +22,24 @@ namespace MedAgenda.API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+
+            SetupAutomapper();
+        }
+
+        public static void SetupAutomapper()
+        {
+            Mapper.CreateMap<Appointment, AppointmentModel>();
+            Mapper.CreateMap<Doctor, DoctorModel>();
+            Mapper.CreateMap<DoctorCheck, DoctorCheckModel>();
+            Mapper.CreateMap<EmergencyContact, EmergencyContactModel>();
+            Mapper.CreateMap<ExamRoom, ExamRoomModel>();
+            Mapper.CreateMap<Patient, PatientModel>();
+            Mapper.CreateMap<PatientCheck, PatientCheckModel>();
+            Mapper.CreateMap<Specialty, SpecialtyModel>();
+
         }
     }
 }

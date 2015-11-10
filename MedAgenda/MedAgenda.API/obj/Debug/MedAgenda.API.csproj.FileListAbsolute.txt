@@ -47,3 +47,5 @@ C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAg
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API\obj\Debug\MedAgenda.API.csprojResolveAssemblyReference.cache
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API\obj\Debug\MedAgenda.API.dll
 C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API\obj\Debug\MedAgenda.API.pdb
+C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API\bin\MedAgenda.CORE.dll
+C:\Users\jward01\Documents\Visual Studio 2015\Projects\MedAgenda\MedAgenda\MedAgenda.API\bin\MedAgenda.CORE.pdb
