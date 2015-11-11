@@ -65,7 +65,8 @@ namespace MedAgenda.API.Tests.ControllerTests
                 Birthdate = new DateTime(1968, 12, 27),
                 Email = "a@b.com",
                 BloodType = "A+",
-                CreatedDate = new DateTime(2015, 11, 10)               
+                CreatedDate = new DateTime(2015, 11, 10),
+                Archived = false               
             };
             IHttpActionResult result = patientController.PostPatient(newPatient);
 
@@ -104,7 +105,8 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Birthdate = new DateTime(1968, 12, 27),
                     Email = "a@b.com",
                     BloodType = "A+",
-                    CreatedDate = new DateTime(2015, 11, 10)
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
                 };
                 result = patientController.PostPatient(newPatient);
                 createdContentResult =
@@ -185,7 +187,8 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Birthdate = new DateTime(1968, 12, 27),
                     Email = "a@b.com",
                     BloodType = "A+",
-                    CreatedDate = new DateTime(2015, 11, 10)
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
                 };
                 result = patientController.PostPatient(patient);
                 createdContentResult =
