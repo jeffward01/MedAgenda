@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MedAgenda.CORE.Models;
 
 namespace MedAgenda.CORE.Domain
 {
@@ -17,5 +18,13 @@ namespace MedAgenda.CORE.Domain
         public virtual Patient Patient { get; set; }
         public virtual Specialty Specialty { get; set; }
 
+        public void Update(PatientCheckModel patientCheck)
+        {
+            PatientCheckID = patientCheck.PatientCheckID;
+            PatientID = patientCheck.PatientID;
+            SpecialtyID = patientCheck.SpecialtyID;
+            CheckinDateTime = patientCheck.CheckinDateTime;
+            CheckoutDateTime = patientCheck.CheckoutDateTime;
+        }
     }
 }
