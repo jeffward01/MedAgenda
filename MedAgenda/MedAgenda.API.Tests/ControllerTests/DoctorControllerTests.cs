@@ -17,15 +17,12 @@ namespace MedAgenda.API.Tests.ControllerTests
     [TestClass]
     public class DoctorControllerTests : BaseTest
     {
-
-
         [TestMethod] // Get all Doctors | [0]
         public void GetDoctorsReturnDoctors()
         {
             //Arrange
             using (var DoctorController = new DoctorsController())
             {
-
                 //Act: Call the GetDoctors Method
                 IEnumerable<DoctorModel> doctors = DoctorController.GetDoctors();
 
@@ -56,6 +53,8 @@ namespace MedAgenda.API.Tests.ControllerTests
         [TestMethod] // Create Doctor [2]
         public void PostDoctorCreateDoctor()
         {
+            CreatedAtRouteNegotiatedContentResult<DoctorModel> contentResult;
+
             //Arrange
             using (var DoctorController = new DoctorsController())
             {
@@ -76,15 +75,19 @@ namespace MedAgenda.API.Tests.ControllerTests
                 //Assert
                 Assert.IsInstanceOfType(result, typeof(CreatedAtRouteNegotiatedContentResult<DoctorModel>));
 
-                CreatedAtRouteNegotiatedContentResult<DoctorModel> contentResult = (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+                 contentResult = (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
 
-                Assert.IsTrue(contentResult.Content.DoctorID != 0);
+                Assert.IsTrue(contentResult.Content.DoctorID != 0);                
+            }
+
+            using (var SecondDoctorsController = new DoctorsController())
+            {
+                var deleteAppt = contentResult.Content;
 
                 //Delete the Test Doctor
-                result = DoctorController.DeleteDoctor(contentResult.Content.DoctorID);
+               IHttpActionResult result = SecondDoctorsController.DeleteDoctor(contentResult.Content.DoctorID);
             }
         }
-
 
         [TestMethod] //Update Doctor [3]
         public void PutDoctorUpdateDoctor()
@@ -153,8 +156,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                 //Assert
                 Assert.IsInstanceOfType(resultAlteredDoctor, typeof(OkNegotiatedContentResult<DoctorModel>));
 
-                readContentResult =
-                    (OkNegotiatedContentResult<DoctorModel>)resultAlteredDoctor;
+                readContentResult = (OkNegotiatedContentResult<DoctorModel>)resultAlteredDoctor;
 
                 Assert.IsTrue(readContentResult.Content.FirstName == "John");
             }
@@ -210,8 +212,5 @@ namespace MedAgenda.API.Tests.ControllerTests
 
 
         }
-
-
-
     }
 }

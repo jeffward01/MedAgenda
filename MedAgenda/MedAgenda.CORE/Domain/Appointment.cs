@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedAgenda.CORE.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,15 @@ namespace MedAgenda.CORE.Domain
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual ExamRoom ExamRoom { get; set; }
-        
+
+        public void Update(AppointmentModel appointment)
+        {
+            AppointmentID = appointment.AppointmentID;
+            PatientID = appointment.PatientID;
+            DoctorID = appointment.DoctorID;
+            ExamRoomID = appointment.ExamRoomID;
+            CheckinDateTime = appointment.CheckinDateTime;
+            CheckoutDateTime = appointment.CheckoutDateTime;
+        }
     }
 }
