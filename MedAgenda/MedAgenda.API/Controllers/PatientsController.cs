@@ -20,9 +20,20 @@ namespace MedAgenda.API.Controllers
         private MedAgendaDbContext db = new MedAgendaDbContext();
 
         // GET: api/Patients
+        // Return all patients with archived indicator set to false
         public IEnumerable<PatientModel> GetPatients()
         {
-            return Mapper.Map<IEnumerable<PatientModel>>(db.Patients);
+            var dbPatients = db.Patients.Where(p => !p.Archived);
+            return Mapper.Map<IEnumerable<PatientModel>>(dbPatients);
+        }
+
+        // GET: api/archive/Patients
+        // Return all patients with archived indicator set to true
+        [Route("api/archive/patients")]
+        public IEnumerable<PatientModel> GetArchivedPatients()
+        {
+            var dbPatients = db.Patients.Where(p => p.Archived);
+            return Mapper.Map<IEnumerable<PatientModel>>(dbPatients);
         }
 
         // GET: api/Patients/5

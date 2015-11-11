@@ -16,7 +16,7 @@ namespace MedAgenda.API.Tests.ControllerTests
     public class PatientControllerTests : BaseTest
     {
         [TestMethod]
-        public void GetPatientsReturnsPatients()
+        public void GetPatientsReturnsNonArchivedPatients()
         {
 
             //Arrange: Instantiate PatientsController so its methods can be called
@@ -27,6 +27,28 @@ namespace MedAgenda.API.Tests.ControllerTests
 
                 //Assert: Verify that an array was returned with at least one element
                 Assert.IsTrue(patients.Count() > 0);
+
+                //Assert: Verify that none of the patients are archived
+                Assert.IsTrue(patients.Where(p => p.Archived).Count() == 0);
+                
+            }
+        }
+
+        [TestMethod]
+        public void GetArchivedPatientsReturnsArchivedPatients()
+        {
+            //Arrange: Instantiate PatientsController so its methods can be called
+            using (var patientController = new PatientsController())
+            {
+                //Act: Call the GetPatients method
+                IEnumerable<PatientModel> patients = patientController.GetArchivedPatients();
+
+                // If patients were returned, verify that all of the patients are archived,
+                // (it is possible that there are no archived patients)
+                if (patients.Count() > 0)
+                {
+                    Assert.IsTrue(patients.Where(p => !p.Archived).Count() == 0);
+                }               
             }
         }
 
