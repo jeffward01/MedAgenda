@@ -13,5 +13,8 @@ namespace MedAgenda.CORE.Models
         public int ExamRoomID { get; set; }
         public DateTime CheckinDateTime { get; set; }
         public Nullable<DateTime> CheckoutDateTime { get; set; }
+
+
+
     }
 }
