@@ -33,22 +33,67 @@ namespace MedAgenda.API.Tests.ControllerTests
         [TestMethod]
         public void GetPatientReturnsPatient()
         {
-            int PatientIDForTest = 1;
+            int patientIDForTest;
+            string patientFirstNameForTest = "Impatient";
+            string patientLastNameForTest = "Patience";
 
-            //Arrange: Instantiate PatientsController so its methods can be called
-            var patientController = new PatientsController();
+            IHttpActionResult result;
+            CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult;
+            OkNegotiatedContentResult<PatientModel> OkContentResult;
 
-            //Act: Call the GetPatient method
-            IHttpActionResult result = patientController.GetPatient(PatientIDForTest);
+            // Create a new test patient, and get its patient ID
+            using (var patientController = new PatientsController())
+            {
+                var patient = new PatientModel
+                {
+                    FirstName = patientFirstNameForTest,
+                    LastName = patientLastNameForTest,
+                    Birthdate = new DateTime(1968, 12, 27),
+                    Email = "a@b.com",
+                    BloodType = "A+",
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
+                };
+                result = patientController.PostPatient(patient);
+                createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
+                patientIDForTest = createdContentResult.Content.PatientID;
+            }
 
-            //Assert: 
-            // Verify that HTTP status code is OK
-            // Verify that returned patient ID is correct
-            Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<PatientModel>));
+            //Get the created patient, and check that it is the same that was created
+            using (var patientController = new PatientsController())
+            {
+                //Act: Call the GetPatient method
+                result = patientController.GetPatient(patientIDForTest);
 
-            OkNegotiatedContentResult<PatientModel> contentResult =
-                (OkNegotiatedContentResult<PatientModel>)result;
-            Assert.IsTrue(contentResult.Content.PatientID == PatientIDForTest);
+                //Assert: 
+                // Verify that HTTP status code is OK
+                // Verify that returned patient is the same patient that was created
+                Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<PatientModel>));
+
+                OkContentResult =
+                    (OkNegotiatedContentResult<PatientModel>)result;
+                Assert.IsTrue(OkContentResult.Content.FirstName == patientFirstNameForTest);
+                Assert.IsTrue(OkContentResult.Content.LastName == patientLastNameForTest);
+
+            }
+
+            // Remove the patient from the database with actual deletion, not archiving
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Patient dbPatient = db.Patients.Find(OkContentResult.Content.PatientID);
+                db.Patients.Remove(dbPatient);
+                db.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void GetEmergencyContactsForPatientReturnsEmergencyContacts()
+        {
+            
+                Assert.IsTrue(true);
+            
+
         }
 
         [TestMethod]
@@ -84,7 +129,6 @@ namespace MedAgenda.API.Tests.ControllerTests
                     (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
                 Assert.IsTrue(contentResult.Content.PatientID != 0);
             }
-
 
             // Remove the patient from the database with actual deletion, not archiving
             using (MedAgendaDbContext db = new MedAgendaDbContext())
@@ -173,7 +217,6 @@ namespace MedAgenda.API.Tests.ControllerTests
                 db.Patients.Remove(dbPatient);
                 db.SaveChanges();
             }
-
         }
 
         [TestMethod]
