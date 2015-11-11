@@ -31,7 +31,6 @@ namespace MedAgenda.CORE.Domain
                 CreatedDate = DateTime.Now;
             }
 
-            PatientID = patient.PatientID;
             FirstName = patient.FirstName;
             LastName = patient.LastName;
             Birthdate = patient.Birthdate;           
