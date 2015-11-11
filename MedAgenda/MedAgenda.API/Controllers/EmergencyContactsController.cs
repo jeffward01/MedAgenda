@@ -20,9 +20,9 @@ namespace MedAgenda.API.Controllers
         private MedAgendaDbContext db = new MedAgendaDbContext();
 
         // GET: api/EmergencyContacts
-        public IQueryable<EmergencyContact> GetEmergencyContacts()
-        {
-            return db.EmergencyContacts;
+        public IEnumerable<EmergencyContactModel> GetEmergencyContacts()
+        {           
+            return Mapper.Map<IEnumerable<EmergencyContactModel>>(db.EmergencyContacts);
         }
 
         // GET: api/EmergencyContacts/5

@@ -38,6 +38,78 @@ namespace MedAgenda.API.Controllers
             return Ok(Mapper.Map<PatientModel>(dbPatient));
         }
 
+        // GET: api/patients/5/appointments
+        // Get appointments belonging to patient corresponding to patient ID
+        [Route("api/patients/{patientID}/appointments")]
+        public IHttpActionResult GetAppointmentsForPatient(int patientID)
+        {
+            // Validate request
+            if (!PatientExists(patientID))
+            {
+                return BadRequest();
+            }
+
+            // Get list of appointments where the patient ID
+            //  matches the input patient ID
+            var dbAppointments = db.Appointments.Where(a => a.PatientID == patientID);
+
+            if (dbAppointments.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            // Return the list of AppointmentModel objects            
+            return Ok(Mapper.Map<IEnumerable<AppointmentModel>>(dbAppointments));
+        }
+
+        // GET: api/patients/5/emergencyContacts
+        // Get emergency contact(s) belonging to patient corresponding to patient ID
+        [Route("api/patients/{patientID}/emergencyContacts")]
+        public IHttpActionResult GetEmergencyContactsForPatient(int patientID)
+        {
+            // Validate request
+            if (!PatientExists(patientID))
+            {
+                return BadRequest();
+            }
+
+            // Get list of emergency contacts where the patient ID
+            //  matches the input patient ID
+            var dbEmergencyContacts = db.EmergencyContacts.Where(ec => ec.PatientID == patientID);
+
+            if (dbEmergencyContacts.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            // Return the list of EmergencyContactModel objects            
+            return Ok(Mapper.Map<IEnumerable<EmergencyContactModel>>(dbEmergencyContacts));
+        }
+
+        // GET: api/patients/5/patientchecks
+        // Get patient check-ins belonging to patient corresponding to patient ID
+        [Route("api/patients/{patientID}/patientchecks")]
+        public IHttpActionResult GetPatientChecksForPatient(int patientID)
+        {
+            // Validate request
+            if (!PatientExists(patientID))
+            {
+                return BadRequest();
+            }
+
+            // Get list of patient check-ins where the patient ID
+            //  matches the input patient ID
+            var dbPatientChecks = db.PatientChecks.Where(pc => pc.PatientID == patientID);
+
+            if (dbPatientChecks.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            // Return the list of PatientCheckModel objects            
+            return Ok(Mapper.Map<IEnumerable<PatientCheckModel>>(dbPatientChecks));
+        }
+
         // PUT: api/Patients/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutPatient(int id, PatientModel patient)

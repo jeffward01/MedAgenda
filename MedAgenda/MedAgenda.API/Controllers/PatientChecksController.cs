@@ -20,9 +20,9 @@ namespace MedAgenda.API.Controllers
         private MedAgendaDbContext db = new MedAgendaDbContext();
 
         // GET: api/PatientChecks
-        public IQueryable<PatientCheck> GetPatientChecks()
-        {
-            return db.PatientChecks;
+        public IEnumerable<PatientCheckModel> GetPatientChecks()
+        {            
+            return Mapper.Map<IEnumerable<PatientCheckModel>>(db.PatientChecks);
         }
 
         // GET: api/PatientChecks/5
