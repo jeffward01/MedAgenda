@@ -36,7 +36,7 @@ namespace MedAgenda.API
             Mapper.CreateMap<DoctorCheck, DoctorCheckModel>();
             Mapper.CreateMap<EmergencyContact, EmergencyContactModel>();
             Mapper.CreateMap<ExamRoom, ExamRoomModel>();
-            Mapper.CreateMap<Patient, PatientModel>();
+            Mapper.CreateMap<Patient, DoctorCheckModel>();
             Mapper.CreateMap<PatientCheck, PatientCheckModel>();
             Mapper.CreateMap<Specialty, SpecialtyModel>();
 

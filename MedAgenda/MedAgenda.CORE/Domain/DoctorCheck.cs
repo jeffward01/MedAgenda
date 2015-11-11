@@ -21,7 +21,7 @@ namespace MedAgenda.CORE.Domain
 
         public void Update(DoctorCheckModel doctorCheck)
         {
-            DoctorCheckID = doctorCheck.DoctorCheckID;
+           
             DoctorID = doctorCheck.DoctorID;
             ExamRoomID = doctorCheck.ExamRoomID;
            

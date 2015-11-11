@@ -50,6 +50,7 @@ namespace MedAgenda.API.Controllers
                 return BadRequest();
             }
             var dbDoctorCheck = db.DoctorChecks.Find(id);
+
             dbDoctorCheck.Update(doctorCheck);
           
             db.Entry(dbDoctorCheck).State = EntityState.Modified;
@@ -82,7 +83,12 @@ namespace MedAgenda.API.Controllers
                 return BadRequest(ModelState);
             }
             var dbDoctorCheck = new DoctorCheck();
+
+            dbDoctorCheck.Update(doctorCheck);
+
             db.DoctorChecks.Add(dbDoctorCheck);
+
+
             try
             {
                 db.SaveChanges();
@@ -115,7 +121,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Could not delete doctor check-in".);
+                throw new Exception("Could not delete doctor check-in.");
             }
            
 
