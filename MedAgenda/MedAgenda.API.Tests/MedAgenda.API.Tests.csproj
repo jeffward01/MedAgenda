@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerTests\DoctorControllerTests.cs" />
+    <Compile Include="ControllerTests\EmergencyContactControllerTests.cs" />
     <Compile Include="Infrastructure\BaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
