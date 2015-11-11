@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MedAgenda.CORE.Models;
 
 namespace MedAgenda.CORE.Domain
 {
@@ -17,5 +18,16 @@ namespace MedAgenda.CORE.Domain
         public string Relationship { get; set; }
 
         public virtual Patient Patient { get; set; }
+
+        public void Update(EmergencyContactModel emergencyContact)
+        {
+            EmergencyContactID = emergencyContact.EmergencyContactID;
+            PatientID = emergencyContact.PatientID;
+            FirstName = emergencyContact.FirstName;
+            LastName = emergencyContact.LastName;
+            Telephone = emergencyContact.Telephone;
+            Email = emergencyContact.Email;
+            Relationship = emergencyContact.Relationship;
+        }
     }
 }
