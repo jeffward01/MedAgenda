@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedAgenda.CORE.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,5 +23,22 @@ namespace MedAgenda.CORE.Domain
         public virtual ICollection<Appointment> Appointments { get; set; }
 
         public virtual ICollection<PatientCheck> PatientChecks { get; set; }
+
+        public void Update(PatientModel patient)
+        {
+            if (patient.PatientID == 0)
+            {
+                CreatedDate = DateTime.Now;
+            }
+
+            PatientID = patient.PatientID;
+            FirstName = patient.FirstName;
+            LastName = patient.LastName;
+            Birthdate = patient.Birthdate;           
+            Telephone = patient.Telephone;
+            Email = patient.Email;
+            BloodType = patient.BloodType;
+            
+        }
     }
 }

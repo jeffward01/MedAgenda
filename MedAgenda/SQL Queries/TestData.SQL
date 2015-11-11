@@ -1,3 +1,6 @@
+Use MedAgenda;
+GO
+
 -- Examination Rooms
 INSERT INTO ExamRooms([ExamRoomName]) VALUES('Room #1');
 INSERT INTO ExamRooms([ExamRoomName]) VALUES('Room #2');
