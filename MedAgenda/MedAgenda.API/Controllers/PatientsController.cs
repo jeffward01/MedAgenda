@@ -192,59 +192,35 @@ namespace MedAgenda.API.Controllers
         }
 
         // DELETE: api/Patients/5
+        // Set the patient as archived, instead of deleting it
         [ResponseType(typeof(PatientModel))]
         public IHttpActionResult DeletePatient(int id)
         {
-            Patient patient = db.Patients.Find(id);
-            if (patient == null)
+
+            // Get the patient record corresponding to the patient ID
+            Patient dbPatient = db.Patients.Find(id);
+            if (dbPatient == null)
             {
                 return NotFound();
-            }            
+            }
+
+            //   Set the patient as archived    
+            dbPatient.Archived = true;               
+            
+            // Set indicator that DB has been modified
+           db.Entry(dbPatient).State = EntityState.Modified;
 
             try
             {
-                // Remove the appointments corresponding to the patient
-                var appointments = db.Appointments.Where(a => a.PatientID == patient.PatientID);
-                if (appointments != null)
-                {
-                    foreach (var appointment in appointments)
-                    {
-                        db.Appointments.Remove(appointment);
-                    }
-                }
-
-                // Remove the patient check-ins corresponding to the patient
-                var patientChecks = db.PatientChecks.Where(pc => pc.PatientID == patient.PatientID);
-                if (patientChecks != null)
-                {
-                    foreach (var patientCheck in patientChecks)
-                    {
-                        db.PatientChecks.Remove(patientCheck);
-                    }
-                }
-
-                // Remove the emergency contacts corresponding to the patient
-                var emergencyContacts = db.EmergencyContacts.Where(ec => ec.PatientID == patient.PatientID);
-                if (emergencyContacts != null)
-                {
-                    foreach (var emergencyContact in emergencyContacts)
-                    {
-                        db.EmergencyContacts.Remove(emergencyContact);
-                    }
-                }
-
-                // Remove the patient
-                db.Patients.Remove(patient);
                 db.SaveChanges();
             }
             catch (Exception)
             {
 
                 throw new Exception ("Unable to delete the patient from the database");
-            }
-            
+            }           
 
-            return Ok(Mapper.Map<PatientModel>(patient));
+            return Ok(Mapper.Map<PatientModel>(dbPatient));
         }
 
         protected override void Dispose(bool disposing)
