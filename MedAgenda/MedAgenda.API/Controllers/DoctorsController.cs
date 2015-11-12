@@ -143,8 +143,12 @@ namespace MedAgenda.API.Controllers
                 throw new Exception("Unable to delete the doctor from the database");
             }
 
+<<<<<<< HEAD
             return Ok(Mapper.Map<PatientModel>(dbDoctor));
             
+=======
+            return Ok(Mapper.Map<DoctorModel>(dbDoctor));
+>>>>>>> 3d7656cb323d128efc7adf2d694701fae545a6ac
         }
 
 

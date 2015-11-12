@@ -47,10 +47,11 @@ namespace MedAgenda.API.Tests.ControllerTests
                 IEnumerable<DoctorModel> doctors = DoctorController.GetDoctors();
 
                 //Assert
+                if (doctors.Count() == 0) Assert.Inconclusive();
+                
                 Assert.IsTrue(doctors.Count() > 0);
 
-                //Assert
-                Assert.IsTrue(doctors.Where(d => !d.Archived).Count() == 0);
+                Assert.IsTrue(doctors.Any(d => !d.Archived));
             }
   
         }
