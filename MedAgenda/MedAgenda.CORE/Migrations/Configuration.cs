@@ -10,7 +10,6 @@ namespace MedAgenda.CORE.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "MedAgenda.CORE.Infrastructure.MedAgendaDbContext";
         }
 
         protected override void Seed(MedAgenda.CORE.Infrastructure.MedAgendaDbContext context)

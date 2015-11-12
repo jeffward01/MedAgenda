@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MedAgenda.CORE.Models;
 
 namespace MedAgenda.CORE.Domain
 {
@@ -21,11 +20,19 @@ namespace MedAgenda.CORE.Domain
 
         public void Update(PatientCheckModel patientCheck)
         {
-            PatientCheckID = patientCheck.PatientCheckID;
+
+            if (patientCheck.PatientCheckID == 0)
+            {
+                CheckinDateTime = DateTime.Now;
+            }
+
             PatientID = patientCheck.PatientID;
             SpecialtyID = patientCheck.SpecialtyID;
-            CheckinDateTime = patientCheck.CheckinDateTime;
-            CheckoutDateTime = patientCheck.CheckoutDateTime;
+            CheckoutDateTime = patientCheck.CheckoutDateTime;          
+            PatientID = patientCheck.PatientID;
+            SpecialtyID = patientCheck.SpecialtyID;
+ 
         }
+
     }
 }

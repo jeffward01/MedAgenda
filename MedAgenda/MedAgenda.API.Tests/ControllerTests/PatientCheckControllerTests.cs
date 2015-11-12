@@ -21,6 +21,8 @@ namespace MedAgenda.API.Tests.ControllerTests
             {
                 IEnumerable<PatientCheckModel> patientChecks = patientCheckController.GetPatientChecks();
 
+                if (patientChecks.Count() == 0) Assert.Inconclusive("Patient checks table is empty");
+
                 Assert.IsTrue(patientChecks.Count() > 0);
             }
         }
@@ -61,7 +63,6 @@ namespace MedAgenda.API.Tests.ControllerTests
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientCheckID = 1,
                     PatientID = 1,
                     SpecialtyID = 1,
                     CheckinDateTime = DateTime.Now,
@@ -97,7 +98,6 @@ namespace MedAgenda.API.Tests.ControllerTests
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientCheckID = 1,
                     PatientID = 1,
                     SpecialtyID = 1,
                     CheckinDateTime = now,
@@ -158,7 +158,6 @@ namespace MedAgenda.API.Tests.ControllerTests
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientCheckID = 1,
                     PatientID = 1,
                     SpecialtyID = 1,
                     CheckinDateTime = DateTime.Now,

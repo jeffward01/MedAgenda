@@ -66,13 +66,9 @@
     <Compile Include="Domain\PatientCheck.cs" />
     <Compile Include="Domain\Specialty.cs" />
     <Compile Include="Infrastructure\MedAgendaDbContext.cs" />
-    <Compile Include="Migrations\201511102325363_InitialCreate.cs" />
-    <Compile Include="Migrations\201511102325363_InitialCreate.Designer.cs">
-      <DependentUpon>201511102325363_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511120011009_MergeWithMaster.cs" />
-    <Compile Include="Migrations\201511120011009_MergeWithMaster.Designer.cs">
-      <DependentUpon>201511120011009_MergeWithMaster.cs</DependentUpon>
+    <Compile Include="Migrations\201511121811258_InitialCreate.cs" />
+    <Compile Include="Migrations\201511121811258_InitialCreate.Designer.cs">
+      <DependentUpon>201511121811258_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppointmentModel.cs" />
@@ -90,11 +86,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511102325363_InitialCreate.resx">
-      <DependentUpon>201511102325363_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511120011009_MergeWithMaster.resx">
-      <DependentUpon>201511120011009_MergeWithMaster.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511121811258_InitialCreate.resx">
+      <DependentUpon>201511121811258_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

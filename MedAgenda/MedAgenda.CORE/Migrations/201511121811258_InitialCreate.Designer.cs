@@ -13,7 +13,7 @@ namespace MedAgenda.CORE.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201511102325363_InitialCreate"; }
+            get { return "201511121811258_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

@@ -37,6 +37,7 @@ namespace MedAgenda.CORE.Migrations
                         Telephone = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
                         SpecialtyID = c.Int(nullable: false),
+                        Archived = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.DoctorID)
                 .ForeignKey("dbo.Specialties", t => t.SpecialtyID, cascadeDelete: true)
@@ -104,6 +105,7 @@ namespace MedAgenda.CORE.Migrations
                         Email = c.String(),
                         BloodType = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
+                        Archived = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.PatientID);
             
