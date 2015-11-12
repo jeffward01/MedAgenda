@@ -94,7 +94,7 @@ namespace MedAgenda.API.Controllers
             {
                 db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 throw new Exception("Unable to add Appointment to database");
