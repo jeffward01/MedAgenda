@@ -17,5 +17,6 @@ namespace MedAgenda.CORE.Models
         public string BloodType { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Archived { get; set; }
+
     }
 }
