@@ -116,7 +116,7 @@ namespace MedAgenda.API.Controllers
         }
 
      
-        [ResponseType(typeof(DoctorModel))]
+        [ResponseType(typeof(DoctorModel))] // Delete Doctor [4]
         public IHttpActionResult DeleteDoctor(int id)
         {
 
@@ -145,7 +145,60 @@ namespace MedAgenda.API.Controllers
 
             return Ok(Mapper.Map<PatientModel>(dbDoctor));
         }
-    
+
+
+        // GET: api/doctors/5/patientchecks
+        // Get doctors check-ins belonging to doctors corresponding to doctor ID
+        [Route("api/doctors/{doctorID}/doctorchecks")] // Get all Doctor Checks Method [5]
+        public IHttpActionResult GetDoctorChecksForDoctor(int doctorId)
+        {
+            // Validate request
+            if (!DoctorExists(doctorId))
+            {
+                return BadRequest();
+            }
+
+            // Get list of patient check-ins where the patient ID
+            //  matches the input patient ID
+            var dbDoctorChecks = db.DoctorChecks.Where(dc => dc.DoctorID == doctorId);
+
+            if (dbDoctorChecks.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            // Return the list of PatientCheckModel objects            
+            return Ok(Mapper.Map<IEnumerable<DoctorCheckModel>>(dbDoctorChecks));
+        }
+
+
+
+        // GET: api/doctors/5/appointments
+        // Get appointments belonging to doctors corresponding to doctor ID
+        [Route("api/doctor/{doctorId}/appointments")] // Get all appointments for DoctorID Method [5]
+        public IHttpActionResult GetAppointmentForDoctorId(int doctorId)
+        {
+            // Validate request
+            if (!DoctorExists(doctorId))
+            {
+                return BadRequest();
+            }
+
+            // Get list of appointments  appointments match doctor ID
+            //  matches the input doctor ID
+            var dbDoctorAppointment = db.Appointments.Where(d => d.DoctorID == doctorId);
+
+            if (dbDoctorAppointment.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            // Return the list of appointmentModel objects            
+            return Ok(Mapper.Map<IEnumerable<AppointmentModel>>(dbDoctorAppointment));
+        }
+
+
+
 
         protected override void Dispose(bool disposing)
         {
