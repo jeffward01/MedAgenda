@@ -144,6 +144,7 @@ namespace MedAgenda.API.Controllers
             }
 
             return Ok(Mapper.Map<PatientModel>(dbDoctor));
+            
         }
 
 
