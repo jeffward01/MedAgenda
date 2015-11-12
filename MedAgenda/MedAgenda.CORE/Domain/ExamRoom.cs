@@ -16,8 +16,7 @@ namespace MedAgenda.CORE.Domain
         public virtual ICollection<DoctorCheck> DoctorChecks { get; set; }
 
         public void Update(ExamRoomModel examRoom)
-        {
-            ExamRoomID = examRoom.ExamRoomID;
+        {           
             ExamRoomName = examRoom.ExamRoomName;
         }
     }

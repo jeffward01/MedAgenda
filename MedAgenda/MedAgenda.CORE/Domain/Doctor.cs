@@ -22,8 +22,7 @@ namespace MedAgenda.CORE.Domain
         public virtual Specialty Specialty { get; set; }
 
         public void Update(DoctorModel doctor)
-        {
-            DoctorID = doctor.DoctorID;
+        {           
             FirstName = doctor.FirstName;
             LastName = doctor.LastName;
             Email = doctor.Email;
