@@ -8,6 +8,7 @@ namespace MedAgenda.API.Tests
     [TestClass]
     public class ModelBuilderTests
     {
+
         [TestMethod]
         public void GenerateDatabase()
         {

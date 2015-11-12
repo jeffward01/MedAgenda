@@ -17,7 +17,6 @@ namespace MedAgenda.CORE.Domain
 
         public void Update(SpecialtyModel specialty)
         {
-            SpecialtyID = specialty.SpecialtyID;
             SpecialtyName = specialty.SpecialtyName;
         }
     }

@@ -63,7 +63,6 @@ namespace MedAgenda.API.Tests.ControllerTests
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientCheckID = 1,
                     PatientID = 1,
                     SpecialtyID = 1,
                     CheckinDateTime = DateTime.Now,
@@ -99,7 +98,6 @@ namespace MedAgenda.API.Tests.ControllerTests
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientCheckID = 1,
                     PatientID = 1,
                     SpecialtyID = 1,
                     CheckinDateTime = now,
@@ -160,7 +158,6 @@ namespace MedAgenda.API.Tests.ControllerTests
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientCheckID = 1,
                     PatientID = 1,
                     SpecialtyID = 1,
                     CheckinDateTime = DateTime.Now,
