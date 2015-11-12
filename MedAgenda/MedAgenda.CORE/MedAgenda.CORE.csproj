@@ -70,13 +70,13 @@
     <Compile Include="Migrations\201511102339109_InitialCreate.Designer.cs">
       <DependentUpon>201511102339109_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511111752384_AddArchiveFieldtoPatient.cs" />
-    <Compile Include="Migrations\201511111752384_AddArchiveFieldtoPatient.Designer.cs">
-      <DependentUpon>201511111752384_AddArchiveFieldtoPatient.cs</DependentUpon>
-	</Compile>
     <Compile Include="Migrations\201511120011009_MergeWithMaster.cs" />
     <Compile Include="Migrations\201511120011009_MergeWithMaster.Designer.cs">
       <DependentUpon>201511120011009_MergeWithMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511120109542_KarenFix.cs" />
+    <Compile Include="Migrations\201511120109542_KarenFix.Designer.cs">
+      <DependentUpon>201511120109542_KarenFix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppointmentModel.cs" />
@@ -94,19 +94,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <EmbeddedResource Include="Migrations\201511102339109_InitialCreate.resx">
       <DependentUpon>201511102339109_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511111752384_AddArchiveFieldtoPatient.resx">
-      <DependentUpon>201511111752384_AddArchiveFieldtoPatient.cs</DependentUpon>
-=======
-    <EmbeddedResource Include="Migrations\201511102325363_InitialCreate.resx">
-      <DependentUpon>201511102325363_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511120011009_MergeWithMaster.resx">
       <DependentUpon>201511120011009_MergeWithMaster.cs</DependentUpon>
->>>>>>> 310cf1801b106e9c720ae5a101602ccb035a6219
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511120109542_KarenFix.resx">
+      <DependentUpon>201511120109542_KarenFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

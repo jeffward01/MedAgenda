@@ -104,7 +104,7 @@
     <Compile Include="ControllerTests\PatientControllerTests.cs" />
     <Compile Include="ControllerTests\PatientCheckControllerTests.cs" />
     <Compile Include="ControllerTests\ExamRoomControllerTest.cs" />
-    <Compile Include="ControllerTests\SpecailtyControllerTest.cs" />
+    <Compile Include="ControllerTests\SpecialtyControllerTest.cs" />
     <Compile Include="Infrastructure\BaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
