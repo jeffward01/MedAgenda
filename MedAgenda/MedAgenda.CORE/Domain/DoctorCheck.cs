@@ -17,6 +17,7 @@ namespace MedAgenda.CORE.Domain
 
         public virtual Doctor Doctor { get; set; }
         public virtual ExamRoom ExamRoom { get; set; }
+<<<<<<< HEAD
 
 
         public void Update(DoctorCheckModel doctorCheck)
@@ -33,5 +34,8 @@ namespace MedAgenda.CORE.Domain
                 CheckinDateTime = DateTime.Now;
             }
         }
+=======
+    
+>>>>>>> 2249ad4dd0c20e09778a8649208cd899c8e4da9f
     }
 }

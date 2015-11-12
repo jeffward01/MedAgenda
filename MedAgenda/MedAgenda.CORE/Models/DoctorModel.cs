@@ -15,6 +15,8 @@ namespace MedAgenda.CORE.Models
         public string Telephone { get; set; }
         public DateTime CreatedDate { get; set; }
         public int SpecialtyID { get; set; }
+        public bool Archived { get; set; }
 
+        public DoctorCheckModel DoctorCheck { get; set; }
     }
 }

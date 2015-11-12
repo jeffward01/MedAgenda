@@ -131,8 +131,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\DoctorsCheckController.cs" />
+=======
+    <Compile Include="Controllers\AppointmentsController.cs" />
+>>>>>>> 2249ad4dd0c20e09778a8649208cd899c8e4da9f
     <Compile Include="Controllers\DoctorsController.cs" />
+    <Compile Include="Controllers\PatientChecksController.cs" />
+    <Compile Include="Controllers\ExamRoomsController.cs" />
+    <Compile Include="Controllers\SpecialtiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

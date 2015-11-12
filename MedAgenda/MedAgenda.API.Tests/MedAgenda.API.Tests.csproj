@@ -99,8 +99,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerTests\AppointmentControllerTests.cs" />
     <Compile Include="ControllerTests\DoctorControllerTests.cs" />
+<<<<<<< HEAD
     <Compile Include="ControllerTests\DoctorsCheckControllerTests.cs" />
+=======
+    <Compile Include="ControllerTests\PatientCheckControllerTests.cs" />
+    <Compile Include="ControllerTests\ExamRoomControllerTest.cs" />
+    <Compile Include="ControllerTests\SpecailtyControllerTest.cs" />
+>>>>>>> 2249ad4dd0c20e09778a8649208cd899c8e4da9f
     <Compile Include="Infrastructure\BaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
