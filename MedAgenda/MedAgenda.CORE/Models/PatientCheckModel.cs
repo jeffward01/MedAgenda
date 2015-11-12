@@ -13,5 +13,8 @@ namespace MedAgenda.CORE.Models
         public int SpecialtyID { get; set; }
         public DateTime CheckinDateTime { get; set; }
         public Nullable<DateTime> CheckoutDateTime { get; set; }
+
+        public PatientModel Patient { get; set; }
+        public SpecialtyModel Specialty { get; set; }
     }
 }

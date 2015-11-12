@@ -38,36 +38,6 @@ namespace MedAgenda.API.Controllers
 
             return Ok(patientCheck);
         }
-        //Get for Patient in PatientCheck
-        [Route("api/patientchecks/{id}/patient")]
-        public IHttpActionResult GetPatientsForPatientCheck(int id)
-        {
-            var patientChecksPatients = db.Patients.Where(p => p.PatientID == id);
-
-            return Ok(patientChecksPatients.Select(p => new PatientModel
-            {
-                PatientID = p.PatientID,
-                FirstName = p.FirstName,
-                LastName = p.LastName,
-                Birthdate = p.Birthdate,
-                Telephone = p.Telephone,
-                Email = p.Email,
-                BloodType = p.BloodType,
-                CreatedDate = p.CreatedDate
-            }));
-        }
-        //Get for Specialty in PatientCheck
-        [Route("api/patientchecks/{id}/specialties")]
-        public IHttpActionResult GetSpecialtiesForPatientCheck(int id)
-        {
-            var specialtiesPatientCheck = db.Specialties.Where(s => s.SpecialtyID == id);
-
-            return Ok(specialtiesPatientCheck.Select(s => new SpecialtyModel
-            {
-                SpecialtyID = s.SpecialtyID,
-                SpecialtyName = s.SpecialtyName
-            }));
-        }
         
         // PUT: api/PatientChecks/5
         [ResponseType(typeof(void))]
@@ -86,7 +56,7 @@ namespace MedAgenda.API.Controllers
 
             dbPatientCheck.Update(patientCheck);
 
-            db.Entry(patientCheck).State = EntityState.Modified;
+            db.Entry(dbPatientCheck).State = EntityState.Modified;
 
             try
             {
