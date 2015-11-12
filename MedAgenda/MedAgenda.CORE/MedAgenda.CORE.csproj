@@ -70,13 +70,13 @@
     <Compile Include="Migrations\201511102339109_InitialCreate.Designer.cs">
       <DependentUpon>201511102339109_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511120011009_MergeWithMaster.cs" />
-    <Compile Include="Migrations\201511120011009_MergeWithMaster.Designer.cs">
-      <DependentUpon>201511120011009_MergeWithMaster.cs</DependentUpon>
+    <Compile Include="Migrations\201511121756548_merge.cs" />
+    <Compile Include="Migrations\201511121756548_merge.Designer.cs">
+      <DependentUpon>201511121756548_merge.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511120109542_KarenFix.cs" />
-    <Compile Include="Migrations\201511120109542_KarenFix.Designer.cs">
-      <DependentUpon>201511120109542_KarenFix.cs</DependentUpon>
+    <Compile Include="Migrations\201511121758573_AddArchivedToPatient.cs" />
+    <Compile Include="Migrations\201511121758573_AddArchivedToPatient.Designer.cs">
+      <DependentUpon>201511121758573_AddArchivedToPatient.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppointmentModel.cs" />
@@ -97,11 +97,11 @@
     <EmbeddedResource Include="Migrations\201511102339109_InitialCreate.resx">
       <DependentUpon>201511102339109_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511120011009_MergeWithMaster.resx">
-      <DependentUpon>201511120011009_MergeWithMaster.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511121756548_merge.resx">
+      <DependentUpon>201511121756548_merge.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511120109542_KarenFix.resx">
-      <DependentUpon>201511120109542_KarenFix.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511121758573_AddArchivedToPatient.resx">
+      <DependentUpon>201511121758573_AddArchivedToPatient.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
