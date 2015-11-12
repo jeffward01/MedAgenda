@@ -66,19 +66,6 @@
     <Compile Include="Domain\PatientCheck.cs" />
     <Compile Include="Domain\Specialty.cs" />
     <Compile Include="Infrastructure\MedAgendaDbContext.cs" />
-    <Compile Include="Migrations\201511102339109_InitialCreate.cs" />
-    <Compile Include="Migrations\201511102339109_InitialCreate.Designer.cs">
-      <DependentUpon>201511102339109_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511121756548_merge.cs" />
-    <Compile Include="Migrations\201511121756548_merge.Designer.cs">
-      <DependentUpon>201511121756548_merge.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511121758573_AddArchivedToPatient.cs" />
-    <Compile Include="Migrations\201511121758573_AddArchivedToPatient.Designer.cs">
-      <DependentUpon>201511121758573_AddArchivedToPatient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppointmentModel.cs" />
     <Compile Include="Models\DoctorCheckModel.cs" />
     <Compile Include="Models\DoctorModel.cs" />
@@ -92,17 +79,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511102339109_InitialCreate.resx">
-      <DependentUpon>201511102339109_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511121756548_merge.resx">
-      <DependentUpon>201511121756548_merge.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511121758573_AddArchivedToPatient.resx">
-      <DependentUpon>201511121758573_AddArchivedToPatient.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
