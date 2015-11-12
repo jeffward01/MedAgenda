@@ -21,6 +21,8 @@ namespace MedAgenda.API.Tests.ControllerTests
             {
                 IEnumerable<PatientCheckModel> patientChecks = patientCheckController.GetPatientChecks();
 
+                if (patientChecks.Count() == 0) Assert.Inconclusive("Patient checks table is empty");
+
                 Assert.IsTrue(patientChecks.Count() > 0);
             }
         }
