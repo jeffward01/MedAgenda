@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedAgenda.CORE.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,16 @@ namespace MedAgenda.CORE.Domain
         public string Relationship { get; set; }
 
         public virtual Patient Patient { get; set; }
+
+        public void Update(EmergencyContactModel emergencyContact)
+        {
+            PatientID = emergencyContact.PatientID;
+            FirstName = emergencyContact.FirstName;
+            LastName = emergencyContact.LastName;
+            Telephone = emergencyContact.Telephone;
+            Email = emergencyContact.Email;
+            Relationship = emergencyContact.Relationship;
+
+        }
     }
 }

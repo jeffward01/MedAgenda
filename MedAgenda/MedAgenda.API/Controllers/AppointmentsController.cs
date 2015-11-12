@@ -130,6 +130,9 @@ namespace MedAgenda.API.Controllers
             return Ok(Mapper.Map<AppointmentModel>(appointment));
         }
 
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
