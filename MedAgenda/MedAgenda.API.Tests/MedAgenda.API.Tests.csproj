@@ -103,6 +103,7 @@
     <Compile Include="ControllerTests\DoctorControllerTests.cs" />
     <Compile Include="ControllerTests\EmergencyContactControllerTests.cs" />
     <Compile Include="ControllerTests\PatientControllerTests.cs" />
+    <Compile Include="ControllerTests\DoctorsCheckControllerTests.cs" />
     <Compile Include="ControllerTests\PatientCheckControllerTests.cs" />
     <Compile Include="ControllerTests\ExamRoomControllerTest.cs" />
     <Compile Include="ControllerTests\SpecialtyControllerTests.cs" />
