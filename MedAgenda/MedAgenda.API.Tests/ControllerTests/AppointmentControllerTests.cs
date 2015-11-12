@@ -16,8 +16,7 @@ namespace MedAgenda.API.Tests.ControllerTests
     /// </summary>
     [TestClass]
     public class AppointmentControllerTests : BaseTest
-    {
-      
+    {    
         [TestMethod] // Get all appointments | [0]
         public void GetAppointmentsReturnAppointments()
         {
@@ -61,7 +60,6 @@ namespace MedAgenda.API.Tests.ControllerTests
                 }
             }
         }
-
 
         [TestMethod] // Create an Appointment | [2]
         public void PostAppointmentCreateAppointment()

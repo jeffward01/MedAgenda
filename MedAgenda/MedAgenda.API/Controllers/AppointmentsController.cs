@@ -57,6 +57,8 @@ namespace MedAgenda.API.Controllers
 
             dbAppt.Update(appointment);
 
+            db.Entry(dbAppt).State = EntityState.Modified;
+
             try
             {
                 db.SaveChanges();
