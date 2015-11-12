@@ -94,7 +94,7 @@ namespace MedAgenda.API.Controllers
             {
                 db.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 throw new Exception("Unable to add Appointment to database");
@@ -129,6 +129,9 @@ namespace MedAgenda.API.Controllers
 
             return Ok(Mapper.Map<AppointmentModel>(appointment));
         }
+
+
+
 
         protected override void Dispose(bool disposing)
         {
