@@ -22,14 +22,11 @@ namespace MedAgenda.CORE.Domain
 
         public void Update(AppointmentModel appointment)
         {
-
             PatientID = appointment.PatientID;
             DoctorID = appointment.DoctorID;
             ExamRoomID = appointment.ExamRoomID;
             CheckinDateTime = appointment.CheckinDateTime;
             CheckoutDateTime = appointment.CheckoutDateTime;
-
         }
-
     }
 }

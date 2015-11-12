@@ -99,8 +99,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerTests\AppointmentControllerTests.cs" />
     <Compile Include="ControllerTests\DoctorControllerTests.cs" />
     <Compile Include="ControllerTests\PatientControllerTests.cs" />
+    <Compile Include="ControllerTests\ExamRoomControllerTest.cs" />
+    <Compile Include="ControllerTests\SpecailtyControllerTest.cs" />
     <Compile Include="Infrastructure\BaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -120,7 +123,7 @@
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
