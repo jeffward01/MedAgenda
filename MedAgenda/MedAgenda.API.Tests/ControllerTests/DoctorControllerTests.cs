@@ -8,6 +8,8 @@ using MedAgenda.CORE.Models;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
+using MedAgenda.CORE.Infrastructure;
+using MedAgenda.CORE.Domain;
 
 namespace MedAgenda.API.Tests.ControllerTests
 {
@@ -28,7 +30,29 @@ namespace MedAgenda.API.Tests.ControllerTests
 
                 //Assert
                 Assert.IsTrue(doctors.Count() > 0);
+
+                //Assert
+                Assert.IsTrue(doctors.Where(d => d.Archived).Count() == 0);
             }
+        }
+
+
+        [TestMethod]
+        public void GetArchivedDoctorReturnArchivedDoctors()
+        {
+            //Arrange
+            using (var DoctorController = new DoctorsController())
+            {
+                //Act: Call the GetDoctors Method
+                IEnumerable<DoctorModel> doctors = DoctorController.GetDoctors();
+
+                //Assert
+                Assert.IsTrue(doctors.Count() > 0);
+
+                //Assert
+                Assert.IsTrue(doctors.Where(d => !d.Archived).Count() == 0);
+            }
+  
         }
 
         [TestMethod] //Get Doctor by ID | [1]
@@ -171,12 +195,15 @@ namespace MedAgenda.API.Tests.ControllerTests
         [TestMethod] // Delete Doctor [4]
         public void DeleteDoctor()
         {
-            CreatedAtRouteNegotiatedContentResult<DoctorModel> contentResult;
-        
+            int doctorIDForTest;
 
+            IHttpActionResult result;
+            CreatedAtRouteNegotiatedContentResult<DoctorModel> createdContentResult;
+            OkNegotiatedContentResult<DoctorModel> OkcontentResult;
+
+            // Create a new test patient, and get its patient ID
             using (var DoctorController = new DoctorsController())
             {
-                //Create Doctor
                 var newDoctor = new DoctorModel
                 {
                     FirstName = "Alex",
@@ -186,31 +213,42 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Telephone = "111-111-1111",
                     CreatedDate = DateTime.Today
                 };
-                //Insert DoctorModelObject into Database so 
-                //that I can take it out and test for update.
-               var result = DoctorController.PostDoctor(newDoctor);
-
-                //Cast result as Content Result so that I can gather information from ContentResult
-               contentResult = (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+                result = DoctorController.PostDoctor(newDoctor);
+                createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+                doctorIDForTest = createdContentResult.Content.DoctorID;
             }
 
-            using (var secondDocController = new DoctorsController())
+            //Call the procedure to delete the patient, which sets its archived indicator to true
+            using (var docConrtoller = new DoctorsController())
             {
-                //Delete the Test Doctor
-                var result = secondDocController.DeleteDoctor(contentResult.Content.DoctorID);
+                result = docConrtoller.DeleteDoctor(doctorIDForTest);
 
-                //Assert
+                // Verify that HTTP result is OK
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorModel>));
+                // Verify that the returned PatientModel object has archived indicator set to true
+                OkcontentResult =
+                    (OkNegotiatedContentResult<DoctorModel>)result;
+                Assert.IsTrue(OkcontentResult.Content.Archived);
             }
-            using (var thirdDocController = new DoctorsController())
+
+            // Get the patient and verify that the patient has archived indicator set to true
+            using (var DocController = new DoctorsController())
             {
-                var result = thirdDocController.GetDoctor(contentResult.Content.DoctorID);
-
-                //Assert
-                Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+                result = DocController.GetDoctor(doctorIDForTest);
+                Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorModel>));
+                OkcontentResult =
+                    (OkNegotiatedContentResult<DoctorModel>)result;
+                Assert.IsTrue(OkcontentResult.Content.Archived);
             }
 
-
+            // Remove the patient from the database with actual deletion, not archiving
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Doctor dbDoctor = db.Doctors.Find(doctorIDForTest);
+                db.Doctors.Remove(dbDoctor);
+                db.SaveChanges();
+            }
         }
     }
 }

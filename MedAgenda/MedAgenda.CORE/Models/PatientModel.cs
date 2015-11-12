@@ -16,5 +16,9 @@ namespace MedAgenda.CORE.Models
         public string Email { get; set; }
         public string BloodType { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public List<AppointmentModel> appointments { get; set; }
+
+
     }
 }
