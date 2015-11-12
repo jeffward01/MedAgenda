@@ -15,7 +15,7 @@ namespace MedAgenda.API.Tests.ControllerTests
     /// Summary description for SpecailtyControllerTest
     /// </summary>
     [TestClass]
-    public class SpecailtyControllerTest : BaseTest
+    public class SpecialtyControllerTests : BaseTest
     {
         [TestMethod] // Get all Specialties
         public void GetSpecialtiesReturnSpecialties()
