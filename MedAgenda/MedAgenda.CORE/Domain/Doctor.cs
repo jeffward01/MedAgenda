@@ -15,6 +15,7 @@ namespace MedAgenda.CORE.Domain
         public string Telephone { get; set; }
         public DateTime CreatedDate { get; set; }
         public int SpecialtyID { get; set; }
+        public bool Archived { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual ICollection<DoctorCheck> DoctorChecks { get; set; }
