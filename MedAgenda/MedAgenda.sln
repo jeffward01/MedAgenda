@@ -11,6 +11,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedAgenda.CORE.Tests", "Med
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedAgenda.CORE", "MedAgenda.CORE\MedAgenda.CORE.csproj", "{828EEACF-75D5-4EB1-A7C6-704AC0CCD222}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "MedAgenda.Client", "MedAgenda.Client\", "{FF5AC9C4-AEFC-47C3-ABA7-3C721DFF10F0}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_49753"
+		Debug.AspNetCompiler.PhysicalPath = "MedAgenda.Client\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49753\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_49753"
+		Release.AspNetCompiler.PhysicalPath = "MedAgenda.Client\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49753\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "49753"
+		SlnRelativePath = "MedAgenda.Client\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +55,10 @@ Global
 		{828EEACF-75D5-4EB1-A7C6-704AC0CCD222}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{828EEACF-75D5-4EB1-A7C6-704AC0CCD222}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{828EEACF-75D5-4EB1-A7C6-704AC0CCD222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF5AC9C4-AEFC-47C3-ABA7-3C721DFF10F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5AC9C4-AEFC-47C3-ABA7-3C721DFF10F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF5AC9C4-AEFC-47C3-ABA7-3C721DFF10F0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5AC9C4-AEFC-47C3-ABA7-3C721DFF10F0}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
