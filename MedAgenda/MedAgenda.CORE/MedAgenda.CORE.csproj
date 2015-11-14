@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppointmentModel.cs" />
+    <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DoctorCheckModel.cs" />
     <Compile Include="Models\DoctorModel.cs" />
     <Compile Include="Models\EmergencyContactModel.cs" />
