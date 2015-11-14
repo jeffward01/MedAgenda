@@ -24,29 +24,31 @@ namespace MedAgenda.API.Controllers
         public DashboardModel GetDashboard()
         {
             var sixMonthsFromNow = DateTime.Now.AddMonths(6);
-          
-          
+
+
             return new DashboardModel
             {
-           
-                 DoctorTotalCount = db.Doctors.Count(),
+
+                DoctorTotalCount = db.Doctors.Count(),
                 PatientTotalCount = db.Patients.Count(),
                 ExamRoomTotalCount = db.ExamRooms.Count(),
 
                 OpenExamRoomsCount = db.ExamRooms.Count() - db.Appointments.Count(),
-                DoctorsOnsitePercentage = (int)(0.5f + ((100f * db.DoctorChecks.Count()/db.Doctors.Count()))),
+                DoctorsOnsitePercentage = (int)(0.5f + ((100f * db.DoctorChecks.Count() / db.Doctors.Count()))),
                 ExamRoomsFilledPercentage = (int)(0.5f + ((100f * db.Appointments.Count() / db.ExamRooms.Count()))),
 
                 DoctorsCheckedinCount = db.DoctorChecks.Count(),
                 PatientsCheckedinCount = db.PatientChecks.Count(),
 
-                
+
                 AveragePatientAge = (int)db.Patients.ToList().Average(p => p.Age),
-          
-                
-                 YoungestPatientAge = db.Patients.ToList().Min(a => a.Age),
+
+
+                YoungestPatientAge = db.Patients.ToList().Min(a => a.Age),
                 OldestPatientAge = db.Patients.ToList().Max(a => a.Age),
-                
+
+                NumberOfArchivedDoctors = db.Doctors.Count(a => a.Archived == true),
+                NumberOfArchivedPatients = db.Patients.Count(a => a.Archived == true),
 
                 CurrentAppointments = Mapper.Map<IEnumerable<AppointmentModel>>(
                     db.Appointments.Where(a => (a.CheckoutDateTime == null))),
@@ -58,7 +60,14 @@ namespace MedAgenda.API.Controllers
                     db.Patients.Where(p => p.PatientChecks.Count() != null && p.PatientChecks.All(c => c.CheckinDateTime > DateTime.Today && c.CheckoutDateTime == null))),
                 
                  CheckedinDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
-                    db.Doctors.Where(d => d.DoctorChecks.Count() != null || d.DoctorChecks.All(c => c.CheckinDateTime >= DateTime.Today && c.CheckoutDateTime == null)))
+                    db.Doctors.Where(d => d.DoctorChecks.Count() != null || d.DoctorChecks.All(c => c.CheckinDateTime >= DateTime.Today && c.CheckoutDateTime == null))),
+
+                 ArchivedDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
+                     db.Doctors.Where(a => a.Archived == true)),
+
+                 ArchivedPatients = Mapper.Map<IEnumerable<PatientModel>>(
+                     db.Patients.Where(a => a.Archived == true))
+                   
                     
 
             };

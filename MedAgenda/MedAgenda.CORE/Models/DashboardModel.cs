@@ -24,7 +24,8 @@ namespace MedAgenda.CORE.Models
         public int DoctorsCheckedinCount { get; set; }
         public int PatientsCheckedinCount { get; set; }
 
-        //Add get archived
+        public int NumberOfArchivedDoctors { get; set; }
+        public int NumberOfArchivedPatients { get; set; }
        
      
 
@@ -32,6 +33,8 @@ namespace MedAgenda.CORE.Models
         public IEnumerable<DoctorModel> CheckedinDoctors { get; set; }
         public IEnumerable<DoctorModel> CheckedOutDoctors { get; set; }
         public IEnumerable<PatientModel> CheckedinPatients { get; set; }
+        public IEnumerable<PatientModel> ArchivedPatients { get; set; }
+        public IEnumerable<DoctorModel> ArchivedDoctors { get; set; }
  
 
     }
