@@ -1,11 +1,12 @@
-﻿<h1>admin tabs</h1>
-<tabset>
-    <tab ng-repeat="t in tabs"
-         heading="{{t.heading}}"
-         select="go(t.route)"
-         active="t.active">
-    </tab>
-</tabset>
+﻿<div>
+    <uib-tabset>
+        <uib-tab ng-repeat="t in tabs"
+                 heading="{{t.heading}}"
+                 select="go(t.route)"
+                 active="t.active">
+        </uib-tab>
+    </uib-tabset>
 
-<h2>View:</h2>
-<div ui-view></div>
+    <h2>UI-View:</h2>
+    <div ui-view></div>
+</div>
