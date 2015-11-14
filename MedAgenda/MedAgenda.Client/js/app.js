@@ -1,4 +1,4 @@
-﻿angular.module('app', ['ui.router', 'ngResource']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('app', ['ui.router', 'ui.bootstrap', 'ngResource','angular-loading-bar']).config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/app/dashboard');
 
     $stateProvider
