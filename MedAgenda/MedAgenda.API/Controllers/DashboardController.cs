@@ -83,25 +83,3 @@ namespace MedAgenda.API.Controllers
 
 
 
-/*
-public DoctorModel GetCheckedInDoctors(DoctorCheck checkinTime)
-{
-    DateTime today = DateTime.Today;
-    if ((checkinTime.CheckinDateTime.Date >= today) && (checkinTime.CheckoutDateTime == null))
-    {
-        var newDoctor = new DoctorModel
-        {
-            DoctorID = checkinTime.Doctor.DoctorID,
-            FirstName = checkinTime.Doctor.FirstName,
-            LastName = checkinTime.Doctor.LastName,
-            Email = checkinTime.Doctor.Email,
-            Telephone = checkinTime.Doctor.Telephone,
-            SpecialtyID = checkinTime.Doctor.SpecialtyID,
-            Archived = checkinTime.Doctor.Archived,
-            CreatedDate = checkinTime.Doctor.CreatedDate
-        };
-        return newDoctor;
-    }
-    return null;
-    */
-
