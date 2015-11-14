@@ -1,0 +1,23 @@
+/*Dashboard CSS*/
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.centered {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#subTable {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+.table td {
+   text-align: center;   
+}
+.table tr th {
+   text-align: center;   
+}

@@ -1,24 +1,42 @@
-angular.module('app').controller('DashboardController', function ($rootScope, $scope) {
+angular.module('app').controller('DashboardController', function ($rootScope, $scope, dashboardService, $http, apiUrl) {
     $rootScope.$broadcast('change-page-title', {
         title: 'Dashboard'
     });
-    $scope.tabs = [
-        {
-            title: 'Dynamic Title 1',
-            content: 'Dynamic content 1'
-        },
-        {
-            title: 'Dynamic Title 2',
-            content: 'Dynamic content 2',
-            disabled: true
-        }
-  ];
 
-    $scope.alertMe = function () {
-        setTimeout(function () {
-            $window.alert('You\'ve selected the alert tab!');
-        });
+    //Dashboard Code
+
+    dashboardService.get().then(
+        function (data) {
+            // callback from deferred.resolve
+            // bind data now!
+
+            $scope.dashboard = data;
+
+
+        },
+        function (error) {
+            // callback from deferred.reject
+            // show sad faces :(
+        }
+    );
+
+    //Accordian Code
+    $scope.oneAtATime = false;
+
+
+    $scope.addItem = function () {
+        var newItemNo = $scope.items.length + 1;
+        $scope.items.push('Item ' + newItemNo);
     };
+
+    $scope.status = {
+        isFirstOpen: true,
+        isFirstDisabled: false
+    };
+
+
+    //Liquid Fill Gauge
+
 
 
 
