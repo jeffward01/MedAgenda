@@ -2,7 +2,7 @@
     <uib-tabset justified="true">
         <uib-tab heading="Overview">
             <!--Script for Accordian-->
-        
+
 
             <uib-accordion close-others="oneAtATime">
                 <uib-accordion-group>
@@ -70,7 +70,7 @@
                     </div>
 
                 </uib-accordion-group>
-                <uib-accordion-group heading="Check-in or Check-out  ||  Patient or Doctor">
+                <uib-accordion-group heading="Check-in or Check-out">
                     <div class="row clearfix">
                         <div class="col-md-4 col-lg-4 pull-left">
                             <div class="page-header">
@@ -93,24 +93,87 @@
                     </div>
 
                 </uib-accordion-group>
-                <uib-accordion-group heading="Current Appointments">
+                <uib-accordion-group heading="Current Appointments:  {{dashboard.CurrentAppointments.length}}">
                     <div class="row clearfix">
-                        <div class="col-md-3 col-lg-3 center">
-                            <h3>Exam Room Occupancy</h3>
-                            <h3 class="center">X%</h3>
+                        <div class="well well-lg" ng-repeat="appt in dashboard.CurrentAppointments">
+                            <span id="AppointmentLabel" class="label label-Appointment">Appointment ID: {{appt.AppointmentID}}</span>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Patient ID</th>
+                                        <th>Doctor ID</th>
+                                        <th>ExamRoom</th>
+                                        <th>Check-in Date Time</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>{{appt.PatientID}}</td>
+                                        <td>{{appt.DoctorID}}</td>
+                                        <td>{{appt.ExamRoom.ExamRoomName}}</td>
+                                        <td>{{appt.CheckinDateTime | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <span id="AppointmentLabel" class="label label-Appointment">Patient Name: {{appt.Patient.FirstName}} {{appt.Patient.LastName}}</span>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>BirthDate</th>
+                                        <th>Age</th>
+                                        <th>Telephone</th>
+                                        <th>Email</th>
+                                        <th>BloodType</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>{{appt.Patient.Birthdate | date:"MM/dd/yyyy"}}</td>
+                                        <td>{{appt.Patient.Age}}</td>
+                                        <td>{{appt.Patient.Telephone | tel}}</td>
+                                        <td>{{appt.Patient.Email}}</td>
+                                        <td>{{appt.Patient.BloodType}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <span id="AppointmentLabel" class="label label-Appointment">Doctor Name: {{appt.Doctor.FirstName}} {{appt.Doctor.LastName}}</span>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+
+                                        <th>Telephone</th>
+                                        <th>Email</th>
+                                        <th>SpecialtyId</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>{{appt.Doctor.Telephone | tel}}</td>
+                                        <td>{{appt.Doctor.Email}}</td>
+                                        <td>{{appt.Doctor.SpecialtyID}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
                         </div>
-                        <div class="col-md-3 col-lg-3 center">
-                            <h3>Doctor's Onsite Percentage</h3>
-                            <h3 class="center">X%</h3>
-                        </div>
-                        <div class="col-md-3 col-lg-3">
-                            <h3>Exam Room Occupancy</h3>
-                            <h3>X%</h3>
-                        </div>
+
+
+
                     </div>
 
 
                 </uib-accordion-group>
+                
+                
                 <uib-accordion-group heading="Custom template" template-url="group-template.html">
                     Hello
                 </uib-accordion-group>
