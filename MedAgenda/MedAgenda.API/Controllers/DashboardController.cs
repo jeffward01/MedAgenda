@@ -51,15 +51,15 @@ namespace MedAgenda.API.Controllers
                 CurrentAppointments = Mapper.Map<IEnumerable<AppointmentModel>>(
                     db.Appointments.Where(a => (a.CheckoutDateTime == null))),
 
-                /*
+                //Logic is wrong here
                 CheckedOutDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
-                    db.Doctors.SelectMany(a => a.DoctorChecks).Where(c => c.CheckoutDateTime < DateTime.Now)),
+                    db.Doctors.Where(d => d.DoctorChecks.Count() == null || d.DoctorChecks.All(c => c.CheckoutDateTime.HasValue))),
+            CheckedinPatients = Mapper.Map<IEnumerable<PatientModel>>(
+                    db.Patients.Where(p => p.PatientChecks.Count() != null && p.PatientChecks.All(c => c.CheckinDateTime > DateTime.Today && c.CheckoutDateTime == null))),
                 
-                CheckedinPatients = Mapper.Map<IEnumerable<PatientModel>>(
-                    db.Patients.SelectMany(p => p.PatientChecks).Where(ch => ((ch.CheckinDateTime.Date > DateTime.Today) && ch.CheckoutDateTime == null))),
                  CheckedinDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
-                    db.Doctors.SelectMany(d => d.DoctorChecks).Where(ch => ((ch.CheckinDateTime.Date >= DateTime.Today) && (ch.CheckoutDateTime == null))))
-                    */
+                    db.Doctors.Where(d => d.DoctorChecks.Count() != null || d.DoctorChecks.All(c => c.CheckinDateTime >= DateTime.Today && c.CheckoutDateTime == null)))
+                    
 
             };
         }
