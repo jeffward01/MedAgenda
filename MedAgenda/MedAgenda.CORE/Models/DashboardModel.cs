@@ -26,8 +26,7 @@ namespace MedAgenda.CORE.Models
 
         public int NumberOfArchivedDoctors { get; set; }
         public int NumberOfArchivedPatients { get; set; }
-       
-     
+            
 
         public IEnumerable<AppointmentModel> CurrentAppointments { get; set; }
         public IEnumerable<DoctorModel> CheckedinDoctors { get; set; }

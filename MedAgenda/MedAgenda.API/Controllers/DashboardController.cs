@@ -66,10 +66,8 @@ namespace MedAgenda.API.Controllers
                      db.Doctors.Where(a => a.Archived == true)),
 
                  ArchivedPatients = Mapper.Map<IEnumerable<PatientModel>>(
-                     db.Patients.Where(a => a.Archived == true))
+                     db.Patients.Where(a => a.Archived == true)),
                    
-                    
-
             };
         }
 
