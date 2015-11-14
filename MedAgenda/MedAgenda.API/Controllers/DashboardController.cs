@@ -24,41 +24,44 @@ namespace MedAgenda.API.Controllers
         public DashboardModel GetDashboard()
         {
             var sixMonthsFromNow = DateTime.Now.AddMonths(6);
-
+          
+          
             return new DashboardModel
             {
-                DoctorTotalCount = db.Doctors.Count(),
+           
+                 DoctorTotalCount = db.Doctors.Count(),
                 PatientTotalCount = db.Patients.Count(),
                 ExamRoomTotalCount = db.ExamRooms.Count(),
 
                 OpenExamRoomsCount = db.ExamRooms.Count() - db.Appointments.Count(),
-                DoctorsOnsitePercentage = (int)(0.5f + ((100f * db.Doctors.Count()/db.DoctorChecks.Count()))),
-                ExamRoomsFilledPercentage = (int)(0.5f + ((100f * db.Appointments.Count()/db.ExamRooms.Count()))),
+                DoctorsOnsitePercentage = (int)(0.5f + ((100f * db.DoctorChecks.Count()/db.Doctors.Count()))),
+                ExamRoomsFilledPercentage = (int)(0.5f + ((100f * db.Appointments.Count() / db.ExamRooms.Count()))),
 
                 DoctorsCheckedinCount = db.DoctorChecks.Count(),
                 PatientsCheckedinCount = db.PatientChecks.Count(),
 
-                AveragePatientAge = db.Patients.Sum(a => GetAge(DateTime.Now(), a.Birthdate) / db.Patients.Count(),
+                
+                AveragePatientAge = (int)db.Patients.ToList().Average(p => p.Age),
+          
+                
+                 YoungestPatientAge = db.Patients.ToList().Min(a => a.Age),
+                OldestPatientAge = db.Patients.ToList().Max(a => a.Age),
+                
 
+                CurrentAppointments = Mapper.Map<IEnumerable<AppointmentModel>>(
+                    db.Appointments.Where(a => (a.CheckoutDateTime == null))),
 
-            TotalMonthlyIncome = db.Leases.Sum(l => l.Rent),
-                ExpiringLeases = Mapper.Map<IEnumerable<LeaseModel>>(
-                    db.Leases.Where(
-                                    l => l.EndDate.HasValue &&
-                                         l.EndDate >= DateTime.Now &&
-                                         l.EndDate <= sixMonthsFromNow
-                                   )
-                             .OrderBy(l => l.EndDate)
-                             .Take(3)
-                )
+                /*
+                CheckedOutDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
+                    db.Doctors.SelectMany(a => a.DoctorChecks).Where(c => c.CheckoutDateTime < DateTime.Now)),
+                
+                CheckedinPatients = Mapper.Map<IEnumerable<PatientModel>>(
+                    db.Patients.SelectMany(p => p.PatientChecks).Where(ch => ((ch.CheckinDateTime.Date > DateTime.Today) && ch.CheckoutDateTime == null))),
+                 CheckedinDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
+                    db.Doctors.SelectMany(d => d.DoctorChecks).Where(ch => ((ch.CheckinDateTime.Date >= DateTime.Today) && (ch.CheckoutDateTime == null))))
+                    */
+
             };
-        }
-        public static int GetAge(DateTime reference, DateTime birthday)
-        {
-            int age = reference.Year - birthday.Year;
-            if (reference < birthday.AddYears(age)) age--;
-
-            return age;
         }
 
         protected override void Dispose(bool disposing)
@@ -70,3 +73,28 @@ namespace MedAgenda.API.Controllers
         }
     }
 }
+
+
+
+/*
+public DoctorModel GetCheckedInDoctors(DoctorCheck checkinTime)
+{
+    DateTime today = DateTime.Today;
+    if ((checkinTime.CheckinDateTime.Date >= today) && (checkinTime.CheckoutDateTime == null))
+    {
+        var newDoctor = new DoctorModel
+        {
+            DoctorID = checkinTime.Doctor.DoctorID,
+            FirstName = checkinTime.Doctor.FirstName,
+            LastName = checkinTime.Doctor.LastName,
+            Email = checkinTime.Doctor.Email,
+            Telephone = checkinTime.Doctor.Telephone,
+            SpecialtyID = checkinTime.Doctor.SpecialtyID,
+            Archived = checkinTime.Doctor.Archived,
+            CreatedDate = checkinTime.Doctor.CreatedDate
+        };
+        return newDoctor;
+    }
+    return null;
+    */
+
