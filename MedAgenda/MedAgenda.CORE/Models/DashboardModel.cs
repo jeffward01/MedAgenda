@@ -17,6 +17,8 @@ namespace MedAgenda.CORE.Models
         public int ExamRoomsFilledPercentage { get; set; }
         public int DoctorsOnsitePercentage { get; set; }
 
+        public int AveragePatientAge { get; set; }
+
         public int DoctorsCheckedinCount { get; set; }
         public int PatientsCheckedinCount { get; set; }
 
@@ -24,6 +26,7 @@ namespace MedAgenda.CORE.Models
         public IEnumerable<AppointmentModel> CheckedinDoctors { get; set; }
         public IEnumerable<AppointmentModel> CheckedOutDoctors { get; set; }
         public IEnumerable<AppointmentModel> CheckedinPatients { get; set; }
+ 
 
     }
 }
