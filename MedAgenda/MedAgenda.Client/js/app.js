@@ -19,7 +19,7 @@
                 .state('app.appointments.past', { url: '/past', templateUrl: '/templates/app/appointments/past.html', controller: 'AppointmentsController' })
 
            .state('app.admin', { url: '/admin', templateUrl: '/templates/app/admin/tabs.html', controller: 'AdminController' })           
-                .state('app.admin.exam', { url: '/exam', templateUrl: '/templates/app/admin/exam.html', controller: 'AdminExamController' })
+                .state('app.admin.exam', { url: '/exam', templateUrl: '/templates/app/admin/examrooms.html', controller: 'AdminExamController' })
                 .state('app.admin.specialties', { url: '/specialties', templateUrl: '/templates/app/admin/specialties.html', controller: 'AdminSpecialtiesController' });
   
 });

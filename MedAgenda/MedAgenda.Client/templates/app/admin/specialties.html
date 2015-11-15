@@ -1,13 +1,28 @@
-﻿<h1>Specialties</h1>
-<table class="table table-bordered table-condensed table-responsive" ng-show="specialties.length">
-    <thead>
-        <tr>
-            <th>Specialty</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="specialty in specialties">
-            <td>{{specialty.SpecialtyName}}</td>
-        </tr>
-    </tbody>
-</table>
+﻿
+<div class="alert alert-info" ng-hide="specialties.length">
+    There are no specialties - please add one
+</div>
+
+<div class="row">
+    <!-- column for specialty table -->
+    <div class="col-sm-6">
+        <table class="table table-bordered table-condensed table-responsive" ng-show="specialties.length">
+            <thead>
+                <tr>
+                    <th>Specialty</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="specialty in specialties">
+                    <td align="left">{{specialty.SpecialtyName}}</td>
+                    <td>
+                        <a class="btn btn-danger btn-xs" ng-click="deleteSpecialty(specialty)">
+                            <i class="fa fa-remove fa-fw"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!-- End column for specialty table -->
+</div><!-- End row -->

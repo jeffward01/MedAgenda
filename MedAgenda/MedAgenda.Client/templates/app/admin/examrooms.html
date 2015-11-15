@@ -1,0 +1,27 @@
+﻿<div class="alert alert-info" ng-hide="examRooms.length">
+    There are no exam rooms - please add one
+</div>
+
+<div class="row">
+    <!-- column for exam room table -->
+    <div class="col-sm-6">
+        <table class="table table-bordered table-condensed table-responsive" ng-show="examRooms.length">
+            <thead>
+                <tr>
+                    <th>Exam Room Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="examroom in examRooms">
+                    <td align="left">{{examroom.ExamRoomName}}</td>
+                    <td>
+                        <a class="btn btn-danger btn-xs" ng-click="deleteExamRoom(examroom)">
+                            <i class="fa fa-remove fa-fw"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!-- End column for exam room table -->
+</div><!-- End row -->
