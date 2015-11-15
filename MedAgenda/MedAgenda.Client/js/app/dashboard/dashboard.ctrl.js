@@ -1,16 +1,29 @@
-angular.module('app').controller('DashboardController', function ($rootScope, $scope, dashboardService, $http, apiUrl) {
+angular.module('app').controller('DashboardController', function ($rootScope, $scope, $compile, dashboardService, $http, apiUrl, $log) {
     $rootScope.$broadcast('change-page-title', {
         title: 'Dashboard'
     });
 
-    //Dashboard Code
 
+
+
+    //Dashboard Code
     dashboardService.get().then(
         function (data) {
             // callback from deferred.resolve
             // bind data now!
 
             $scope.dashboard = data;
+            //Onsite Doctors Page Settings
+            $scope.totalItems = $scope.dashboard.CheckedinDoctors.length;
+             $scope.maxSize = 5;
+            $scope.itemsPerPage = 5;
+            $scope.currentPage = 1;
+            
+
+      
+    
+
+
 
 
         },
@@ -20,14 +33,14 @@ angular.module('app').controller('DashboardController', function ($rootScope, $s
         }
     );
 
+
+
+
+
     //Accordian Code
     $scope.oneAtATime = false;
 
 
-    $scope.addItem = function () {
-        var newItemNo = $scope.items.length + 1;
-        $scope.items.push('Item ' + newItemNo);
-    };
 
     $scope.status = {
         isFirstOpen: true,
@@ -35,7 +48,6 @@ angular.module('app').controller('DashboardController', function ($rootScope, $s
     };
 
 
-    //Liquid Fill Gauge
 
 
 

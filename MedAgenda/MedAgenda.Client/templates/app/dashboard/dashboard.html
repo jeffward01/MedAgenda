@@ -172,9 +172,53 @@
 
 
                 </uib-accordion-group>
+
+                <uib-accordion-group heading="Checked-In Doctors: {{dashboard.CheckedinDoctors.length}}">
+                    <h4>OnSite Doctors</h4>
+                    <div class="row">
+                          <div id="PageScan1">
+                     
+
+
+                        <div class="panel panel-primary" ng-repeat="doctor in dashboard.CheckedinDoctors">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{doctor.FirstName}} {{doctor.LastName}}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Doctor ID</th>
+                                            <th>Email</th>
+                                            <th>Telephone</th>
+                                            <th>Join Date</th>
+                                            <th>SpecialtyID</th>                      
+                                        </tr>
+                                    </thead>
+                              
+                                    <tbody>
+                                
+                                        <tr>
+                                            <td>{{doctor.DoctorID}}</td>
+                                            <td>{{doctor.Email}}</td>
+                                            <td>{{doctor.Telephone | tel}}</td>
+                                            <td>{{doctor.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                            <td>{{doctor.SpecialtyID}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
                 
-                
-                <uib-accordion-group heading="Custom template" template-url="group-template.html">
+
+
+                    </div>
+                    <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
+                    </div>
+                </uib-accordion-group>
+
+                <uib-accordion-group heading="Custom template">
                     Hello
                 </uib-accordion-group>
                 <uib-accordion-group heading="Delete account" panel-class="panel-danger">
