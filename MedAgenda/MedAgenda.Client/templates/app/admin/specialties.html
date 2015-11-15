@@ -1,1 +1,13 @@
 ﻿<h1>Specialties</h1>
+<table class="table table-bordered table-condensed table-responsive" ng-show="specialties.length">
+    <thead>
+        <tr>
+            <th>Specialty</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="specialty in specialties">
+            <td>{{specialty.SpecialtyName}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -21,7 +21,7 @@
            .state('app.admin', { url: '/admin', templateUrl: '/templates/app/admin/tabs.html', controller: 'AdminController' })           
                 .state('app.admin.exam', { url: '/exam', templateUrl: '/templates/app/admin/exam.html', controller: 'AdminExamController' })
                 .state('app.admin.specialties', { url: '/specialties', templateUrl: '/templates/app/admin/specialties.html', controller: 'AdminSpecialtiesController' });
-
-
-    angular.module('app').value('apiUrl', 'http://localhost:65406/');
+  
 });
+
+angular.module('app').value('apiUrl', 'http://localhost:65406/');
