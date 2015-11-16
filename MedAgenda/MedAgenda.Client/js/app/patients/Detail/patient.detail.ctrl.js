@@ -9,11 +9,11 @@
     $scope.saveTenant = function () {
         if ($scope.patient.PatientId) {
             $scope.patient.$update(function () {
-                $state.go('patient.grid');
+                $state.go('patient.detail');
             });
         } else {
             $scope.patient.$save(function () {
-                $state.go('patient.grid');
+                $state.go('patient.detail');
             });
         }
     }
