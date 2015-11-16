@@ -1,5 +1,4 @@
-﻿angular.module('app').controller('PatientsGridController', function ($rootScope) {
-    $rootScope.$broadcast('change-page-title', { title: 'Patients' });
+﻿angular.module('app').controller('PatientsDetailController', function ($scope, $stateParams, Patient, $state) {
 
     if ($stateParams.id) {
         $scope.patient = Patient.get({ id: $stateParams.id });
@@ -7,14 +6,14 @@
         $scope.patient = new Patient();
     }
 
-    $scope.savePatient = function () {
+    $scope.saveTenant = function () {
         if ($scope.patient.PatientId) {
             $scope.patient.$update(function () {
-                $state.go('patient.grid');
+                $state.go('patients.grid');
             });
         } else {
             $scope.patient.$save(function () {
-                $state.go('patient.grid');
+                $state.go('patients.grid');
             });
         }
     }
