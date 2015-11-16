@@ -120,14 +120,14 @@ namespace MedAgenda.API.Controllers
         public IHttpActionResult DeleteDoctor(int id)
         {
 
-            // Get the patient record corresponding to the patient ID
+            // Get the doctor record corresponding to the doctor ID
             Doctor dbDoctor = db.Doctors.Find(id);
             if (dbDoctor == null)
             {
                 return NotFound();
             }
 
-            //   Set the patient as archived    
+            //   Set the doctor as archived    
             dbDoctor.Archived = true;
 
             // Set indicator that DB has been modified
@@ -149,7 +149,7 @@ namespace MedAgenda.API.Controllers
         }
 
 
-        // GET: api/doctors/5/patientchecks
+        // GET: api/doctors/5/doctorchecks
         // Get doctors check-ins belonging to doctors corresponding to doctor ID
         [Route("api/doctors/{doctorID}/doctorchecks")] // Get all Doctor Checks Method [5]
         public IHttpActionResult GetDoctorChecksForDoctor(int doctorId)
@@ -160,8 +160,8 @@ namespace MedAgenda.API.Controllers
                 return BadRequest();
             }
 
-            // Get list of patient check-ins where the patient ID
-            //  matches the input patient ID
+            // Get list of doctor check-ins where the doctor ID
+            //  matches the input doctor ID
             var dbDoctorChecks = db.DoctorChecks.Where(dc => dc.DoctorID == doctorId);
 
             if (dbDoctorChecks.Count() == 0)
@@ -186,8 +186,8 @@ namespace MedAgenda.API.Controllers
                 return BadRequest();
             }
 
-            // Get list of appointments  appointments match doctor ID
-            //  matches the input doctor ID
+            // Get list of appointments that
+            //  match the input doctor ID
             var dbDoctorAppointment = db.Appointments.Where(d => d.DoctorID == doctorId);
 
             if (dbDoctorAppointment.Count() == 0)

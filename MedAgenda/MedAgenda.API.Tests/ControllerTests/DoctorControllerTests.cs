@@ -52,8 +52,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                 Assert.IsTrue(doctors.Count() > 0);
 
                 Assert.IsTrue(doctors.Any(d => !d.Archived));
-            }
-  
+            }  
         }
 
         [TestMethod] //Get Doctor by ID | [1]
@@ -72,7 +71,6 @@ namespace MedAgenda.API.Tests.ControllerTests
 
                 Assert.IsTrue(contentResult.Content.DoctorID == 1);
             }
-
         }
 
         [TestMethod] // Create Doctor [2]
@@ -202,7 +200,7 @@ namespace MedAgenda.API.Tests.ControllerTests
             CreatedAtRouteNegotiatedContentResult<DoctorModel> createdContentResult;
             OkNegotiatedContentResult<DoctorModel> OkcontentResult;
 
-            // Create a new test patient, and get its patient ID
+            // Create a new test doctor, and get its doctor ID
             using (var DoctorController = new DoctorsController())
             {
                 var newDoctor = new DoctorModel
@@ -220,20 +218,20 @@ namespace MedAgenda.API.Tests.ControllerTests
                 doctorIDForTest = createdContentResult.Content.DoctorID;
             }
 
-            //Call the procedure to delete the patient, which sets its archived indicator to true
+            //Call the procedure to delete the doctor, which sets its archived indicator to true
             using (var docConrtoller = new DoctorsController())
             {
                 result = docConrtoller.DeleteDoctor(doctorIDForTest);
 
                 // Verify that HTTP result is OK
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorModel>));
-                // Verify that the returned PatientModel object has archived indicator set to true
+                // Verify that the returned DoctorModel object has archived indicator set to true
                 OkcontentResult =
                     (OkNegotiatedContentResult<DoctorModel>)result;
                 Assert.IsTrue(OkcontentResult.Content.Archived);
             }
 
-            // Get the patient and verify that the patient has archived indicator set to true
+            // Get the doctor and verify that the doctor has archived indicator set to true
             using (var DocController = new DoctorsController())
             {
                 result = DocController.GetDoctor(doctorIDForTest);
@@ -243,7 +241,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                 Assert.IsTrue(OkcontentResult.Content.Archived);
             }
 
-            // Remove the patient from the database with actual deletion, not archiving
+            // Remove the doctor from the database with actual deletion, not archiving
             using (MedAgendaDbContext db = new MedAgendaDbContext())
             {
                 Doctor dbDoctor = db.Doctors.Find(doctorIDForTest);

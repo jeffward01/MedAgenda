@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 angular.module('app', ['ui.router', 'ui.bootstrap', 'ngResource','angular-loading-bar']).config(function ($stateProvider, $urlRouterProvider) {
+=======
+﻿angular.module('app', ['ui.router', 'ui.bootstrap', 'ngResource']).config(function ($stateProvider, $urlRouterProvider) {
+>>>>>>> 102b1edfa923005157c94a1946ff1e085a668a87
     $urlRouterProvider.otherwise('/app/dashboard');
 
     $stateProvider
@@ -9,11 +13,15 @@ angular.module('app', ['ui.router', 'ui.bootstrap', 'ngResource','angular-loadin
         .state('app.doctors', {abstract: true, url: '/doctors', template: '<ui-view/>' })
             .state('app.doctors.grid', { url: '/grid', templateUrl: '/templates/app/doctors/grid.html', controller: 'DoctorsGridController' })
             .state('app.doctors.detail', { url: '/detail/:id', templateUrl: '/templates/app/doctors/detail.html', controller: 'DoctorsGridController' })
-
+            .state('app.doctors.check-in', {url: '/doctorCheckin/detail', templateUrl: '/templates/app/doctorCheck.detail.html', controller: 'DoctorCheckController'})
+            .state('app.doctors.check-out', {url: '/doctorCheckout/grid', templateUrl: '/templates/app/doctorCheck.grid.html', controller: 'DoctorCheckController'})
+    
          .state('app.patients', { abstract: true, url: '/patients', template: '<ui-view/>' })
             .state('app.patients.grid', { url: '/grid', templateUrl: '/templates/app/patients/grid.html', controller: 'PatientsGridController' })
             .state('app.patients.detail', { url: '/detail/:id', templateUrl: '/templates/app/patients/detail.html', controller: 'PatientsGridController' })
-            
+            .state('app.patients.check-in', {url: '/patientCheckin/detail', templateUrl: '/templates/app/patientCheck.detail.html', controller: 'PatientsCheckController'})
+            .state('app.doctors.check-out', {url: '/patientCheckout/grid', templateUrl: '/templates/app/patientCheck.grid.html', controller: 'PatientCheckController'})
+    
          .state('app.appointments', { url: '/appointments', templateUrl: '/templates/app/appointments/tabs.html', controller: 'AppointmentsController' })
                 .state('app.appointments.upcoming', { url: '/upcoming', templateUrl: '/templates/app/appointments/upcoming.html', controller: 'AppointmentsController' })
                 .state('app.appointments.past', { url: '/past', templateUrl: '/templates/app/appointments/past.html', controller: 'AppointmentsController' })

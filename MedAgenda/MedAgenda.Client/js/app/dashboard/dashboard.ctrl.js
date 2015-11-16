@@ -3,9 +3,6 @@ angular.module('app').controller('DashboardController', function ($rootScope, $s
         title: 'Dashboard'
     });
 
-
-
-
     //Dashboard Code
     dashboardService.get().then(
         function (data) {
@@ -17,15 +14,7 @@ angular.module('app').controller('DashboardController', function ($rootScope, $s
             $scope.totalItems = $scope.dashboard.CheckedinDoctors.length;
              $scope.maxSize = 5;
             $scope.itemsPerPage = 5;
-            $scope.currentPage = 1;
-            
-
-      
-    
-
-
-
-
+            $scope.currentPage = 1;         
         },
         function (error) {
             // callback from deferred.reject
@@ -33,24 +22,11 @@ angular.module('app').controller('DashboardController', function ($rootScope, $s
         }
     );
 
-
-
-
-
     //Accordian Code
     $scope.oneAtATime = false;
-
-
-
     $scope.status = {
         isFirstOpen: true,
         isFirstDisabled: false
     };
-
-
-
-
-
-
 
 });

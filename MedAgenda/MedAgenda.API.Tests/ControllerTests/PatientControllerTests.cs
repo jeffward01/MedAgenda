@@ -186,83 +186,83 @@ namespace MedAgenda.API.Tests.ControllerTests
             }
         }
 
-        //[TestMethod]
-        //public void GetEmergencyContactsForPatientReturnsEmergencyContacts()
-        //{
-        //    int patientIDForTest;
-        //    int createdEmergencyContactID;
+        [TestMethod]
+        public void GetEmergencyContactsForPatientReturnsEmergencyContacts()
+        {
+            int patientIDForTest;
+            int createdEmergencyContactID;
 
-        //    IHttpActionResult result;
-        //    CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult;
-        //    OkNegotiatedContentResult<IEnumerable<EmergencyContactModel>> OkEmergencyContactContentResult;
+            IHttpActionResult result;
+            CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult;
+            OkNegotiatedContentResult<IEnumerable<EmergencyContactModel>> OkEmergencyContactContentResult;
 
-        //    // Create a new test patient, and get its patient ID
-        //    using (var patientController = new PatientsController())
-        //    {
-        //        var patient = new PatientModel
-        //        {
-        //            FirstName = "Impatient",
-        //            LastName = "Patience",
-        //            Birthdate = new DateTime(1968, 12, 27),
-        //            Email = "a@b.com",
-        //            BloodType = "A+",
-        //            CreatedDate = new DateTime(2015, 11, 10),
-        //            Archived = false
-        //        };
-        //        result = patientController.PostPatient(patient);
-        //        createdContentResult =
-        //            (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
-        //        patientIDForTest = createdContentResult.Content.PatientID;
-        //    }
+            // Create a new test patient, and get its patient ID
+            using (var patientController = new PatientsController())
+            {
+                var patient = new PatientModel
+                {
+                    FirstName = "Impatient",
+                    LastName = "Patience",
+                    Birthdate = new DateTime(1968, 12, 27),
+                    Email = "a@b.com",
+                    BloodType = "A+",
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
+                };
+                result = patientController.PostPatient(patient);
+                createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
+                patientIDForTest = createdContentResult.Content.PatientID;
+            }
 
-        //    // Create emergency contact for patient
-        //    //using (var emergencyContactController = new EmergencyContactsController())
-        //    //{
-        //    //    var emergencyContact = new EmergencyContactModel
-        //    //    {
-        //    //        PatientID = patientIDForTest,
-        //    //        FirstName = "Tester",
-        //    //        LastName = "Testerson",
-        //    //        Telephone = "555-1212",
-        //    //        Email = "c@d.com",
-        //    //        Relationship = "Probation Officer"
-        //    //    };
+            // Create emergency contact for patient
+            using (var emergencyContactController = new EmergencyContactsController())
+            {
+                var emergencyContact = new EmergencyContactModel
+                {
+                    PatientID = patientIDForTest,
+                    FirstName = "Tester",
+                    LastName = "Testerson",
+                    Telephone = "555-1212",
+                    Email = "c@d.com",
+                    Relationship = "Probation Officer"
+                };
 
-        //    //    result = emergencyContactController.PostEmergencyContact(emergencyContact);
-        //    //    CreatedAtRouteNegotiatedContentResult < EmergencyContactModel > emergencyContactContentResult =
-        //    //    (CreatedAtRouteNegotiatedContentResult<EmergencyContactModel>)result;
-        //    //    createdEmergencyContactID = emergencyContactContentResult.Content.EmergencyContactID;
-        //    //}
+                result = emergencyContactController.PostEmergencyContact(emergencyContact);
+                CreatedAtRouteNegotiatedContentResult<EmergencyContactModel> emergencyContactContentResult =
+                (CreatedAtRouteNegotiatedContentResult<EmergencyContactModel>)result;
+                createdEmergencyContactID = emergencyContactContentResult.Content.EmergencyContactID;
+            }
 
-        //    // Call GetEmergencyContactsForPatient
-        //    using (var patientController = new PatientsController())
-        //    {
-        //        result = patientController.GetEmergencyContactsForPatient(patientIDForTest);
+            // Call GetEmergencyContactsForPatient
+            using (var patientController = new PatientsController())
+            {
+                result = patientController.GetEmergencyContactsForPatient(patientIDForTest);
 
-        //        // Verify that HTTP status code is OK
-        //        Assert.IsInstanceOfType(result,
-        //        typeof(OkNegotiatedContentResult<IEnumerable<EmergencyContactModel>>));
+                // Verify that HTTP status code is OK
+                Assert.IsInstanceOfType(result,
+                typeof(OkNegotiatedContentResult<IEnumerable<EmergencyContactModel>>));
 
-        //        // Verify that at least one element was returned
-        //        OkEmergencyContactContentResult =
-        //        (OkNegotiatedContentResult<IEnumerable<EmergencyContactModel>>)result;
-        //        Assert.IsTrue(OkEmergencyContactContentResult.Content.Count() > 0);
+                // Verify that at least one element was returned
+                OkEmergencyContactContentResult =
+                (OkNegotiatedContentResult<IEnumerable<EmergencyContactModel>>)result;
+                Assert.IsTrue(OkEmergencyContactContentResult.Content.Count() > 0);
 
-        //        // Verify that all the returned emergency contact(s) correspond to the test patient ID
-        //        Assert.IsTrue(OkEmergencyContactContentResult.Content.
-        //            Where(ec => ec.PatientID != patientIDForTest).Count() == 0);
-        //  }
+                // Verify that all the returned emergency contact(s) correspond to the test patient ID
+                Assert.IsTrue(OkEmergencyContactContentResult.Content.
+                    Where(ec => ec.PatientID != patientIDForTest).Count() == 0);
+            }
 
-        //    // Delete the emergency contact and test patient (actual deletion, not archiving) 
-        //    using (MedAgendaDbContext db = new MedAgendaDbContext())
-        //    {
-        //        EmergencyContact dbEmergencyContact = db.EmergencyContacts.Find(createdEmergencyContactID);
-        //        db.EmergencyContacts.Remove(dbEmergencyContact);
-        //        Patient dbPatient = db.Patients.Find(patientIDForTest);
-        //        db.Patients.Remove(dbPatient);
-        //        db.SaveChanges();
-        //    }
-        //}
+            // Delete the emergency contact and test patient (actual deletion, not archiving) 
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                EmergencyContact dbEmergencyContact = db.EmergencyContacts.Find(createdEmergencyContactID);
+                db.EmergencyContacts.Remove(dbEmergencyContact);
+                Patient dbPatient = db.Patients.Find(patientIDForTest);
+                db.Patients.Remove(dbPatient);
+                db.SaveChanges();
+            }
+        }
 
         [TestMethod]
         public void GetPatientChecksForPatientReturnsPatientChecks()
