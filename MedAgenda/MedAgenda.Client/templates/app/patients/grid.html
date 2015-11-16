@@ -1,1 +1,27 @@
 ﻿<h1>patients grid</h1>
+<div>
+    <div ng-hide="patients.length">
+        <div class="spacer10 hidden-xs-4"></div>
+        <div class="alert alert-info">
+            There are no patients- please add one
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="patients.length">
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="patient in patients">
+                <td>{{patient.PatientName}}</td>
+                <td>
+                    <a class="btn btn-danger btn-xs" ng-click="deletePatient(examroom)">
+                        <i class="fa fa-remove fa-fw"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
