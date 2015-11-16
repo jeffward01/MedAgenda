@@ -25,4 +25,31 @@
             </tbody>
         </table>
     </div><!-- End column for specialty table -->
-</div><!-- End row -->
+
+    <!-- column for elements to add new specialty -->
+    <div class="col-sm-6">
+
+        <!--Specialty form (block any default browser validation) -->
+        <form name="specialtyForm" role="form" novalidate>
+
+            <div class="form-group"
+                 ng-class="{'has-error': specialtyForm.specialtyName.$invalid && specialtyForm.$submitted }">
+                <label class="control-label" for="specialtyName">Add New Specialty:</label>
+                <input type="text" class="form-control" id="specialtyName" name="specialtyName"
+                       placeholder="Specialty Name" ng-model="specialty.SpecialtyName" required>
+                <span class="help-block" ng-show="specialtyForm.specialtyName.$invalid && specialtyForm.$submitted">
+                    This is a required field
+                </span>
+            </div><!-- end form group -->
+
+            <div class="row">
+                <div class="col-sm-4"><!-- column for save button -->
+                    <button class="btn btn-success btn-sm" type="submit" ng-click="saveSpecialty()">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+                </div><!-- end column --><!-- end column for save button -->
+            </div><!-- end row -->
+        </form><!-- end form -->
+    </div><!-- end column for elements to add new specialty -->
+
+</div><!-- end row -->

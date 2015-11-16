@@ -28,12 +28,13 @@
 
     <!-- column for elements to add new exam room -->
     <div class="col-sm-6">
+
         <!-- Exam room form (block any default browser validation) -->
         <form name="examRoomForm" role="form" novalidate>
 
             <div class="form-group"
                  ng-class="{'has-error': examRoomForm.examRoomName.$invalid && examRoomForm.$submitted }">
-                <label class="control-label" for="examRoomName">Exam Room Name</label>
+                <label class="control-label" for="examRoomName">Add New Exam Room:</label>
                 <input type="text" class="form-control" id="examRoomName" name="examRoomName"
                        placeholder="Exam Room Name" ng-model="examRoom.ExamRoomName" required>
                 <span class="help-block" ng-show="examRoomForm.examRoomName.$invalid && examRoomForm.$submitted">
@@ -42,12 +43,12 @@
             </div><!-- end form group -->
 
             <div class="row">
-                <div class="col-sm-4 col-sm-offset-4">
+                <div class="col-sm-4"><!-- column for save button -->
                     <button class="btn btn-success btn-sm" type="submit" ng-click="saveExamRoom()">
                         <i class="fa fa-save"></i> Save
                     </button>
-                </div><!-- end column -->               
+                </div><!-- end column --><!-- end column for save button -->
             </div><!-- end row -->
         </form><!-- end form -->
-</div><!-- End column for elements to add new exam room -->
-</div><!-- End row -->
+    </div><!-- end column for elements to add new exam room -->
+</div><!-- end row -->
