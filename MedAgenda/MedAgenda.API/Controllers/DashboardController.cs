@@ -53,19 +53,19 @@ namespace MedAgenda.API.Controllers
                 CurrentAppointments = Mapper.Map<IEnumerable<AppointmentModel>>(
                     db.Appointments.Where(a => (a.CheckoutDateTime == null))),
 
-                //Logic is wrong here
-                CheckedOutDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
-                    db.Doctors.Where(d => d.DoctorChecks.Count() == null || d.DoctorChecks.All(c => c.CheckoutDateTime.HasValue))),
-            CheckedinPatients = Mapper.Map<IEnumerable<PatientModel>>(
-                    db.Patients.Where(p => p.PatientChecks.Count() != null && p.PatientChecks.All(c => c.CheckinDateTime > DateTime.Today && c.CheckoutDateTime == null))),
+            //    //Logic is wrong here
+            //    CheckedOutDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
+            //        db.Doctors.Where(d => d.DoctorChecks.Count() == null || d.DoctorChecks.All(c => c.CheckoutDateTime.HasValue))),
+            //CheckedinPatients = Mapper.Map<IEnumerable<PatientModel>>(
+            //        db.Patients.Where(p => p.PatientChecks.Count() != null && p.PatientChecks.All(c => c.CheckinDateTime > DateTime.Today && c.CheckoutDateTime == null))),
                 
-                 CheckedinDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
-                    db.Doctors.Where(d => d.DoctorChecks.Count() != null || d.DoctorChecks.All(c => c.CheckinDateTime >= DateTime.Today && c.CheckoutDateTime == null))),
+            //     CheckedinDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
+            //        db.Doctors.Where(d => d.DoctorChecks.Count() != null || d.DoctorChecks.All(c => c.CheckinDateTime >= DateTime.Today && c.CheckoutDateTime == null))),
 
                  ArchivedDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
                      db.Doctors.Where(a => a.Archived == true)),
 
-                 ArchivedPatients = Mapper.Map<IEnumerable<PatientModel>>(
+                ArchivedPatients = Mapper.Map<IEnumerable<PatientModel>>(
                      db.Patients.Where(a => a.Archived == true)),
                    
             };

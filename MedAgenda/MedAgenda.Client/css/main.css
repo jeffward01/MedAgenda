@@ -36,3 +36,20 @@
     margin: 0 auto;
     text-align: center;
 }
+.center-buttons{
+    width: 100%;
+    margin: 0 auto;
+    text-align: center; 
+}
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
