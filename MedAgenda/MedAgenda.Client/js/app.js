@@ -24,4 +24,4 @@
   
 });
 
-angular.module('app').value('apiUrl', 'http://localhost:65406/');
+angular.module('app').value('apiUrl', 'http://localhost:7000/');

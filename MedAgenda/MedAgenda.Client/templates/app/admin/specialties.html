@@ -1,9 +1,12 @@
 ﻿
 <div class="row">
     <!-- column for specialty table -->
-    <div class="alert alert-info" ng-hide="specialties.length">
-        There are no specialties - please add one
-    </div>
+    <div ng-hide="specialties.length">
+        <div class="spacer10 hidden-xs-4"></div>
+        <div class="alert alert-info">
+            There are no specialties - please add one
+        </div>
+    </div>    
 
     <div class="col-sm-6">
         <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="specialties.length">
@@ -28,6 +31,7 @@
 
     <!-- column for elements to add new specialty -->
     <div class="col-sm-6">
+        <div class="spacer5 hidden-xs-4"></div>
 
         <!--Specialty form (block any default browser validation) -->
         <form name="specialtyForm" role="form" novalidate>

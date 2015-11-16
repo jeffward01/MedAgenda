@@ -2,9 +2,12 @@
 <div class="row">
     <!-- column for exam room table -->
     <div class="col-sm-6">
-        <div class="alert alert-info" ng-hide="examRooms.length">                    
-            There are no exam rooms - please add one
-        </div>
+        <div ng-hide="examRooms.length">
+            <div class="spacer10 hidden-xs-4"></div> 
+            <div class="alert alert-info">
+                There are no exam rooms - please add one
+            </div>
+        </div>                     
 
         <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="examRooms.length">
             <thead>
@@ -28,6 +31,7 @@
 
     <!-- column for elements to add new exam room -->
     <div class="col-sm-6">
+        <div class="spacer5 hidden-xs-4"></div>
 
         <!-- Exam room form (block any default browser validation) -->
         <form name="examRoomForm" role="form" novalidate>
