@@ -15,6 +15,11 @@ namespace MedAgenda.CORE.Domain
         public DateTime Birthdate { get; set; }
         public string Telephone { get; set;}
         public string Email { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
         public string BloodType { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Archived { get; set; }
@@ -37,8 +42,13 @@ namespace MedAgenda.CORE.Domain
             Birthdate = patient.Birthdate;           
             Telephone = patient.Telephone;
             Email = patient.Email;
+            Address1 = patient.Address1;
+            Address2 = patient.Address2;
+            City = patient.City;
+            State = patient.State;                      
+            Zip = patient.Zip;
             BloodType = patient.BloodType;
-            
+            Archived = patient.Archived;
         }
     }
 }
