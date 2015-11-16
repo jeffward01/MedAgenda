@@ -5,16 +5,14 @@
 
 
             <uib-accordion close-others="oneAtATime">
-                <uib-accordion-group>
+                <uib-accordion-group  is-open="status.open">
                     <uib-accordion-heading is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                        Quick Look
+                        Quick Look <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                     </uib-accordion-heading>
 
                     <div class="row clearfix">
                         <div class="col-md-12 col-lg-12">
                             <div class="well">
-
-
 
                                 <table class="table table-striped">
                                     <thead>
@@ -146,80 +144,131 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-
                                         <th>Telephone</th>
                                         <th>Email</th>
                                         <th>SpecialtyId</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
-
                                     <tr>
-
                                         <td>{{appt.Doctor.Telephone | tel}}</td>
                                         <td>{{appt.Doctor.Email}}</td>
                                         <td>{{appt.Doctor.SpecialtyID}}</td>
                                     </tr>
                                 </tbody>
                             </table>
-
                         </div>
-
-
-
                     </div>
-
-
                 </uib-accordion-group>
 
-                <uib-accordion-group heading="Checked-In Doctors: {{dashboard.CheckedinDoctors.length}}">
+                <uib-accordion-group heading="Checked-In Doctors: {{dashboard.CheckedinDoctors.length}} <-- Logic Wrong">
                     <h4>OnSite Doctors</h4>
                     <div class="row">
-                          <div id="PageScan1">
-                     
+                        <div id="PageScan1">
 
 
-                        <div class="panel panel-primary" ng-repeat="doctor in dashboard.CheckedinDoctors">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">{{doctor.FirstName}} {{doctor.LastName}}</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Doctor ID</th>
-                                            <th>Email</th>
-                                            <th>Telephone</th>
-                                            <th>Join Date</th>
-                                            <th>SpecialtyID</th>                      
-                                        </tr>
-                                    </thead>
-                              
-                                    <tbody>
-                                
-                                        <tr>
-                                            <td>{{doctor.DoctorID}}</td>
-                                            <td>{{doctor.Email}}</td>
-                                            <td>{{doctor.Telephone | tel}}</td>
-                                            <td>{{doctor.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
-                                            <td>{{doctor.SpecialtyID}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
 
+                            <div class="panel panel-primary" ng-repeat="doctor in dashboard.CheckedinDoctors">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{doctor.FirstName}} {{doctor.LastName}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Doctor ID</th>
+                                                <th>Email</th>
+                                                <th>Telephone</th>
+                                                <th>Join Date</th>
+                                                <th>SpecialtyID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{doctor.DoctorID}}</td>
+                                                <td>{{doctor.Email}}</td>
+                                                <td>{{doctor.Telephone | tel}}</td>
+                                                <td>{{doctor.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                                <td>{{doctor.SpecialtyID}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                
-
-
+                        <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
                     </div>
-                    <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Checked-Out Doctors: {{dashboard.CheckedOutDoctors.length}} <-- Logic Wrong">
+                    <h4>OnSite Doctors</h4>
+                    <div class="row">
+                        <div id="PageScan1">
+                            <div class="panel panel-primary" ng-repeat="doctor in dashboard.CheckedOutDoctors">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{doctor.FirstName}} {{doctor.LastName}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Doctor ID</th>
+                                                <th>Email</th>
+                                                <th>Telephone</th>
+                                                <th>Join Date</th>
+                                                <th>SpecialtyID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{doctor.DoctorID}}</td>
+                                                <td>{{doctor.Email}}</td>
+                                                <td>{{doctor.Telephone | tel}}</td>
+                                                <td>{{doctor.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                                <td>{{doctor.SpecialtyID}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
                     </div>
                 </uib-accordion-group>
 
-                <uib-accordion-group heading="Custom template">
-                    Hello
+                <uib-accordion-group heading="Checked-In Patients: {{dashboard.CheckedinPatients.length}} <-- Logic Wrong">
+                    <h4>OnSite Doctors</h4>
+                    <div class="row">
+                        <div id="PageScan1">
+                            <div class="panel panel-primary" ng-repeat="patient in dashboard.CheckedinPatients">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{patient.FirstName}} {{patient.LastName}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient ID</th>
+                                                <th>Email</th>
+                                                <th>Telephone</th>
+                                                <th>Join Date</th>
+                                                <th>BloodType</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{patient.PatientID}}</td>
+                                                <td>{{patient.Email}}</td>
+                                                <td>{{patient.Telephone | tel}}</td>
+                                                <td>{{patient.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                                <td>{{patient.BloodType}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
+                    </div>
                 </uib-accordion-group>
                 <uib-accordion-group heading="Delete account" panel-class="panel-danger">
                     <p>Please, to delete your account, click the button below</p>
@@ -233,17 +282,83 @@
                 </uib-accordion-group>
             </uib-accordion>
 
-
-
-
-
-
-
-
-
-
         </uib-tab>
         <uib-tab heading="Statistics">Short Labeled Justified content</uib-tab>
         <uib-tab heading="View All">Long Labeled Justified content</uib-tab>
+        <uib-tab heading="Archived Patients/Doctors">
+            <uib-accordion close-others="oneAtATime">
+                <uib-accordion-group heading="Archived Doctors: {{dashboard.ArchivedDoctors.length}}">
+                    <h4>OnSite Doctors</h4>
+                    <div class="row">
+                        <div id="PageScan1">
+                            <div class="panel panel-primary" ng-repeat="doctor in dashboard.ArchivedDoctors">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{doctor.FirstName}} {{doctor.LastName}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Doctor ID</th>
+                                                <th>Email</th>
+                                                <th>Telephone</th>
+                                                <th>Join Date</th>
+                                                <th>SpecialtyID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{doctor.DoctorID}}</td>
+                                                <td>{{doctor.Email}}</td>
+                                                <td>{{doctor.Telephone | tel}}</td>
+                                                <td>{{doctor.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                                <td>{{doctor.SpecialtyID}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
+                    </div>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Archived Patients: {{dashboard.ArchivedDoctors.length}}">
+                    <h4>OnSite Doctors</h4>
+                    <div class="row">
+                        <div id="PageScan1">
+                            <div class="panel panel-primary" ng-repeat="patient in dashboard.ArchivedPatients">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{patient.FirstName}} {{patient.LastName}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient ID</th>
+                                                <th>Email</th>
+                                                <th>Telephone</th>
+                                                <th>Join Date</th>
+                                                <th>Blood Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{patient.DoctorID}}</td>
+                                                <td>{{patient.Email}}</td>
+                                                <td>{{patient.Telephone | tel}}</td>
+                                                <td>{{patient.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                                <td>{{patient.BloodDype}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
+                    </div>
+                </uib-accordion-group>
+            </uib-accordion>
+        </uib-tab>
+
     </uib-tabset>
 </div>
