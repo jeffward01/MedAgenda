@@ -8,6 +8,8 @@ using MedAgenda.CORE.Models;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
+using MedAgenda.CORE.Infrastructure;
+using MedAgenda.CORE.Domain;
 
 namespace MedAgenda.API.Tests.ControllerTests
 {
@@ -54,22 +56,57 @@ namespace MedAgenda.API.Tests.ControllerTests
             }
         }
 
-        [TestMethod] //Creat a PatientCheck [2]
+        [TestMethod] //Create a PatientCheck [2]
         public void PostPatientCheck()
         {
+            int createdPatientID;
+            int createdSpecialtyID;
+            IHttpActionResult result;
             CreatedAtRouteNegotiatedContentResult<PatientCheckModel> contentResult;
+
+            // Create a new test patient, and get its patient ID
+            using (var patientController = new PatientsController())
+            {
+                var patient = new PatientModel
+                {
+                    FirstName = "Testpatient",
+                    LastName = "Testerson",
+                    Birthdate = new DateTime(1968, 12, 27),
+                    Email = "a@b.com",
+                    BloodType = "A+",
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
+                };
+                result = patientController.PostPatient(patient);
+                CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
+                createdPatientID = createdContentResult.Content.PatientID;
+            }
+
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
 
             using (var patientCheckController = new PatientChecksController())
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientID = 1,
-                    SpecialtyID = 1,
+                    PatientID = createdPatientID,
+                    SpecialtyID = createdSpecialtyID,
                     CheckinDateTime = DateTime.Now,
                     CheckoutDateTime = DateTime.Now.AddHours(2)
                 };
 
-                IHttpActionResult result = patientCheckController.PostPatientCheck(newPatientCheck);
+                result = patientCheckController.PostPatientCheck(newPatientCheck);
 
                 Assert.IsInstanceOfType(result, typeof(CreatedAtRouteNegotiatedContentResult<PatientCheckModel>));
 
@@ -81,8 +118,19 @@ namespace MedAgenda.API.Tests.ControllerTests
             //Delete the PatientCheck
             using (var SecondPatientCheckController = new PatientChecksController())
             {
-                IHttpActionResult result = SecondPatientCheckController.DeletePatientCheck(contentResult.Content.PatientCheckID);
+                result = SecondPatientCheckController.DeletePatientCheck(contentResult.Content.PatientCheckID);
             }
+          
+            // Delete the test data (actual deletion, not archiving) 
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {                
+                Specialty dbSpecialty = db.Specialties.Find(createdSpecialtyID);
+                db.Specialties.Remove(dbSpecialty);
+                Patient dbPatient = db.Patients.Find(createdPatientID);
+                db.Patients.Remove(dbPatient);
+                db.SaveChanges();
+            }
+
         }
 
         [TestMethod] //Update PatientCheck [3]

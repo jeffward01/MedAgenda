@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('PatientsGridController', function ($rootScope, $scope, Patient) {
+﻿angular.module('app').controller('PatientsGridController', function ($rootScope, $scope, Patient, apiUrl) {
     $rootScope.$broadcast('change-page-title', { title: 'Patients' });
 
     $scope.patients = Patient.query();
