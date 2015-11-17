@@ -27,6 +27,7 @@ namespace MedAgenda.API.Tests.ControllerTests
 
                 // Verify if patients were returned
                 if (patients.Count() == 0) Assert.Inconclusive("No non-archived patients found");
+
                 
                 // If patients were returned, verify that all of the patients are not archived               
                 Assert.IsTrue(patients.Where(p => p.Archived).Count() == 0);                
@@ -47,8 +48,7 @@ namespace MedAgenda.API.Tests.ControllerTests
 
                 // If patients were returned, verify that all of the patients are archived                                               
                 Assert.IsTrue(patients.Where(p => !p.Archived).Count() == 0);
-                
-                            
+
             }
         }
 
@@ -114,6 +114,9 @@ namespace MedAgenda.API.Tests.ControllerTests
         {
             int patientIDForTest;
             int createdAppointmentID;
+            int createdDoctorID;
+            int createdExamRoomID;
+            int createdSpecialtyID;
 
             IHttpActionResult result;
             CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult;
@@ -129,7 +132,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Birthdate = new DateTime(1968, 12, 27),
                     Email = "a@b.com",
                     BloodType = "A+",
-                    CreatedDate = new DateTime(2015, 11, 10),
+                    CreatedDate = DateTime.Now,
                     Archived = false
                 };
                 result = patientController.PostPatient(patient);
@@ -138,14 +141,59 @@ namespace MedAgenda.API.Tests.ControllerTests
                 patientIDForTest = createdContentResult.Content.PatientID;
             }
 
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"                   
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
+
+            // Create a new test doctor, and get its doctor ID
+            using (var doctorController = new DoctorsController())
+            {
+                var doctor = new DoctorModel
+                {
+                    FirstName = "Imdoctor",
+                    LastName = "Hippocrates",
+                    Email = "a@b.com",
+                    Telephone = "555-1212",
+                    CreatedDate = DateTime.Now,
+                    SpecialtyID = createdSpecialtyID,
+                    Archived = false
+                };
+                result = doctorController.PostDoctor(doctor);
+                CreatedAtRouteNegotiatedContentResult<DoctorModel> doctorContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+                createdDoctorID = doctorContentResult.Content.DoctorID;
+            }
+
+            // Create a new test exam room, and get its exam room ID
+            using (var examRoomController = new ExamRoomsController())
+            {
+                var examRoom = new ExamRoomModel
+                {
+                    ExamRoomName = "ImexamRoom"
+                };
+                result = examRoomController.PostExamRoom(examRoom);
+                CreatedAtRouteNegotiatedContentResult<ExamRoomModel> examRoomContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<ExamRoomModel>)result;
+                createdExamRoomID = examRoomContentResult.Content.ExamRoomID;
+            }
+
             // Create appointment for patient
             using (var appointmentController = new AppointmentsController())
             {
                 var appointment = new AppointmentModel
                 {
                     PatientID = patientIDForTest,
-                    DoctorID = 4,
-                    ExamRoomID = 8,
+                    DoctorID = createdDoctorID,
+                    ExamRoomID = createdExamRoomID,
                     CheckinDateTime = DateTime.Now,
                     CheckoutDateTime = DateTime.Now
                 };
@@ -175,11 +223,17 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Where(a => a.PatientID != patientIDForTest).Count() == 0);
             }
 
-            // Delete the appointment and test patient (actual deletion, not archiving) 
+            // Delete the test data (actual deletion, not archiving) 
             using (MedAgendaDbContext db = new MedAgendaDbContext())
             {
                 Appointment dbAppointment = db.Appointments.Find(createdAppointmentID);
                 db.Appointments.Remove(dbAppointment);
+                ExamRoom dbExamRoom = db.ExamRooms.Find(createdExamRoomID);
+                db.ExamRooms.Remove(dbExamRoom);
+                Doctor dbDoctor = db.Doctors.Find(createdDoctorID);
+                db.Doctors.Remove(dbDoctor);
+                Specialty dbSpecialty = db.Specialties.Find(createdSpecialtyID);
+                db.Specialties.Remove(dbSpecialty);
                 Patient dbPatient = db.Patients.Find(patientIDForTest);
                 db.Patients.Remove(dbPatient);
                 db.SaveChanges();

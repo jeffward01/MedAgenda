@@ -18,7 +18,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="examroom in examRooms">
-                    <td align="left">{{examroom.ExamRoomName}}</td>
+                    <td>{{examroom.ExamRoomName}}</td>
                     <td>
                         <a class="btn btn-danger btn-xs" ng-click="deleteExamRoom(examroom)">
                             <i class="fa fa-remove fa-fw"></i>
@@ -34,7 +34,7 @@
         <div class="spacer5 hidden-xs-4"></div>
 
         <!-- Exam room form (block any default browser validation) -->
-        <form name="examRoomForm" role="form" novalidate>
+        <form name="examRoomForm" role="form" ng-submit="saveExamRoom()" novalidate>
 
             <div class="form-group"
                  ng-class="{'has-error': examRoomForm.examRoomName.$invalid && examRoomForm.$submitted }">
@@ -48,7 +48,7 @@
 
             <div class="row">
                 <div class="col-sm-4"><!-- column for save button -->
-                    <button class="btn btn-success btn-sm" type="submit" ng-click="saveExamRoom()">
+                    <button class="btn btn-success btn-sm pull-right" type="submit">
                         <i class="fa fa-save"></i> Save
                     </button>
                 </div><!-- end column --><!-- end column for save button -->
