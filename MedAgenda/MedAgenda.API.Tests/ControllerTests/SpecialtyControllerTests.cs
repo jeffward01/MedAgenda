@@ -33,19 +33,40 @@ namespace MedAgenda.API.Tests.ControllerTests
         }
 
         [TestMethod] // Get Specialty by ID [1]
-        public void GetSpecialtyReturnSpecialt()
+        public void GetSpecialtyReturnSpecialty()
         {
-            //Arrange
+            int specialtyIDForTest;
+
+            //Arrange: create test specialty
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                IHttpActionResult result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                specialtyIDForTest = specialtyContentResult.Content.SpecialtyID;
+            }
+
             using (var specialtyController = new SpecialtiesController())
             {
                 //Act
-                IHttpActionResult result = specialtyController.GetSpecialty(1);
+                IHttpActionResult result = specialtyController.GetSpecialty(specialtyIDForTest);
 
                 //Assert
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<SpecialtyModel>));
                      OkNegotiatedContentResult<SpecialtyModel> contentResult = (OkNegotiatedContentResult<SpecialtyModel>)result;
 
-                Assert.IsTrue(contentResult.Content.SpecialtyID == 1);
+                Assert.IsTrue(contentResult.Content.SpecialtyID == specialtyIDForTest);
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                IHttpActionResult result = specialtyController.DeleteSpecialty(specialtyIDForTest);
             }
         }
 
@@ -108,7 +129,7 @@ namespace MedAgenda.API.Tests.ControllerTests
 
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<SpecialtyModel>));
 
-                //Get ExamRoomModel from 'result'
+                //Get SpecialtyModel from 'result'
                 specialtyResult = (OkNegotiatedContentResult<SpecialtyModel>)result;
 
             }
