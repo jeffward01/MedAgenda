@@ -8,6 +8,8 @@ using MedAgenda.CORE.Models;
 using System.Web.Http;
 using System.Web.Http.Results;
 using System.Collections;
+using MedAgenda.CORE.Infrastructure;
+using MedAgenda.CORE.Domain;
 
 namespace MedAgenda.API.Tests.ControllerTests
 {
@@ -33,23 +35,114 @@ namespace MedAgenda.API.Tests.ControllerTests
         [TestMethod]
         public void GetDoctorCheckReturnDoctorCheck()
         {
-            //TODO: Fix - Test breaks on environments where a doctorcheckid of 4 doesn't exist
-            //int DoctorCheckIDForTest = 4;
+            int createdDoctorID;
+            int createdExamRoomID;
+            int createdSpecialtyID;
+            int doctorCheckIDForTest;
+            IHttpActionResult result;
 
-            ////Arrange: Instantiate DoctorCheckController so its methods can be called
-            //var doctorCheckController = new DoctorsCheckController();
+            //Arrange: create test doctor, exam room, and doctor check-in
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
 
-            ////Act: Call the GetDoctorCheck method
-            //IHttpActionResult result = doctorCheckController.GetDoctorCheck(DoctorCheckIDForTest);
+            // Create a new test doctor, and get its doctor ID
+            using (var doctorController = new DoctorsController())
+            {
+                var doctor = new DoctorModel
+                {
+                    FirstName = "Imdoctor",
+                    LastName = "Hippocrates",
+                    Email = "a@b.com",
+                    Telephone = "555-1212",
+                    CreatedDate = DateTime.Now,
+                    SpecialtyID = createdSpecialtyID,
+                    Archived = false
+                };
+                result = doctorController.PostDoctor(doctor);
+                CreatedAtRouteNegotiatedContentResult<DoctorModel> doctorContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+                createdDoctorID = doctorContentResult.Content.DoctorID;
+            }
 
-            ////Assert: 
-            //// Verify that HTTP status code is OK
-            //// Verify that returned patient ID is correct
-            //Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorCheckModel>));
+            // Create a new test exam room, and get its exam room ID
+            using (var examRoomController = new ExamRoomsController())
+            {
+                var examRoom = new ExamRoomModel
+                {
+                    ExamRoomName = "ImexamRoom"
+                };
+                result = examRoomController.PostExamRoom(examRoom);
+                CreatedAtRouteNegotiatedContentResult<ExamRoomModel> examRoomContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<ExamRoomModel>)result;
+                createdExamRoomID = examRoomContentResult.Content.ExamRoomID;
+            }
 
-            //OkNegotiatedContentResult<DoctorCheckModel> contentResult =
-            //    (OkNegotiatedContentResult<DoctorCheckModel>)result;
-            //Assert.IsTrue(contentResult.Content.DoctorCheckID == DoctorCheckIDForTest);
+            using (var doctorCheckController = new DoctorsCheckController())
+            {
+                var doctorCheck = new DoctorCheckModel
+                {
+                    DoctorID = createdDoctorID,
+                    ExamRoomID = createdExamRoomID,
+                    CheckinDateTime = DateTime.Now,
+                    CheckoutDateTime = DateTime.Now.AddHours(2)
+                };
+                result = doctorCheckController.PostDoctorCheck(doctorCheck);
+                CreatedAtRouteNegotiatedContentResult<DoctorCheckModel> contentResult =
+                (CreatedAtRouteNegotiatedContentResult<DoctorCheckModel>)result;
+                doctorCheckIDForTest = contentResult.Content.DoctorCheckID;
+            }
+
+            //Act: Call the GetDoctorCheck method
+            using (var doctorCheckController = new DoctorsCheckController())
+            {
+                result = doctorCheckController.GetDoctorCheck(doctorCheckIDForTest);
+
+                //Assert: 
+                // Verify that HTTP status code is OK
+                // Verify that returned doctor check ID is correct
+                Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorCheckModel>));
+
+                OkNegotiatedContentResult<DoctorCheckModel> contentResult =
+                    (OkNegotiatedContentResult<DoctorCheckModel>)result;
+                Assert.IsTrue(contentResult.Content.DoctorCheckID == doctorCheckIDForTest);
+            }
+
+            // Delete the test doctor check-in
+            using (var doctorCheckController = new DoctorsCheckController())
+            {
+                result = doctorCheckController.DeleteDoctorCheck(doctorCheckIDForTest);
+            }
+
+            // Remove the test doctor from the database with actual deletion, not archiving
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Doctor dbDoctor = db.Doctors.Find(createdDoctorID);
+                db.Doctors.Remove(dbDoctor);                
+                db.SaveChanges();
+            }
+
+            // Delete the test exam room
+            using (var SecondExamRoomController = new ExamRoomsController())
+            {
+                result = SecondExamRoomController.DeleteExamRoom(createdExamRoomID);
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
+            }
+
         }
 
         [TestMethod]
