@@ -71,7 +71,7 @@ namespace MedAgenda.API.Controllers
                 }
                 else
                 {
-                    throw new Exception("Unable to update the Appointment in the database");
+                    throw new Exception("Unable to update the appointment in the database");
                 }
             }
 
@@ -97,7 +97,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Unable to add Appointment to database");
+                throw new Exception("Unable to add the appointment to the database");
             }
 
             appointment.AppointmentID = dbAppt.AppointmentID;
@@ -123,7 +123,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Could not delete Appointment from database");
+                throw new Exception("Unable to delete the appointment from the database");
             }
 
 
