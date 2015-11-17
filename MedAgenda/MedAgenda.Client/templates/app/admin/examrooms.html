@@ -3,11 +3,11 @@
     <!-- column for exam room table -->
     <div class="col-sm-6">
         <div ng-hide="examRooms.length">
-            <div class="spacer10 hidden-xs-4"></div> 
+            <div class="spacer10 hidden-xs-4"></div>
             <div class="alert alert-info">
                 There are no exam rooms - please add one
             </div>
-        </div>                     
+        </div>
 
         <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="examRooms.length">
             <thead>
@@ -28,14 +28,12 @@
             </tbody>
         </table>
     </div><!-- End column for exam room table -->
-
     <!-- column for elements to add new exam room -->
     <div class="col-sm-6">
         <div class="spacer5 hidden-xs-4"></div>
 
         <!-- Exam room form (block any default browser validation) -->
         <form name="examRoomForm" role="form" ng-submit="saveExamRoom()" novalidate>
-
             <div class="form-group"
                  ng-class="{'has-error': examRoomForm.examRoomName.$invalid && examRoomForm.$submitted }">
                 <label class="control-label" for="examRoomName">Add New Exam Room:</label>
@@ -46,13 +44,9 @@
                 </span>
             </div><!-- end form group -->
 
-            <div class="row">
-                <div class="col-sm-4"><!-- column for save button -->
-                    <button class="btn btn-success btn-sm pull-right" type="submit">
-                        <i class="fa fa-save"></i> Save
-                    </button>
-                </div><!-- end column --><!-- end column for save button -->
-            </div><!-- end row -->
+            <button class="btn btn-success btn-sm pull-right" type="submit">
+                <i class="fa fa-save"></i> Save
+            </button>
         </form><!-- end form -->
     </div><!-- end column for elements to add new exam room -->
 </div><!-- end row -->
