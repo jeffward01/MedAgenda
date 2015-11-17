@@ -24,6 +24,14 @@ namespace MedAgenda.CORE.Domain
         public DateTime CreatedDate { get; set; }
         public bool Archived { get; set; }
 
+        public string FullName
+        {
+            get
+            {
+                return string.Format("{0} {1}", FirstName, LastName);
+            }
+        }
+
         public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; }

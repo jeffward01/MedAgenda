@@ -23,5 +23,7 @@ namespace MedAgenda.CORE.Models
         public DateTime CreatedDate { get; set; }
         public bool Archived { get; set; }
 
+        public string FullName { get; set; }
+
     }
 }
