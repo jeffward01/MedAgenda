@@ -34,16 +34,63 @@
                                placeholder="Email Address" ng-model="patient.EmailAddress">
                     </div><!-- end form group -->
                 </div><!-- end column -->
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label" for="patientBirthdate">Birthdate</label>
+                        <input type="datetime" class="form-control" id="patientBirthdate"
+                               placeholder="Birthdate (MM/DD/YYYY)" ng-model="patient.Birthdate">
+                    </div><!-- end form group -->
+                </div><!-- end column -->
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label" for="patientBloodType">Blood Type</label>
+                        <input type="text" class="form-control" id="patientBloodType"
+                               placeholder="Blood Type" ng-model="patient.BloodType">
+                    </div><!-- end form group -->
+                </div><!-- end column -->
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label" for="patientAddress1">Address 1</label>
+                        <input type="text" class="form-control" id="patientAddress1"
+                               placeholder="Address 1" ng-model="patient.Address1">
+                    </div><!-- end form group -->
+                </div><!-- end column -->
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label" for="patientAddress2">Address 2</label>
+                        <input type="text" class="form-control" id="patientAddress2"
+                               placeholder="Address 2 (Optional)" ng-model="patient.Address2">
+                    </div><!-- end form group -->
+                </div><!-- end column -->
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label" for="patientCity">City</label>
+                        <input type="text" class="form-control" id="patientCity"
+                               placeholder="City" ng-model="patient.City">
+                    </div><!-- end form group -->
+                </div><!-- end column -->
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label" for="patientState">State</label>
+                        <input type="text" class="form-control" id="patientState"
+                               placeholder="State" ng-model="patient.State">
+                    </div><!-- end form group -->
+                </div><!-- end column -->
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label" for="patientZip">Zip</label>
+                        <input type="text" class="form-control" id="patientZip"
+                               placeholder="Zip" ng-model="patient.Zip">
+                    </div><!-- end form group -->
+                </div><!-- end column -->
             </div><!-- end row -->
 
             <div class="row">
-                <div class="col-sm-8 col-md-8 col-lg-8">
-                    <button class="btn btn-success btn-sm" ng-click="savePatient()">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <button class="btn btn-success btn-sm pull-right" ng-click="savePatient()">
                         <i class="fa fa-save"></i> Save
                     </button>
-                </div><!-- end column -->
-                <div class="col-sm-4 col-md-4 col-lg-4">
-                    <button class="btn btn-danger btn-sm pull-right" ui-sref="patient.grid">
+                    <button class="btn btn-danger btn-sm pull-right" ui-sref="app.patients.grid">
                         <i class="fa fa-remove fa-fw"></i> Cancel
                     </button>
                 </div><!-- end column -->

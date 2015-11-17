@@ -8,11 +8,11 @@
 
         .state('app.doctors', {abstract: true, url: '/doctors', template: '<ui-view/>' })
             .state('app.doctors.grid', { url: '/grid', templateUrl: '/templates/app/doctors/grid.html', controller: 'DoctorsGridController' })
-            .state('app.doctors.detail', { url: '/detail/:id', templateUrl: '/templates/app/doctors/detail.html', controller: 'DoctorsGridController' })
+            .state('app.doctors.detail', { url: '/detail/:id', templateUrl: '/templates/app/doctors/detail.html', controller: 'DoctorsDetailController' })
 
          .state('app.patients', { abstract: true, url: '/patients', template: '<ui-view/>' })
             .state('app.patients.grid', { url: '/grid', templateUrl: '/templates/app/patients/grid.html', controller: 'PatientsGridController' })
-            .state('app.patients.detail', { url: '/detail/:id', templateUrl: '/templates/app/patients/detail.html', controller: 'PatientsGridController' })
+            .state('app.patients.detail', { url: '/detail/:id', templateUrl: '/templates/app/patients/detail.html', controller: 'PatientsDetailController' })
             
          .state('app.appointments', { url: '/appointments', templateUrl: '/templates/app/appointments/tabs.html', controller: 'AppointmentsController' })
                 .state('app.appointments.upcoming', { url: '/upcoming', templateUrl: '/templates/app/appointments/upcoming.html', controller: 'AppointmentsController' })
