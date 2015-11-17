@@ -1,1 +1,24 @@
-﻿<h1>upcoming appointments</h1>
+﻿<div >
+    <div class="spacer10 hidden-xs-4"></div>
+    <div class="alert alert-info">
+        There are no upcoming appointments
+    </div>
+</div>
+<table class="table table-bordered table-condensed table-responsive table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Doctor Name</th>
+            <th>Exam Room</th>
+            <th>Check-in Date/Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="appointment in appointments">
+            <td>{{appointment.Patient.FullName}}</td>
+            <td>Dr. {{appointment.Doctor.LastName}}</td>
+            <td>{{appointment.ExamRoom.ExamRoomName}}</td>
+            <td>{{appointment.CheckinDateTime}}</td>
+        </tr>
+    </tbody>
+</table>
