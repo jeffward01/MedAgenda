@@ -1,4 +1,5 @@
 ﻿angular.module('app').controller('PatientsDetailController', function ($scope, $stateParams, Patient, $state) {
+    $rootScope.$broadcast('change-page-title', { title: 'Patients' });
 
     if ($stateParams.id) {
         $scope.patient = Patient.get({ id: $stateParams.id });

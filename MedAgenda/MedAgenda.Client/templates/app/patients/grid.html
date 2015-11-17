@@ -1,27 +1,53 @@
-﻿<h1>patients grid</h1>
-<div>
-    <div ng-hide="patients.length">
-        <div class="spacer10 hidden-xs-4"></div>
-        <div class="alert alert-info">
-            There are no patients- please add one
-        </div>
+﻿    <div>
+    <a class="btn btn-success btn-md pull-right" ng-click="createPatient(patient)">
+        <i class="fa fa-plus"> Create Patient</i>
+        </a>
     </div>
-    <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="patients.length">
+<div>
+    <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="patient.length">
         <thead>
             <tr>
-                <th>Patient Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>D.O.B</th>
+                <th>Blood Type</th>
+                <th>Address 1</th>
+                <th>Address 2</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>Created</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="patient in patients">
-                <td>{{patient.PatientName}}</td>
+                <td>{{patient.FirstName}}</td>
+                <td>{{patient.LastName}}</td>
+                <td>{{patient.Birthdate}}</td>
+                <td>{{patient.BloodType}}</td>
+                <td>{{patient.Address1}}</td>
+                <td>{{patient.Address2}}</td>
+                <td>{{patient.City}}</td>
+                <td>{{patient.State}}</td>
+                <td>{{patient.Zip}}</td>
+                <td>{{patient.Telephone}}</td>
+                <td>{{patient.Email}}</td>
+                <td>{{patient.CreatedDate}}</td>
                 <td>
-                    <a class="btn btn-danger btn-xs" ng-click="deletePatient(examroom)">
+                    <a class="btn btn-danger btn-xs" ng-click="deletePatient(patient)">
                         <i class="fa fa-remove fa-fw"></i>
                     </a>
                 </td>
             </tr>
         </tbody>
     </table>
+    <div ng-hide="patient.length">
+        <div class="spacer10 hidden-xs-4"></div>
+        <div class="alert alert-info">
+            There are no patients- please add one
+        </div>
+    </div>
 </div>

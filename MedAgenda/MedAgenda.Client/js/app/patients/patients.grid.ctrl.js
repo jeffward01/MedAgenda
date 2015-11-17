@@ -5,9 +5,9 @@
 
     $scope.deletePatient = function (patient) {
         if (confirm('Are you sure you want to delete this Patient?')) {
-            Patient.delete({ id: patient.PatientId }, function (data) {
-                var index = $scope.patients.indexOf(patient);
-                $scope.patientss.splice(index, 1);
+            Patient.delete({ id: patient.PatientID }, function (data) {
+                $scope.patient = Patient.query();
+
             });
         }
     }
