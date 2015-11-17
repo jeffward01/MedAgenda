@@ -19,4 +19,5 @@
             tab.active = $scope.active(tab.route);
         });
     });
+
 });
