@@ -8,6 +8,8 @@ using MedAgenda.CORE.Models;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
+using MedAgenda.CORE.Infrastructure;
+using MedAgenda.CORE.Domain;
 
 namespace MedAgenda.API.Tests.ControllerTests
 {
@@ -37,18 +39,68 @@ namespace MedAgenda.API.Tests.ControllerTests
         [TestMethod] //Get EmergencyContact by ID | [1]
         public void GetEmergencyContactReturnEmergencyContact()
         {
-            //Arrange
-            using (var emergencyContactController = new EmergencyContactsController())
+            int createdPatientID;
+            int emergencyContactIDForTest;
+
+            // Create test patient and emergency contact
+            using (var patientController = new PatientsController())
             {
+                var patient = new PatientModel
+                {
+                    FirstName = "Testpatient",
+                    LastName = "Testerson",
+                    Birthdate = new DateTime(1968, 12, 27),
+                    Email = "a@b.com",
+                    BloodType = "A+",
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
+                };
+                IHttpActionResult result = patientController.PostPatient(patient);
+                CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
+                createdPatientID = createdContentResult.Content.PatientID;
+            }
+
+            using (var EmergencyContactController = new EmergencyContactsController())
+            {
+                //Create EmergencyContact
+                var newEmergencyContact = new EmergencyContactModel
+                {                   
+                    PatientID = createdPatientID,
+                    FirstName = "Ronnie",
+                    LastName = "Dio",
+                    Telephone = "666-666-6666",
+                    Email = "LastInLine@HolyDiver.com",
+                    Relationship = "Celestial Being"
+                };
+
                 //Act
-                IHttpActionResult result = emergencyContactController.GetEmergencyContact(1);
+                IHttpActionResult result = EmergencyContactController.PostEmergencyContact(newEmergencyContact);
 
                 //Assert
-                Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<EmergencyContactModel>));
+                Assert.IsInstanceOfType(result, typeof(CreatedAtRouteNegotiatedContentResult<EmergencyContactModel>));
 
-                OkNegotiatedContentResult<EmergencyContactModel> contentResult = (OkNegotiatedContentResult<EmergencyContactModel>)result;
+                CreatedAtRouteNegotiatedContentResult<EmergencyContactModel> contentResult = 
+                    (CreatedAtRouteNegotiatedContentResult<EmergencyContactModel>)result;
 
-                Assert.IsTrue(contentResult.Content.EmergencyContactID == 1);
+                Assert.IsTrue(contentResult.Content.EmergencyContactID != 0);
+                emergencyContactIDForTest = contentResult.Content.EmergencyContactID;
+
+            }
+
+            //Delete the Test EmergencyContact
+            using (var emergencyContactController = new EmergencyContactsController())
+            {
+                IHttpActionResult result = 
+                    emergencyContactController.DeleteEmergencyContact(emergencyContactIDForTest);
+            }
+
+            // Remove the test patient from the database with actual deletion, not archiving
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Patient dbPatient = db.Patients.Find(createdPatientID);
+                db.Patients.Remove(dbPatient);
+                db.SaveChanges();
             }
 
         }
