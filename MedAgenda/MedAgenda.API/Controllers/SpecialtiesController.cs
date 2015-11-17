@@ -91,7 +91,7 @@ namespace MedAgenda.API.Controllers
             dbSpecialty.Update(specialty);
             db.Specialties.Add(dbSpecialty);
             try
-            {
+            {                
                 db.SaveChanges();
             }
             catch (Exception)

@@ -34,9 +34,8 @@
             $scope.specialtyForm.$setUntouched();
 
         },
-        function (err) {
-            debugger;
-            toastr.error('Unable to add specialty: ' + $scope.specialty.SpecialtyName);
+        function (error) {            
+            toastr.error(error.data.ExceptionMessage);
         });
     };
 
@@ -50,7 +49,7 @@
                                 specialtyToDelete.SpecialtyName + ' was deleted successfully');
             },
             function (error) {
-                toastr.error(error.data.Message);
+                toastr.error(error.data.ExceptionMessage);
             });
         }
     }

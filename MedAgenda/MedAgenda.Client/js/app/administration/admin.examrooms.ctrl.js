@@ -32,9 +32,8 @@
         $scope.examRoomForm.$setUntouched();
             
         },
-        function (err) {
-            debugger;
-            toastr.error('Unable to add exam room: ' + $scope.examRoom.ExamRoomName);
+        function (error) {           
+            toastr.error(error.data.ExceptionMessage);
         });
     };
 
@@ -48,7 +47,7 @@
                                 roomToDelete.ExamRoomName + ' was deleted successfully');
             },
             function (error) {               
-                toastr.error(error.data.Message);
+                toastr.error(error.data.ExceptionMessage);
             });
         }
     }

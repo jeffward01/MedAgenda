@@ -117,7 +117,7 @@ namespace MedAgenda.API.Controllers
             db.ExamRooms.Remove(examRoom);
 
             try
-            {
+            {               
                 db.SaveChanges();
             }
             catch (Exception)
