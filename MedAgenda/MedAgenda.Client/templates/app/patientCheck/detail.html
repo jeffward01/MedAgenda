@@ -1,0 +1,17 @@
+<div ng-controller="PatientCheckDetailController" class="Container">
+    <h1> Patient Check IN</h1>
+    
+    
+    <ui-select ng-model="selectedItem">
+    <ui-select-match>
+        <span ng-bind="$select.selected.name"></span>
+    </ui-select-match>
+    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+        <span ng-bind="item.name"></span>
+    </ui-select-choices>
+</ui-select>
+    
+    
+    
+ 
+</div>

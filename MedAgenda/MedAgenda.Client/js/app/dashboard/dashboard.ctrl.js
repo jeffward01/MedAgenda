@@ -11,7 +11,7 @@ angular.module('app').controller('DashboardController', function ($rootScope, $s
 
             $scope.dashboard = data;
             //Onsite Doctors Page Settings
-            $scope.totalItems = $scope.dashboard.CheckedinDoctors.length;
+           // $scope.totalItems = $scope.dashboard.CheckedinDoctors.length;
              $scope.maxSize = 5;
             $scope.itemsPerPage = 5;
             $scope.currentPage = 1;         

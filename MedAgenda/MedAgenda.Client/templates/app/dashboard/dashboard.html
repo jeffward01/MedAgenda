@@ -2,35 +2,36 @@
     <div class="row clearfix row-centered">
         <div class="col-md-4 col-lg-4 col-centered">
             <div class="panel panel-primary">
-                <div class="panel-heading">
+                  <div class="panel-heading">
                     <h3 class="panel-title centered">Check-in/out Patient</h3>
                 </div>
                 <div class="panel-body">
                     <div class="center-buttons">
                         <div class="btn-group centered">
-                            <button type="button" class="btn btn-primary center">Check-In Patient</button>
-                            <button type="button" class="btn btn-warning center">Check-Out Patient</button>
+                            <button type="button" ui-sref="app.patients.check-in" class="btn btn-primary center">Check-In Patient</button>
+                            <button type="button" ui-sref="app.patients.check-out" class="btn btn-warning center">Check-Out Patient</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+         </div>
         <div class="col-md-4 col-lg-4 col-centered">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title centered">Check-in/out Patient</h3>
+                    <h3 class="panel-title centered">Check-in/out Doctor</h3>
                 </div>
                 <div class="panel-body">
                     <div class="center-buttons">
                         <div class="btn-group centered">
-                            <button type="button" class="btn btn-primary center">Check-In Patient</button>
-                            <button type="button" class="btn btn-warning center">Check-Out Patient</button>
+                            <button type="button" ui-sref="app.doctors.check-in"class="btn btn-primary center">Check-In Doctor</button>
+                            <button type="button" ui-sref="app.doctors.check-out" class="btn btn-warning center">Check-Out Doctor</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>     
     </div>
+    
     <uib-tabset justified="true">
         <uib-tab heading="Overview">
             <!--Script for Accordian-->

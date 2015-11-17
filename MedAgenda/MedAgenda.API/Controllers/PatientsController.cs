@@ -27,6 +27,14 @@ namespace MedAgenda.API.Controllers
             return Mapper.Map<IEnumerable<PatientModel>>(dbPatients);
         }
 
+        [Route("api/patients/checkedin")]
+        public IEnumerable<PatientModel> GetCheckedInPatients()
+        {
+            var dbPatients = db.Patients.Where(p => p.PatientChecks.Any(c => !c.CheckoutDateTime.HasValue));
+
+            return Mapper.Map<IEnumerable<PatientModel>>(dbPatients);
+        }
+
         // GET: api/archive/Patients
         // Return all patients with archived indicator set to true
         [Route("api/archive/patients")]

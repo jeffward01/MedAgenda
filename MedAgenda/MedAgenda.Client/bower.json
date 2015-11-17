@@ -29,6 +29,11 @@
     "animate.css": "~3.4.0",
     "moment": "~2.10.6",
     "toastr": "~2.1.2",
-    "angular-bootstrap": "~0.14.3"
+    "angular-bootstrap": "~0.14.3",
+    "angular-ui-select2": "~0.0.5",
+    "ui-select": "angular-ui-select#~0.13.2"
+  },
+  "resolutions": {
+    "angular": "^1.2.9"
   }
 }
