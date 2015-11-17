@@ -70,6 +70,10 @@
     <Compile Include="Migrations\201511121811258_InitialCreate.Designer.cs">
       <DependentUpon>201511121811258_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511162252048_AddAddressFieldsToPatientAndDoctor.cs" />
+    <Compile Include="Migrations\201511162252048_AddAddressFieldsToPatientAndDoctor.Designer.cs">
+      <DependentUpon>201511162252048_AddAddressFieldsToPatientAndDoctor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppointmentModel.cs" />
     <Compile Include="Models\DashboardModel.cs" />
@@ -89,6 +93,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511121811258_InitialCreate.resx">
       <DependentUpon>201511121811258_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511162252048_AddAddressFieldsToPatientAndDoctor.resx">
+      <DependentUpon>201511162252048_AddAddressFieldsToPatientAndDoctor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
