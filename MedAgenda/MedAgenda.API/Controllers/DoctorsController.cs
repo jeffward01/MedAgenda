@@ -81,7 +81,7 @@ namespace MedAgenda.API.Controllers
                 }
                 else
                 {
-                    throw new Exception("Unable to update the Doctor in the database");
+                    throw new Exception("Unable to update the doctor in the database");
                 }
             }
 
@@ -107,7 +107,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Unable to add Doctor to database");
+                throw new Exception("Unable to add the doctor to the database");
             }
 
             doctor.DoctorID = dbDoctor.DoctorID;

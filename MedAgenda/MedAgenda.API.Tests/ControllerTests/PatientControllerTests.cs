@@ -223,21 +223,34 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Where(a => a.PatientID != patientIDForTest).Count() == 0);
             }
 
-            // Delete the test data (actual deletion, not archiving) 
-            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            // Delete the test appointment
+            using (var apptController = new AppointmentsController())
             {
-                Appointment dbAppointment = db.Appointments.Find(createdAppointmentID);
-                db.Appointments.Remove(dbAppointment);
-                ExamRoom dbExamRoom = db.ExamRooms.Find(createdExamRoomID);
-                db.ExamRooms.Remove(dbExamRoom);
+                result = apptController.DeleteAppointment(createdAppointmentID);
+            }
+
+            // Delete the test patient and doctor (actual deletion, not archiving) 
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {                              
                 Doctor dbDoctor = db.Doctors.Find(createdDoctorID);
-                db.Doctors.Remove(dbDoctor);
-                Specialty dbSpecialty = db.Specialties.Find(createdSpecialtyID);
-                db.Specialties.Remove(dbSpecialty);
+                db.Doctors.Remove(dbDoctor);               
                 Patient dbPatient = db.Patients.Find(patientIDForTest);
                 db.Patients.Remove(dbPatient);
                 db.SaveChanges();
             }
+
+            // Delete the test exam room
+            using (var examRoomController = new ExamRoomsController())
+            {
+                result = examRoomController.DeleteExamRoom(createdExamRoomID);
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
+            }
+
         }
 
         [TestMethod]
@@ -307,21 +320,28 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Where(ec => ec.PatientID != patientIDForTest).Count() == 0);
             }
 
-            // Delete the emergency contact and test patient (actual deletion, not archiving) 
+            // Delete the test patient (actual deletion, not archiving) 
             using (MedAgendaDbContext db = new MedAgendaDbContext())
-            {
-                EmergencyContact dbEmergencyContact = db.EmergencyContacts.Find(createdEmergencyContactID);
-                db.EmergencyContacts.Remove(dbEmergencyContact);
+            {                
                 Patient dbPatient = db.Patients.Find(patientIDForTest);
                 db.Patients.Remove(dbPatient);
                 db.SaveChanges();
             }
+
+            //Delete the test EmergencyContact
+            using (var emergencyContactController = new EmergencyContactsController())
+            {
+                result =
+                    emergencyContactController.DeleteEmergencyContact(createdEmergencyContactID);
+            }
+
         }
 
         [TestMethod]
         public void GetPatientChecksForPatientReturnsPatientChecks()
         {
             int patientIDForTest;
+            int createdSpecialtyID;
             int createdPatientCheckID;
 
             IHttpActionResult result;
@@ -347,13 +367,26 @@ namespace MedAgenda.API.Tests.ControllerTests
                 patientIDForTest = createdContentResult.Content.PatientID;
             }
 
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
+
             // Create patient check-in for patient
             using (var patientCheckController = new PatientChecksController())
             {
                 var patientCheck = new PatientCheckModel
                 {
                     PatientID = patientIDForTest,
-                    SpecialtyID = 4,                    
+                    SpecialtyID = createdSpecialtyID,                    
                     CheckinDateTime = DateTime.Now,
                     CheckoutDateTime = DateTime.Now
                 };
@@ -383,14 +416,24 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Where(a => a.PatientID != patientIDForTest).Count() == 0);
             }
 
-            // Delete the patient check-in and test patient (actual deletion, not archiving) 
-            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            // Delete the test patient check-in
+            using (var patientCheckController = new PatientChecksController())
             {
-                PatientCheck dbPatientCheck = db.PatientChecks.Find(createdPatientCheckID);
-                db.PatientChecks.Remove(dbPatientCheck);
+                result = patientCheckController.DeletePatientCheck(createdPatientCheckID);
+            }
+
+            // Delete the test patient (actual deletion, not archiving) 
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {               
                 Patient dbPatient = db.Patients.Find(patientIDForTest);
                 db.Patients.Remove(dbPatient);
                 db.SaveChanges();
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
             }
         }
 
