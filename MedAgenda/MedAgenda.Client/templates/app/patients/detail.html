@@ -23,7 +23,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label class="control-label" for="patientTelephone">Telephone</label>
-                        <input type="text" class="form-control" id="patientTelephone"
+                        <input type="tel" class="form-control" id="patientTelephone"
                                placeholder="Telephone" ng-model="patient.Telephone">
                     </div><!-- end form group -->
                 </div><!-- end column -->
@@ -44,8 +44,22 @@
                 <div class="col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label class="control-label" for="patientBloodType">Blood Type</label>
-                        <input type="text" class="form-control" id="patientBloodType"
-                               placeholder="Blood Type" ng-model="patient.BloodType">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownBloodType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Blood Type
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownBloodType">
+                                <li><a href="#">O+</a></li>
+                                <li><a href="#">O-</a></li>
+                                <li><a href="#">A+</a></li>
+                                <li><a href="#">A-</a></li>
+                                <li><a href="#">B+</a></li>
+                                <li><a href="#">B-</a></li>
+                                <li><a href="#">AB+</a></li>
+                                <li><a href="#">AB-</a></li>
+                            </ul>
+                        </div>
                     </div><!-- end form group -->
                 </div><!-- end column -->
                 <div class="col-sm-6 col-md-6 col-lg-6">
@@ -84,17 +98,58 @@
                     </div><!-- end form group -->
                 </div><!-- end column -->
             </div><!-- end row -->
-
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12">
-                    <button class="btn btn-success btn-sm pull-right" ng-click="savePatient()">
-                        <i class="fa fa-save"></i> Save
-                    </button>
-                    <button class="btn btn-danger btn-sm pull-right" ui-sref="app.patients.grid">
-                        <i class="fa fa-remove fa-fw"></i> Cancel
-                    </button>
-                </div><!-- end column -->
-            </div><!-- end row -->
-        </div><!-- end well -->
-    </div>
-</div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Patients Emergency Contact</div>
+                <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="emergencyContactFirstName">First Name</label>
+                                    <input type="text" class="form-control" id="emergencyContactFirstName"
+                                           placeholder="First Name" ng-model="emergencyContact.FirstName">
+                                </div><!-- end form group -->
+                            </div><!-- end column -->
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="emergencyContactLastName">Last Name</label>
+                                    <input type="text" class="form-control" id="emergencyContactLastName"
+                                           placeholder="Last Name" ng-model="emergencyContact.LastName">
+                                </div><!-- end form group -->
+                            </div><!-- end column -->
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="emergencyContactRelation">Relationship</label>
+                                    <input type="text" class="form-control" id="emergencyContactRelationship"
+                                           placeholder="Relationship" ng-model="emergencyContact.Relationship">
+                                </div><!-- end form group -->
+                            </div><!-- end column -->
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="emergencyContactTelephone">Telephone</label>
+                                    <input type="tel" class="form-control" id="emergencyContactTelephone"
+                                           placeholder="Telephone" ng-model="emergencyContact.Telephone">
+                                </div><!-- end form group -->
+                            </div><!-- end column -->
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="emergencyContactEmail">Email Address</label>
+                                    <input type="email" class="form-control" id="emergencyContactEmail"
+                                           placeholder="Email" ng-model="emergencyContact.Email">
+                                </div><!-- end form group -->
+                            </div><!-- end column -->
+                        </div><!-- end row-->  
+                </div>
+            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <button class="btn btn-success btn-sm pull-right" ng-click="savePatient()">
+                                        <i class="fa fa-save"></i> Save
+                                    </button>
+                                    <button class="btn btn-danger btn-sm pull-right" ui-sref="app.patients.grid">
+                                        <i class="fa fa-remove fa-fw"></i> Cancel
+                                    </button>
+                                </div><!-- end column -->
+                            </div><!-- end row -->
+                        </div><!-- end well -->
+                    </div>
+                </div>
