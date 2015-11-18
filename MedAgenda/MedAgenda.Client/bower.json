@@ -1,0 +1,34 @@
+{
+  "name": "MedAgenda.Client",
+  "homepage": "https://github.com/jeffward01/MedAgenda",
+  "authors": [
+    "Cameron Wilby <cameron@origincodeacademy.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-count-to": "*",
+    "angular-local-storage": "~0.2.3",
+    "angular-loading-bar": "~0.8.0",
+    "angular-resource": "~1.4.7",
+    "animate.css": "~3.4.0",
+    "bootstrap": "~3.3.5",
+    "d3": "~3.5.8",
+    "angular-ui-router": "~0.2.15",
+    "font-awesome": "~4.4.0",
+    "angular-bootstrap": "~0.14.3",
+    "toastr": "~2.1.2",
+    "moment": "~2.10.6",
+    "angular": "~1.4.7"
+  }
+}
