@@ -32,11 +32,34 @@ angular.module('app').factory('patientChecksService', function($http, $q, apiUrl
             deferred.resolve(response);
         });
         return deferred.promise;
+    };
+    
+    var _getAllDoctors = function(get){
+        var deferred = $q.defer();
+        
+        $http.get(apiUrl+ '/doctors/')
+        .success(function(response){
+            deferred.resolve(response);
+        })
+        return deferred.promise;
+    };
+    
+    var _getAllExamRooms = function(get){
+        var deferred = $q.defer();
+        
+        $http.get(apiUrl + '/examrooms/')
+        .success(function(response){
+            deferred.resolve(response);
+        })
+        return deferred.promise;
     }
+    
     
     return {
         get: _get,
         getAllPatients : _getAllPatients,
-        getAllSpecialties : _getAllSpecialties
+        getAllSpecialties : _getAllSpecialties,
+        getAllDoctors: _getAllDoctors,
+        getAllExamRooms : _getAllExamRooms
     };   
 });

@@ -1,28 +1,32 @@
-angular.module('app').controller('DoctorCheckDetailController', function ($rootScope, $scope, $compile, dashboardService, $http, apiUrl, $log, DoctorChecks) {
+angular.module('app').controller('DoctorCheckDetailController', function ($rootScope, $scope, $compile, patientChecksService, $http, apiUrl, $log, $state, DoctorChecks) {
     
         $rootScope.$broadcast('change-page-title', {
-        title: 'Patient Check'
+        title: 'Doctor Check-In'
     });
 
     $scope.data = {
-        selectedPatient: {}
+        selectedDoctor: {}
     };
 
-    $scope.newPatientCheckIn = new PatientChecks();
+    $scope.newDoctorCheckIn = new DoctorChecks();
 
     $scope.clear = function () {
-        $scope.data.selectedPatient = {};
+        $scope.data.selectedDoctor = {};
     }
 
 
-    patientChecksService.getAllPatients().then(function (data) {
-        $scope.allPatients = data;
+    patientChecksService.getAllDoctors().then(function (data) {
+        $scope.allDoctors = data;
     });
 
 
     patientChecksService.getAllSpecialties().then(function (data) {
         $scope.allSpecialties = data;
     });
+    
+    patientChecksService.getAllExamRooms().then(function(data){
+        $scope.allExamRooms = data;
+    })
 
 
 
@@ -30,19 +34,32 @@ angular.module('app').controller('DoctorCheckDetailController', function ($rootS
         //Save Current DateTime
         var currentDate = moment.valueOf();
         currentDate = moment(currentDate, "YYY-MM-DDTHH:mm:ssZ").toDate();
-        $scope.newPatientCheckIn.CheckinDateTime = currentDate;
-        $scope.newPatientCheckIn.PatientID = $scope.data.selectedPatient.PatientID;
-        if($scope.newPatientCheckIn.$save()){
+        $scope.newDoctorCheckIn.CheckinDateTime = currentDate;
+        $scope.newDoctorCheckIn.DoctorID = $scope.data.selectedDoctor.DoctorID;
+        $scope.newDoctorCheckIn.ExamRoomID = $scope.data.allExamRooms.ExamRoomID;
+        if($scope.newDoctorCheckIn.$save()){
 
         //Success Message
-        toastr.success($scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName + " has been checked in!", 'Success!');    
+        toastr.success($scope.data.selectedDoctor.FirstName + " " + $scope.data.selectedDoctor.LastName + " has been checked in!", 'Success!');    
                 $state.go('app.dashboard');
     
         } else{
-                  toastr.danger($scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName + " was not checked in!", 'Failure!');    
+                  toastr.danger($scope.data.selectedDoctor.FirstName + " " + $scope.data.selectedDoctor.LastName + " was not checked in!", 'Failure!');    
   
         }
 
+    }
+    
+    function getExamRoom(id){
+        for(var i = 0; i < $scope.allSpecialties.length; i++){
+            var specialty = allSpecialties[i];
+            if(specialty == id){
+                return specialty;
+            }
+            else {
+                return "Error";
+            }
+        }
     }
     
 });
