@@ -47,6 +47,7 @@ namespace MedAgenda.API
             Mapper.CreateMap<Patient, PatientModel>();
             Mapper.CreateMap<PatientCheck, PatientCheckModel>();
             Mapper.CreateMap<Specialty, SpecialtyModel>();
+          
 
         }
     }

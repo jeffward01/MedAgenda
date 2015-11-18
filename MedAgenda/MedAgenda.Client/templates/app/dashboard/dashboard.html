@@ -1,1 +1,265 @@
-﻿<h1>Dashboard Hello</h1>
+<div class="Container">
+    <div class="row clearfix row-centered">
+        <div class="col-md-4 col-lg-4 col-centered">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title centered">Check-in/out Patient</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="center-buttons">
+                        <div class="btn-group centered">
+                            <button type="button" ui-sref="app.patients.check-in" class="btn btn-primary center">Check-In Patient</button>
+                            <button type="button" ui-sref="app.patients.check-out" class="btn btn-warning center">Check-Out Patient</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-centered">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title centered">Check-in/out Doctor</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="center-buttons">
+                        <div class="btn-group centered">
+                            <button type="button" ui-sref="app.doctors.check-in" class="btn btn-primary center">Check-In Doctor</button>
+                            <button type="button" ui-sref="app.doctors.check-out" class="btn btn-warning center">Check-Out Doctor</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <uib-tabset justified="true">
+        <uib-tab heading="Overview">
+            <!--Script for Accordian-->
+            <div class="QuickLookContainer col-md-5 col-lg-5">
+
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title center">Quick Look</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row clearfix">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="well">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Total Patients</th>
+                                                <th>Total Doctors</th>
+                                                <th>Total Exam Rooms</th>
+                                                <th>Open Exam Rooms</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="count" count-to="{{countToPatientTotal}}" value="{{countFrom}}" duration="2"></span></td>
+                                                <td><span class="count" count-to="{{countToDoctorTotal}}" value="{{countFrom}}" duration="2"></span></td>
+                                                <td><span class="count" count-to="{{countToExamRoomTotal}}" value="{{countFrom}}" duration="2"></span></td>
+                                                <td><span class="count" count-to="{{countToOpenExamRoomTotal}}" value="{{countFrom}}" duration="2"></span></td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row" id="subTable">
+                                    <div class="well">
+                                        <table class="table table-striped centered">
+                                            <thead>
+                                                <tr class="centered">
+                                                    <th>Number of Current Appointments</th>
+                                                    <th>Number of Checked in Doctors</th>
+                                                    <th>Number of Checked in Patients</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><span class="count" count-to="{{countToCurrentApptLength}}" value="{{countFrom}}" duration="2"></span></td>
+                                                    <td><span class="count" count-to="{{countToDoctorsCheckedinCount}}" value="{{countFrom}}" duration="2"></span></td>
+                                                    <td><span class="count" count-to="{{countToPatientsCheckedinCount}}" value="{{countFrom}}" duration="2"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row" id="subTable">
+                                    <div class="well">
+                                        <table class="table table-striped centered">
+                                            <thead>
+                                                <tr class="centered">
+                                                    <th>Exam Room Occupancy</th>
+                                                    <th>Doctor Onsite Percentage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><span class="count" count-to="{{countToExamRoomPercent}}" value="{{countFrom}}" duration="2"></span>%</td>
+                                                    <td><span class="count" count-to="{{countToDoctorsOnSitePercercent}}" value="{{countFrom}}" duration="2"></span>%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="CurrentAppointmentsContainer col-md-6 col-lg-6">
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title center">Current Appointments: <span class="count" count-to="{{countToCurrentApptLength}}" value="{{countFrom}}" duration="2"></span></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row clearfix">
+                            <div ng-repeat="appt in dashboard.CurrentAppointments">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient Name</th>
+                                            <th>Doctor Name</th>
+                                            <th>ExamRoom</th>
+                                            <th>Check-in Date Time</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{appt.Patient.FirstName}} {{appt.Patient.LastName}}</td>
+                                            <td>{{appt.Doctor.FirstName}} {{appt.Doctor.LastName}}</td>
+                                            <td>{{appt.ExamRoom.ExamRoomName}}</td>
+                                            <td>{{appt.CheckinDateTime | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+        </uib-tab>
+
+        <uib-tab heading="Statistics">
+            <div class="row">
+                <div class="PatientAgeGraphContainer col-md-6 col-lg-6">
+                    <div class="panel panel-success" id="panel-Age">
+                        <div class="panel-heading">
+                            <h3 class="panel-title center">Patient Age Demographic</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="center centered center-block" id="chart1">
+                                <svg></svg>
+                            </div>
+                            <span class="center-block center centered">Patient Age Groups</span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="GraphicsContainer col-md-5 col-lg-5">
+                <div id="chart"></div>
+                
+                </div>
+            </div>
+
+
+
+        </uib-tab>
+        <uib-tab heading="Archived Patients/Doctors">
+            <uib-accordion close-others="oneAtATime">
+                <uib-accordion-group is-open="status.openAlso">
+                    <uib-accordion-heading is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                        Archived Doctors: {{dashboard.ArchivedDoctors.length}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.openAlso, 'glyphicon-chevron-right': !status.openAlso}"></i>
+                    </uib-accordion-heading>
+                    <h4>OnSite Doctors</h4>
+                    <div class="row">
+                        <div id="PageScan1">
+                            <div class="panel panel-primary" ng-repeat="doctor in dashboard.ArchivedDoctors">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{doctor.FirstName}} {{doctor.LastName}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Doctor ID</th>
+                                                <th>Email</th>
+                                                <th>Telephone</th>
+                                                <th>Join Date</th>
+                                                <th>SpecialtyID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{doctor.DoctorID}}</td>
+                                                <td>{{doctor.Email}}</td>
+                                                <td>{{doctor.Telephone | tel}}</td>
+                                                <td>{{doctor.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                                <td>{{doctor.SpecialtyID}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
+                    </div>
+                </uib-accordion-group>
+                <uib-accordion-group is-open="status.open">
+                    <uib-accordion-heading is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                        Archived Patients: {{dashboard.ArchivedPatients.length}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <h4>OnSite Doctors</h4>
+                    <div class="row">
+                        <div id="PageScan1">
+                            <div class="panel panel-primary" ng-repeat="patient in dashboard.ArchivedPatients">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{patient.FirstName}} {{patient.LastName}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient ID</th>
+                                                <th>Email</th>
+                                                <th>Telephone</th>
+                                                <th>Join Date</th>
+                                                <th>Blood Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{patient.DoctorID}}</td>
+                                                <td>{{patient.Email}}</td>
+                                                <td>{{patient.Telephone | tel}}</td>
+                                                <td>{{patient.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                                <td>{{patient.BloodDype}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <uib-pagination id="PageScan" direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"> </uib-pagination>
+                    </div>
+                </uib-accordion-group>
+            </uib-accordion>
+        </uib-tab>
+    </uib-tabset>
+</div>

@@ -1,0 +1,75 @@
+<div class="container">
+    <h1 id="CheckTitle"> Patient Check IN</h1>
+
+    <div class="form-group">
+        <div class="row">
+        
+                <h2>Locate Patient:</h2>
+            
+            <div class="col-md-5 col-lg-5">
+                <div div class="LocatePatient">
+                    <ui-select ng-model="data.selectedPatient" theme="select2" style="width: 100%">
+                        <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.FirstName}} {{$select.selected.LastName}}</ui-select-match>
+                        <ui-select-choices repeat="item in allPatients | filter: $select.search">
+                            <span ng-bind-html="item.FirstName | highlight: $select.search"></span>
+                            <span ng-bind-html="item.LastName | highlight: $select.search"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="PatientArea row" ng-show="data.selectedPatient.PatientID">
+            <div class="PatientInformation col-md-2 col-lg-2">
+                <h2>Patient Information</h2>
+            </div>
+            <div class="col-md-8 col-lg-8">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Age</th>
+                            <th>Birthdate</th>
+                            <th>Telephone</th>
+
+                            <th>BloodType</th>
+                            <th>Reason for Visit (Specialty)</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{data.selectedPatient.FirstName}} {{data.selectedPatient.LastName}}</td>
+                            <td>{{data.selectedPatient.Age}}</td>
+                            <td>{{data.selectedPatient.Birthdate | date:"MM/dd/yyyy" }}</td>
+                            <td>{{data.selectedPatient.Telephone}}</td>
+
+                            <td>{{data.selectedPatient.BloodType}}</td>
+                            <td>
+                                <ui-select ng-model="newPatientCheckIn.SpecialtyID" theme="select2" style="width: 100%">
+                                    <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.SpecialtyName}}</ui-select-match>
+                                    <ui-select-choices repeat="item.SpecialtyID as item in allSpecialties | filter: $select.search">
+                                        <span ng-bind-html="item.SpecialtyName | highlight: $select.search"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+
+        </div>
+        <div class="CheckInButtonArea center-block row" ng-show="newPatientCheckIn.SpecialtyID">
+            <button type="button" id="CheckinBtn" ng-click="save()" class="btn center-block btn-success">Check In</button>
+
+
+        </div>
+
+
+    </div>
+</div>

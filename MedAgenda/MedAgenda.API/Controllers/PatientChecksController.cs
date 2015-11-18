@@ -22,7 +22,7 @@ namespace MedAgenda.API.Controllers
         // GET: api/PatientChecks
         public IEnumerable<PatientCheckModel> GetPatientChecks()
         {
-            return Mapper.Map<IEnumerable<PatientCheckModel>>(db.PatientChecks);
+            return Mapper.Map<IEnumerable<PatientCheckModel>>(db.PatientChecks.Where(pc => !pc.CheckoutDateTime.HasValue));
         }
 
         // GET: api/PatientChecks/5
@@ -95,10 +95,9 @@ namespace MedAgenda.API.Controllers
             {
                 db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw new Exception("Unable to add the patient check-in");
+                throw new Exception("Unable to add the patient Check in", e);
             }
 
             patientCheck.PatientCheckID = dbPatientCheck.PatientCheckID;

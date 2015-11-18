@@ -320,6 +320,13 @@ namespace MedAgenda.API.Tests.ControllerTests
                     Where(ec => ec.PatientID != patientIDForTest).Count() == 0);
             }
 
+            // Delete the emergency contact and test patient (actual deletion, not archiving) 
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                EmergencyContact dbEmergencyContact = db.EmergencyContacts.Find(createdEmergencyContactID);
+                db.EmergencyContacts.Remove(dbEmergencyContact);
+            }
+
             // Delete the test patient (actual deletion, not archiving) 
             using (MedAgendaDbContext db = new MedAgendaDbContext())
             {                
@@ -334,7 +341,6 @@ namespace MedAgenda.API.Tests.ControllerTests
                 result =
                     emergencyContactController.DeleteEmergencyContact(createdEmergencyContactID);
             }
-
         }
 
         [TestMethod]

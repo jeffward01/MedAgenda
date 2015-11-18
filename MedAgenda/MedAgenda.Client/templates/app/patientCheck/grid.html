@@ -1,0 +1,37 @@
+<div ng-controller="PatientCheckGridController" class="Container">
+    <h1>Current checked in Patients</h1>
+    <div class="well well-lg row">
+        <div ng-repeat="patient in PatientChecks">
+            <div class="PatientsCheckedInTableContainer">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Check in Time</th>
+                            <th>Reason for Visit</th>
+                            <th>Check-Out Patient</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{patient.Patient.FirstName}} {{patient.Patient.LastName}}</td>
+                            <td>{{patient.CheckinDateTime | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                            <td>{{patient.Specialty.SpecialtyName}}</td>
+                            <td><button type="button" ng-click="PatientCheckOut(patient)" class="btn btn-large btn-block btn-warning"><span class="fa fa-sign-out"></span>Checkout</button>
+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>

@@ -1,0 +1,41 @@
+{
+  "name": "MedAgenda.Client",
+  "homepage": "https://github.com/jeffward01/MedAgenda",
+  "authors": [
+    "jeffward01 <jeffwardcoding@gmail.com>"
+  ],
+  "description": "A healthcare admistration application based in the cloud",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-loading-bar": "~0.8.0",
+    "angular-resource": "~1.4.7",
+    "angular-local-storage": "~0.2.3",
+    "angular-ui-router": "~0.2.15",
+    "d3": "~3.5.8",
+    "angular-ui": "~0.4.0",
+    "font-awesome": "~4.4.0",
+    "bootstrap": "~3.3.5",
+    "animate.css": "~3.4.0",
+    "moment": "~2.10.6",
+    "toastr": "~2.1.2",
+    "angular-bootstrap": "~0.14.3",
+    "angular-ui-select2": "~0.0.5",
+    "ui-select": "angular-ui-select#~0.13.2",
+    "nvd3": "~1.8.1",
+    "requirejs": "~2.1.20",
+    "angular-filter-count-to": "~0.0.3"
+  },
+  "resolutions": {
+    "angular": "^1.2.9"
+  }
+}

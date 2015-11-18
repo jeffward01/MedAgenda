@@ -36,6 +36,18 @@ namespace MedAgenda.API.Controllers
             return Mapper.Map<IEnumerable<DoctorModel>>(dbDoctors);
         }
 
+        [Route("api/doctors/checkedin")]
+        public IEnumerable<DoctorModel> GetCheckedInPatients()
+        {
+            //Logic is wrong here
+            var dbCheckedInDoctors = db.Doctors.Where(dc => dc.DoctorChecks.Any(c => !c.CheckoutDateTime.HasValue));
+
+            return Mapper.Map<IEnumerable<DoctorModel>>(dbCheckedInDoctors);
+        }
+
+
+
+
         // GET: api/Doctors/5 || Get By ID [1]
         [ResponseType(typeof(DoctorModel))]
         public IHttpActionResult GetDoctor(int id)
@@ -172,7 +184,6 @@ namespace MedAgenda.API.Controllers
             // Return the list of PatientCheckModel objects            
             return Ok(Mapper.Map<IEnumerable<DoctorCheckModel>>(dbDoctorChecks));
         }
-
 
 
         // GET: api/doctors/5/appointments
