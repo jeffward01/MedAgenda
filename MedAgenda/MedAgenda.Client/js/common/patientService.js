@@ -3,7 +3,7 @@
     var _get = function get() {
         var deferred = $q.defer();
 
-        $http.get(apiUrl + 'patients')
+        $http.get(apiUrl + 'api/patients')
         .success(function (response) {
             deferred.resolve(response);
         })

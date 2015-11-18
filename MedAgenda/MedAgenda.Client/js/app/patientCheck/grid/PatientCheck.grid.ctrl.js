@@ -15,7 +15,7 @@ angular.module('app').controller('PatientCheckGridController', function ($rootSc
         patient.$update(
             function () {
                 alert("Patient logged out!");
-         toastr.success(doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + " has been Logged out!", 'Success!');
+         toastr.success(patient.Patient.FirstName + " " + patient.Patient.LastName + " has been Logged out!", 'Success!');
  $scope.PatientChecks.splice($scope.PatientChecks.indexOf(patient), 1);
 
             },

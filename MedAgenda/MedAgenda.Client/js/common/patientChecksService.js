@@ -3,7 +3,7 @@ angular.module('app').factory('patientChecksService', function($http, $q, apiUrl
     var _get = function(get){
         var deferred = $q.defer();
         
-        $http.get(apiUrl + 'patients/checkedin')
+        $http.get(apiUrl + 'api/patients/checkedin')
         .success(function(response){
             deferred.resolve(response);
         })
@@ -17,7 +17,7 @@ angular.module('app').factory('patientChecksService', function($http, $q, apiUrl
     var _getAllPatients = function(get){
         var deferred = $q.defer();
         
-        $http.get(apiUrl + '/patients/')
+        $http.get(apiUrl + 'api/patients/')
         .success(function(response){
             deferred.resolve(response);
         });
@@ -27,7 +27,7 @@ angular.module('app').factory('patientChecksService', function($http, $q, apiUrl
     var _getAllSpecialties = function(get){
         var deferred = $q.defer();
         
-        $http.get(apiUrl + '/specialties/')
+        $http.get(apiUrl + 'api/specialties/')
         .success(function(response){
             deferred.resolve(response);
         });
@@ -37,7 +37,7 @@ angular.module('app').factory('patientChecksService', function($http, $q, apiUrl
     var _getAllDoctors = function(get){
         var deferred = $q.defer();
         
-        $http.get(apiUrl+ '/doctors/')
+        $http.get(apiUrl+ 'api/doctors/')
         .success(function(response){
             deferred.resolve(response);
         })
@@ -47,7 +47,7 @@ angular.module('app').factory('patientChecksService', function($http, $q, apiUrl
     var _getAllExamRooms = function(get){
         var deferred = $q.defer();
         
-        $http.get(apiUrl + '/examrooms/')
+        $http.get(apiUrl + 'api/examrooms/')
         .success(function(response){
             deferred.resolve(response);
         })
@@ -57,7 +57,7 @@ angular.module('app').factory('patientChecksService', function($http, $q, apiUrl
     var _getAllCheckedInDoctors = function(get){
         var deferred = $q.defer();
         
-        $http.get(apiUrl + '/doctors/checkedin/')
+        $http.get(apiUrl + 'api/doctors/checkedin/')
         .success(function(response){
             deferred.resolve(response);
         })

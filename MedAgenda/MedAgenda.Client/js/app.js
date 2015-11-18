@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'ui.bootstrap', 'ngResource', 'countTo','angular-loading-bar', 'ui.select', 'ngSanitize']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('app', ['ui.router', 'ui.bootstrap', 'ngResource', 'countTo', 'angular-loading-bar', 'ui.select', 'ngSanitize']).config(function ($stateProvider, $urlRouterProvider) {
     
     $urlRouterProvider.otherwise('/app/dashboard');
 
