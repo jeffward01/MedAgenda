@@ -35,19 +35,39 @@ namespace MedAgenda.API.Tests.ControllerTests
         [TestMethod] // Get Exam Room by ID [1]
         public void GetRoomReturnRoom()
         {
-            //Arrange
+            int examRoomIDForTest;
+
+            //Arrange: create a test exam room, and save its ID
+            using (var examRoomController = new ExamRoomsController())
+            {
+                var examRoom = new ExamRoomModel
+                {
+                    ExamRoomName = "ImexamRoom"
+                };
+                IHttpActionResult result = examRoomController.PostExamRoom(examRoom);
+                CreatedAtRouteNegotiatedContentResult<ExamRoomModel> examRoomContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<ExamRoomModel>)result;
+                examRoomIDForTest = examRoomContentResult.Content.ExamRoomID;
+            }
+
             using (var examRoomController = new ExamRoomsController())
             {
                 //Act
-                IHttpActionResult result = examRoomController.GetExamRoom(1);
+                IHttpActionResult result = examRoomController.GetExamRoom(examRoomIDForTest);
 
                 //Assert
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ExamRoomModel>));
 
                 OkNegotiatedContentResult<ExamRoomModel> contentResult = (OkNegotiatedContentResult<ExamRoomModel>)result;
 
-                Assert.IsTrue(contentResult.Content.ExamRoomID == 1);
+                Assert.IsTrue(contentResult.Content.ExamRoomID == examRoomIDForTest);
 
+            }
+
+            // Delete the test exam room
+            using (var examRoomController = new ExamRoomsController())
+            {
+                IHttpActionResult result = examRoomController.DeleteExamRoom(examRoomIDForTest);
             }
         }
 
@@ -91,13 +111,13 @@ namespace MedAgenda.API.Tests.ControllerTests
 
             using (var ExamRoomController = new ExamRoomsController())
             {
-                //Create Doctor
+                //Create test exam room
                 var newExamRoom = new ExamRoomModel
                 {
                     ExamRoomName = "Test Room",
 
                 };
-                //Insert DoctorModelObject into Database so 
+                //Insert ExamRoomModelObject into Database so 
                 //that I can take it out and test for update.
                 result = ExamRoomController.PostExamRoom(newExamRoom);
 
@@ -106,7 +126,7 @@ namespace MedAgenda.API.Tests.ControllerTests
             }
             using (var SecondExamRoomController = new ExamRoomsController())
             {
-                //Result contains the Doctor I had JUST createad
+                //Result contains the ExamRoom I had JUST createad
                 result = SecondExamRoomController.GetExamRoom(contentResult.Content.ExamRoomID);
 
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<ExamRoomModel>));
@@ -160,13 +180,13 @@ namespace MedAgenda.API.Tests.ControllerTests
 
             using (var ExamRoomController = new ExamRoomsController())
             {
-                //Creat Exam Room
+                //Create Exam Room
                 var newExamRoom = new ExamRoomModel
                 {
                     ExamRoomName = "Test Room"
                 };
                 //Insert ExamRoomModelObject into Database so 
-                //that I can take it out and test for update.
+                //that I can delete it
                 var result = ExamRoomController.PostExamRoom(newExamRoom);
 
                 //Cast result as Content Result so that I can gather information from ContentResult

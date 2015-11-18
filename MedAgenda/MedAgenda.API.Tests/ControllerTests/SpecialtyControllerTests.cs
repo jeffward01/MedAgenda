@@ -115,7 +115,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                     SpecialtyName = "Testologist",
 
                 };
-                //Insert DoctorModelObject into Database so 
+                //Insert SpecialtyModelObject into Database so 
                 //that I can take it out and test for update.
                 result = SpecialtyController.PostSpecialty(newSpecialty);
 
@@ -124,7 +124,7 @@ namespace MedAgenda.API.Tests.ControllerTests
             }
             using (var SecondSpecialtyController = new SpecialtiesController())
             {
-                //Result contains the Doctor I had JUST createad
+                //Result contains the Specialty I had JUST createad
                 result = SecondSpecialtyController.GetSpecialty(contentResult.Content.SpecialtyID);
 
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<SpecialtyModel>));
