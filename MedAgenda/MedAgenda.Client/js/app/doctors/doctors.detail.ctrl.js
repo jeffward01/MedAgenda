@@ -2,7 +2,7 @@
      $rootScope.$broadcast('change-page-title', { title: 'Doctors' })
 
     if($stateParams.id) {
-        $scope.doctor = Doctor.get({ id: $stateParams.id) });       
+        $scope.doctor = Doctor.get({ id: $stateParams.id });       
     } else {
         $scope.doctor = new Doctor();   
     }
