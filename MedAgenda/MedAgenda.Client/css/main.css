@@ -1,0 +1,73 @@
+/*Dashboard CSS*/
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.centered {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#subTable {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+}
+
+.table tr th {
+    text-align: center;
+}
+
+#AppointmentLabel {
+    color: black;
+    font-size: 20px;
+}
+
+#PageScan {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#PageScan1 {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.center-buttons {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+/* centered columns styles */
+
+.row-centered {
+    text-align: center;
+}
+
+.col-centered {
+    display: inline-block;
+    float: none;
+    /* reset the text-align */
+    text-align: left;
+    /* inline-block space fix */
+    margin-right: -4px;
+}
+
+
+/*Panel Colors*/
+
+.panel > .panel-heading {}
+
+#panel-color {
+    background-image: none;
+    background-color: rgba(36, 55, 76, 1) !important;
+    color: white;
+}

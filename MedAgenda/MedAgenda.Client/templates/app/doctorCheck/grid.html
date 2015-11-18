@@ -1,0 +1,35 @@
+<div class="Container">
+    <h1>Current checked in Doctors</h1>
+    <div class="well well-lg row">
+        <div ng-repeat="doctor in DoctorChecks">
+            <div class="PatientsCheckedInTableContainer">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Doctor Name</th>
+                            <th>Check in Time</th>
+                            <th>Check-Out Doctor</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{doctor.Doctor.FirstName}} {{doctor.Doctor.LastName}}</td>
+                            <td>{{doctor.CheckinDateTime | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                            <td><button type="button" ng-click="DoctorCheckOut(doctor)" class="btn btn-large btn-block btn-warning"><span class="fa fa-sign-out"></span>Checkout</button>
+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>

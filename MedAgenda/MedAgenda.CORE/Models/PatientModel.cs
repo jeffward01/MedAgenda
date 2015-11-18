@@ -21,11 +21,16 @@ namespace MedAgenda.CORE.Models
         public string Zip { get; set; }
         public string BloodType { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int Age { get; set; }
         public bool Archived { get; set; }
+       
+
 
         public string FullName { get; set; }
 
         public IEnumerable<EmergencyContactModel> EmergencyContacts { get; set; }
 
     }
+
+    
 }

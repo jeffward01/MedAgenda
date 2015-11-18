@@ -23,6 +23,17 @@ namespace MedAgenda.CORE.Domain
         public string BloodType { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Archived { get; set; }
+        public int Age
+        {
+            get
+            {
+                TimeSpan age = DateTime.Now - Birthdate;
+                double myAge = (age.TotalDays / 365);
+                int Age = (int)myAge;
+
+                return (Age);
+            }
+        }
 
         public string FullName
         {
@@ -58,5 +69,9 @@ namespace MedAgenda.CORE.Domain
             BloodType = patient.BloodType;
             Archived = patient.Archived;
         }
+   
+
+
+
     }
 }

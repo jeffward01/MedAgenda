@@ -1,0 +1,73 @@
+<div class="container">
+    <h1 id="CheckTitle"> Doctor Check In</h1>
+
+    <div class="form-group">
+        <div class="row">
+
+            <h2>Locate Doctor:</h2>
+
+            <div class="col-md-5 col-lg-5">
+                <div div class="LocatePatient">
+                    <ui-select ng-model="data.selectedDoctor" theme="select2" style="width: 100%">
+                        <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.FirstName}} {{$select.selected.LastName}}</ui-select-match>
+                        <ui-select-choices repeat="item in allDoctors | filter: $select.search">
+                            <span ng-bind-html="item.FirstName | highlight: $select.search"></span>
+                            <span ng-bind-html="item.LastName | highlight: $select.search"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="PatientArea row" ng-show="data.selectedDoctor.DoctorID">
+            <div class="PatientInformation col-md-2 col-lg-2">
+                <h2>Doctor Information</h2>
+            </div>
+            <div class="col-md-8 col-lg-8">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Doctor Name</th>
+
+
+                            <th>Telephone</th>
+
+
+                            <th>Preferred Exam Room</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{data.selectedDoctor.FirstName}} {{data.selectedDoctor.LastName}}</td>
+                            <td>{{data.selectedDoctor.Telephone}}</td>
+
+
+                            <td>   <ui-select ng-model="newDoctorCheckIn.ExamRoomID" theme="select2" style="width: 100%">
+                                    <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.ExamRoomName}}</ui-select-match>
+                                    <ui-select-choices repeat="item.ExamRoomID as item in allExamRooms | filter: $select.search">
+                                        <span ng-bind-html="item.ExamRoomName | highlight: $select.search"></span>
+                                    </ui-select-choices>
+                                </ui-select></td>
+
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+
+        </div>
+        <div class="CheckInButtonArea center-block row" ng-show="newDoctorCheckIn.ExamRoomID">
+            <button type="button" id="CheckinBtn" ng-click="save()" class="btn center-block btn-success">Check In</button>
+
+
+        </div>
+
+
+    </div>
+</div>
