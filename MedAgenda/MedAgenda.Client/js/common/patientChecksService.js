@@ -54,12 +54,22 @@ angular.module('app').factory('patientChecksService', function($http, $q, apiUrl
         return deferred.promise;
     }
     
+    var _getAllCheckedInDoctors = function(get){
+        var deferred = $q.defer();
+        
+        $http.get(apiUrl + '/doctors/checkedin/')
+        .success(function(response){
+            deferred.resolve(response);
+        })
+        return deferred.promise;
+    }
     
     return {
         get: _get,
         getAllPatients : _getAllPatients,
         getAllSpecialties : _getAllSpecialties,
         getAllDoctors: _getAllDoctors,
-        getAllExamRooms : _getAllExamRooms
+        getAllExamRooms : _getAllExamRooms,
+        getAllCheckedInDoctors : _getAllCheckedInDoctors
     };   
 });

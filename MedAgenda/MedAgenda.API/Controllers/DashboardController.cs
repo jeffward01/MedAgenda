@@ -59,8 +59,7 @@ namespace MedAgenda.API.Controllers
             //CheckedinPatients = Mapper.Map<IEnumerable<PatientModel>>(
             //        db.Patients.Where(p => p.PatientChecks.Count() != null && p.PatientChecks.All(c => c.CheckinDateTime > DateTime.Today && c.CheckoutDateTime == null))),
                 
-            //     CheckedinDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
-            //        db.Doctors.Where(d => d.DoctorChecks.Count() != null || d.DoctorChecks.All(c => c.CheckinDateTime >= DateTime.Today && c.CheckoutDateTime == null))),
+          
 
                  ArchivedDoctors = Mapper.Map<IEnumerable<DoctorModel>>(
                      db.Doctors.Where(a => a.Archived == true)),

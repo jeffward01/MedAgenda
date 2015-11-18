@@ -20,7 +20,7 @@ namespace MedAgenda.API.Controllers
         // GET: api/DoctorsCheck
         public IEnumerable<DoctorCheckModel> GetDoctorChecks()
         {
-            return Mapper.Map<IEnumerable<DoctorCheckModel>>(db.DoctorChecks);
+            return Mapper.Map<IEnumerable<DoctorCheckModel>>(db.DoctorChecks.Where(pc => !pc.CheckoutDateTime.HasValue));
         }
 
         // GET: api/DoctorsCheck/5
@@ -93,10 +93,10 @@ namespace MedAgenda.API.Controllers
             {
                 db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw new Exception("Unable to add doctor check-in.");
+                throw new Exception("Unable to add doctor check-in.", e);
             }
             doctorCheck.DoctorCheckID = dbDoctorCheck.DoctorCheckID;
             return CreatedAtRoute("DefaultApi", new { id = dbDoctorCheck.DoctorCheckID }, doctorCheck);

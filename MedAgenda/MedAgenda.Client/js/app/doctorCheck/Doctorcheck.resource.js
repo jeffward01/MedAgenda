@@ -1,6 +1,6 @@
 angular.module('app').factory('DoctorChecks', function($resource, apiUrl){
     
-    return $resource(apiUrl + 'DoctorChecks/:id', {id :'@DoctorCheckID'}, {
+    return $resource(apiUrl + 'DoctorsCheck/:id', {id :'@DoctorCheckID'}, {
         update: {
             method: 'PUT'
         }

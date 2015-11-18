@@ -44,9 +44,9 @@
                             <td>{{data.selectedDoctor.Telephone}}</td>
 
 
-                            <td>   <ui-select ng-model="newDoctorCheckIn.ExamRoomName" theme="select2" style="width: 100%">
+                            <td>   <ui-select ng-model="newDoctorCheckIn.ExamRoomID" theme="select2" style="width: 100%">
                                     <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.ExamRoomName}}</ui-select-match>
-                                    <ui-select-choices repeat="item.ExamRoomName as item in allExamRooms | filter: $select.search">
+                                    <ui-select-choices repeat="item.ExamRoomID as item in allExamRooms | filter: $select.search">
                                         <span ng-bind-html="item.ExamRoomName | highlight: $select.search"></span>
                                     </ui-select-choices>
                                 </ui-select></td>
@@ -62,7 +62,7 @@
 
 
         </div>
-        <div class="CheckInButtonArea center-block row" ng-show="newDoctorCheckIn.ExamRoomName">
+        <div class="CheckInButtonArea center-block row" ng-show="newDoctorCheckIn.ExamRoomID">
             <button type="button" id="CheckinBtn" ng-click="save()" class="btn center-block btn-success">Check In</button>
 
 

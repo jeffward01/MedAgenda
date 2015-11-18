@@ -36,18 +36,14 @@ angular.module('app').controller('DoctorCheckDetailController', function ($rootS
         currentDate = moment(currentDate, "YYY-MM-DDTHH:mm:ssZ").toDate();
         $scope.newDoctorCheckIn.CheckinDateTime = currentDate;
         $scope.newDoctorCheckIn.DoctorID = $scope.data.selectedDoctor.DoctorID;
-        $scope.newDoctorCheckIn.ExamRoomID = $scope.data.allExamRooms.ExamRoomID;
         if($scope.newDoctorCheckIn.$save()){
 
         //Success Message
         toastr.success($scope.data.selectedDoctor.FirstName + " " + $scope.data.selectedDoctor.LastName + " has been checked in!", 'Success!');    
                 $state.go('app.dashboard');
-    
         } else{
                   toastr.danger($scope.data.selectedDoctor.FirstName + " " + $scope.data.selectedDoctor.LastName + " was not checked in!", 'Failure!');    
-  
         }
-
     }
     
     function getExamRoom(id){
