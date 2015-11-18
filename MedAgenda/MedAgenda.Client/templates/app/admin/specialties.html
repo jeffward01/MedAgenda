@@ -1,14 +1,14 @@
 ﻿
 <div class="row">
-    <!-- column for specialty table -->
-    <div ng-hide="specialties.length">
-        <div class="spacer10 hidden-xs"></div>
-        <div class="alert alert-info">
-            There are no specialties - please add one
-        </div>
-    </div>
-
     <div class="col-sm-6">
+        <!-- column for specialty table -->
+        <div ng-hide="specialties.length">
+            <div class="spacer10 hidden-xs"></div>
+            <div class="alert alert-info">
+                There are no specialties - please add one
+            </div>
+        </div>
+
         <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="specialties.length">
             <thead>
                 <tr>
