@@ -34,7 +34,7 @@ angular.module('app').controller('PatientCheckDetailController', function ($root
         if($scope.newPatientCheckIn.$save()){
 
         //Success Message
-        toastr.success($scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName + " has been checked in!", 'Success!');    
+        toastr.success($scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName +  " has been checked in!", 'Success!');    
                 $state.go('app.dashboard');
     
         } else{
