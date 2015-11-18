@@ -147,6 +147,28 @@ namespace MedAgenda.API.Controllers
             return Ok(Mapper.Map<AppointmentModel>(appointment));
         }
 
+        [Route("api/appointments/schedule")]
+        public IHttpActionResult ScheduleAppointment(PatientCheckModel check)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                using (var scheduler = new AppointmentScheduler())
+                {
+                    scheduler.CreateAppointment(check);
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Unable to schedule the appointment");
+            }
+        }
+
+
 
 
 
