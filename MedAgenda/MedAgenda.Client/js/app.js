@@ -23,4 +23,4 @@
                 .state('app.admin.specialties', { url: '/specialties', templateUrl: '/templates/app/admin/specialties.html', controller: 'AdminSpecialtiesController' });
 
 });
-angular.module('app').value('apiUrl', 'http://localhost:7000/api/');
+angular.module('app').value('apiUrl', 'http://localhost:7000/');
