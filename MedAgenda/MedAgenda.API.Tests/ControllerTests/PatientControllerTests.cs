@@ -28,9 +28,9 @@ namespace MedAgenda.API.Tests.ControllerTests
                 // Verify if patients were returned
                 if (patients.Count() == 0) Assert.Inconclusive("No non-archived patients found");
 
+                
                 // If patients were returned, verify that all of the patients are not archived               
-                Assert.IsTrue(patients.Where(p => p.Archived).Count() == 0);
-
+                Assert.IsTrue(patients.Where(p => p.Archived).Count() == 0);                
             }
         }
 
@@ -40,7 +40,7 @@ namespace MedAgenda.API.Tests.ControllerTests
             //Arrange: Instantiate PatientsController so its methods can be called
             using (var patientController = new PatientsController())
             {
-                //Act: Call the GetPatients method
+                //Act: Call the GetArchivedPatients method
                 IEnumerable<PatientModel> patients = patientController.GetArchivedPatients();
 
                 // Verify if patients were returned
@@ -48,6 +48,7 @@ namespace MedAgenda.API.Tests.ControllerTests
 
                 // If patients were returned, verify that all of the patients are archived                                               
                 Assert.IsTrue(patients.Where(p => !p.Archived).Count() == 0);
+
             }
         }
 

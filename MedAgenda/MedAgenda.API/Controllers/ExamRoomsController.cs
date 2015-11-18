@@ -88,7 +88,7 @@ namespace MedAgenda.API.Controllers
             }
             var dbExamRoom = new ExamRoom();
 
-            dbExamRoom.Update(examRoom);
+            dbExamRoom.Update(examRoom);            
             db.ExamRooms.Add(dbExamRoom);
             try
             {
@@ -117,7 +117,7 @@ namespace MedAgenda.API.Controllers
             db.ExamRooms.Remove(examRoom);
 
             try
-            {
+            {               
                 db.SaveChanges();
             }
             catch (Exception)
