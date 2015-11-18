@@ -8,6 +8,8 @@ using MedAgenda.CORE.Models;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
+using MedAgenda.CORE.Infrastructure;
+using MedAgenda.CORE.Domain;
 
 namespace MedAgenda.API.Tests.ControllerTests
 {
@@ -15,7 +17,7 @@ namespace MedAgenda.API.Tests.ControllerTests
     public class PatientCheckControllerTests : BaseTest
     {
         [TestMethod] //Get all PatientChecks [0]
-        public void GetPatientChecksReturnPatienChecks()
+        public void GetPatientChecksReturnPatientChecks()
         {
             using (var patientCheckController = new PatientChecksController())
             {
@@ -30,46 +32,145 @@ namespace MedAgenda.API.Tests.ControllerTests
         [TestMethod] //Get a PatientCheck [1]
         public void GetPatientCheckReturnPatientChecks()
         {
+            int createdPatientID;
+            int createdSpecialtyID;
+            int patientCheckIDForTest;
+            IHttpActionResult result;
+
+            // Create a new test patient, and get its patient ID
+            using (var patientController = new PatientsController())
+            {
+                var patient = new PatientModel
+                {
+                    FirstName = "Testpatient",
+                    LastName = "Testerson",
+                    Birthdate = new DateTime(1968, 12, 27),
+                    Email = "a@b.com",
+                    BloodType = "A+",
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
+                };
+                result = patientController.PostPatient(patient);
+                CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
+                createdPatientID = createdContentResult.Content.PatientID;
+            }
+
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
+
+            // Create test patient check, and save its ID
             using (var patientCheckController = new PatientChecksController())
             {
-                IHttpActionResult result = patientCheckController.GetPatientCheck(1);
-
-                if (result is OkNegotiatedContentResult<PatientCheckModel>)
+                var newPatientCheck = new PatientCheckModel
                 {
-                    OkNegotiatedContentResult<PatientCheckModel> contentResult = (OkNegotiatedContentResult<PatientCheckModel>)result;
+                    PatientID = createdPatientID,
+                    SpecialtyID = createdSpecialtyID,
+                    CheckinDateTime = DateTime.Now,
+                    CheckoutDateTime = DateTime.Now.AddHours(2)
+                };
 
-                    Assert.IsTrue(contentResult.Content.PatientCheckID == 1);
-                }
-                else
-                {
-                    if (result is NotFoundResult)
-                    {
-                        Assert.Inconclusive();
-                    }
-                    else
-                    {
-                        Assert.Fail();
-                    }
-                }
+                result = patientCheckController.PostPatientCheck(newPatientCheck);
+                CreatedAtRouteNegotiatedContentResult<PatientCheckModel> contentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientCheckModel>)result;
+                patientCheckIDForTest = contentResult.Content.PatientCheckID;
+            }
+
+            // Get the test patient check, and verify that it has the same ID
+            using (var patientCheckController = new PatientChecksController())
+            {
+                result = patientCheckController.GetPatientCheck(patientCheckIDForTest);
+
+                Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<PatientCheckModel>));
+
+                OkNegotiatedContentResult<PatientCheckModel> contentResult =
+                                (OkNegotiatedContentResult<PatientCheckModel>)result;
+
+                Assert.IsTrue(contentResult.Content.PatientCheckID == patientCheckIDForTest);
+            }
+
+            // Delete the test patient check-in
+            using (var patientCheckController = new PatientChecksController())
+            {
+                result = patientCheckController.DeletePatientCheck(patientCheckIDForTest);
+            }
+
+            // Remove the test patient from the database with actual deletion, not archiving
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Patient dbPatient = db.Patients.Find(createdPatientID);
+                db.Patients.Remove(dbPatient);
+                db.SaveChanges();
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
             }
         }
 
-        [TestMethod] //Creat a PatientCheck [2]
+        [TestMethod] //Create a PatientCheck [2]
         public void PostPatientCheck()
         {
+            int createdPatientID;
+            int createdSpecialtyID;
+            IHttpActionResult result;
             CreatedAtRouteNegotiatedContentResult<PatientCheckModel> contentResult;
+
+            // Create a new test patient, and get its patient ID
+            using (var patientController = new PatientsController())
+            {
+                var patient = new PatientModel
+                {
+                    FirstName = "Testpatient",
+                    LastName = "Testerson",
+                    Birthdate = new DateTime(1968, 12, 27),
+                    Email = "a@b.com",
+                    BloodType = "A+",
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
+                };
+                result = patientController.PostPatient(patient);
+                CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
+                createdPatientID = createdContentResult.Content.PatientID;
+            }
+
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
 
             using (var patientCheckController = new PatientChecksController())
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientID = 1,
-                    SpecialtyID = 1,
+                    PatientID = createdPatientID,
+                    SpecialtyID = createdSpecialtyID,
                     CheckinDateTime = DateTime.Now,
                     CheckoutDateTime = DateTime.Now.AddHours(2)
                 };
 
-                IHttpActionResult result = patientCheckController.PostPatientCheck(newPatientCheck);
+                result = patientCheckController.PostPatientCheck(newPatientCheck);
 
                 Assert.IsInstanceOfType(result, typeof(CreatedAtRouteNegotiatedContentResult<PatientCheckModel>));
 
@@ -81,7 +182,21 @@ namespace MedAgenda.API.Tests.ControllerTests
             //Delete the PatientCheck
             using (var SecondPatientCheckController = new PatientChecksController())
             {
-                IHttpActionResult result = SecondPatientCheckController.DeletePatientCheck(contentResult.Content.PatientCheckID);
+                result = SecondPatientCheckController.DeletePatientCheck(contentResult.Content.PatientCheckID);
+            }
+
+            // Delete the test patient (actual deletion, not archiving) 
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Patient dbPatient = db.Patients.Find(createdPatientID);
+                db.Patients.Remove(dbPatient);
+                db.SaveChanges();
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
             }
         }
 
@@ -92,14 +207,49 @@ namespace MedAgenda.API.Tests.ControllerTests
             CreatedAtRouteNegotiatedContentResult<PatientCheckModel> contentResult;
             OkNegotiatedContentResult<PatientCheckModel> patientCheckResult;
             OkNegotiatedContentResult<PatientCheckModel> readContentResult;
-            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 
+                                        DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            int createdPatientID;
+            int createdSpecialtyID;
+
+            // Create a new test patient, and get its patient ID
+            using (var patientController = new PatientsController())
+            {
+                var patient = new PatientModel
+                {
+                    FirstName = "Testpatient",
+                    LastName = "Testerson",
+                    Birthdate = new DateTime(1968, 12, 27),
+                    Email = "a@b.com",
+                    BloodType = "A+",
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
+                };
+                result = patientController.PostPatient(patient);
+                CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
+                createdPatientID = createdContentResult.Content.PatientID;
+            }
+
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
 
             using (var patientCheckController = new PatientChecksController())
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientID = 1,
-                    SpecialtyID = 1,
+                    PatientID = createdPatientID,
+                    SpecialtyID = createdSpecialtyID,
                     CheckinDateTime = now,
                     CheckoutDateTime = now.AddHours(2)
                 };
@@ -142,43 +292,107 @@ namespace MedAgenda.API.Tests.ControllerTests
 
                 Assert.IsTrue(readContentResult.Content.CheckoutDateTime == now);
             }
+
+            // Delete the test patient check
             using (var FifthPatientCheckController = new PatientChecksController())
             {
                 result = FifthPatientCheckController.DeletePatientCheck(readContentResult.Content.PatientCheckID);
             }
 
+            // Delete the test patient (actual deletion, not archiving) 
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Patient dbPatient = db.Patients.Find(createdPatientID);
+                db.Patients.Remove(dbPatient);
+                db.SaveChanges();
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
+            }
         }
 
         [TestMethod] //Delete PatientCheck [4]
         public void DeletePatientCheck()
         {
+            int createdPatientID;
+            int createdSpecialtyID;
+            IHttpActionResult result;
             CreatedAtRouteNegotiatedContentResult<PatientCheckModel> contentResult;
+
+            // Create a new test patient, and get its patient ID
+            using (var patientController = new PatientsController())
+            {
+                var patient = new PatientModel
+                {
+                    FirstName = "Testpatient",
+                    LastName = "Testerson",
+                    Birthdate = new DateTime(1968, 12, 27),
+                    Email = "a@b.com",
+                    BloodType = "A+",
+                    CreatedDate = new DateTime(2015, 11, 10),
+                    Archived = false
+                };
+                result = patientController.PostPatient(patient);
+                CreatedAtRouteNegotiatedContentResult<PatientModel> createdContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<PatientModel>)result;
+                createdPatientID = createdContentResult.Content.PatientID;
+            }
+
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
 
             using (var patientCheckController = new PatientChecksController())
             {
                 var newPatientCheck = new PatientCheckModel
                 {
-                    PatientID = 1,
-                    SpecialtyID = 1,
+                    PatientID = createdPatientID,
+                    SpecialtyID = createdSpecialtyID,
                     CheckinDateTime = DateTime.Now,
                     CheckoutDateTime = DateTime.Now.AddHours(2)
                 };
-                var result = patientCheckController.PostPatientCheck(newPatientCheck);
+                result = patientCheckController.PostPatientCheck(newPatientCheck);
 
                 contentResult = (CreatedAtRouteNegotiatedContentResult<PatientCheckModel>)result;
             }
             using (var SecondPatientCheckController = new PatientChecksController())
             {
-                var result = SecondPatientCheckController.DeletePatientCheck(contentResult.Content.PatientCheckID);
+                result = SecondPatientCheckController.DeletePatientCheck(contentResult.Content.PatientCheckID);
 
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<PatientCheckModel>));
             }
             using (var ThirdPatientCheckController = new PatientChecksController())
             {
-                var result = ThirdPatientCheckController.GetPatientCheck(contentResult.Content.PatientCheckID);
+                result = ThirdPatientCheckController.GetPatientCheck(contentResult.Content.PatientCheckID);
 
                 Assert.IsInstanceOfType(result, typeof(NotFoundResult));
 
+            }
+
+            // Delete the test patient (actual deletion, not archiving) 
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Patient dbPatient = db.Patients.Find(createdPatientID);
+                db.Patients.Remove(dbPatient);
+                db.SaveChanges();
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
             }
         }
     }

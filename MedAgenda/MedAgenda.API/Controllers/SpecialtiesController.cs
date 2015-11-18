@@ -71,7 +71,7 @@ namespace MedAgenda.API.Controllers
                 }
                 else
                 {
-                    throw;
+                    throw new Exception("Unable to update the specialty in the database");
                 }
             }
 
@@ -91,12 +91,12 @@ namespace MedAgenda.API.Controllers
             dbSpecialty.Update(specialty);
             db.Specialties.Add(dbSpecialty);
             try
-            {
+            {                
                 db.SaveChanges();
             }
             catch (Exception)
             {
-                throw new Exception("Unable to add Specialty to database");
+                throw new Exception("Unable to add the specialty to the database");
             }
             specialty.SpecialtyID = dbSpecialty.SpecialtyID;
 
@@ -122,7 +122,7 @@ namespace MedAgenda.API.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Could not delete Specialty from database");
+                throw new Exception("Unable to delete the specialty from the database");
             }
 
             return Ok(Mapper.Map<SpecialtyModel>(specialty));

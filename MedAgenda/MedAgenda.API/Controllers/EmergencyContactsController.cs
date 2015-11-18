@@ -90,7 +90,7 @@ namespace MedAgenda.API.Controllers
                 }
                 else
                 {
-                    throw new Exception("Unable to update the Contact in the database");
+                    throw new Exception("Unable to update the emergency contact in the database");
                 }
             }
 
@@ -116,7 +116,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Unable to add EC to database");
+                throw new Exception("Unable to add the emergency contact to the database");
             }
 
             emergencyContact.EmergencyContactID = dbEmergencyContact.EmergencyContactID;
@@ -143,7 +143,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Could not delete Emergency Contact from database");
+                throw new Exception("Unable to delete the emergency contact from the database");
             }
 
 
