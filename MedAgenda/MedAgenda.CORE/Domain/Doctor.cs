@@ -14,6 +14,11 @@ namespace MedAgenda.CORE.Domain
         public string Email { get; set; }
         public string Telephone { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
         public int SpecialtyID { get; set; }
         public bool Archived { get; set; }
 
@@ -35,7 +40,13 @@ namespace MedAgenda.CORE.Domain
             LastName = doctor.LastName;
             Email = doctor.Email;
             Telephone = doctor.Telephone;
+            Address1 = doctor.Address1;
+            Address2 = doctor.Address2;
+            City = doctor.City;
+            State = doctor.State;
+            Zip = doctor.Zip;
             SpecialtyID = doctor.SpecialtyID;
+            Archived = doctor.Archived;            
             
             if (doctor.DoctorID == 0)
             {

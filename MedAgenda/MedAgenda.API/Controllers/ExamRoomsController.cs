@@ -71,7 +71,7 @@ namespace MedAgenda.API.Controllers
                 }
                 else
                 {
-                    throw;
+                    throw new Exception ("Unable to update the exam room in the database");
                 }
             }
 
@@ -88,7 +88,7 @@ namespace MedAgenda.API.Controllers
             }
             var dbExamRoom = new ExamRoom();
 
-            dbExamRoom.Update(examRoom);
+            dbExamRoom.Update(examRoom);            
             db.ExamRooms.Add(dbExamRoom);
             try
             {
@@ -96,7 +96,7 @@ namespace MedAgenda.API.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Unable to add Exam Room to database");
+                throw new Exception("Unable to add the exam room to the database");
             }
 
             examRoom.ExamRoomID = dbExamRoom.ExamRoomID;
@@ -117,12 +117,12 @@ namespace MedAgenda.API.Controllers
             db.ExamRooms.Remove(examRoom);
 
             try
-            {
+            {               
                 db.SaveChanges();
             }
             catch (Exception)
             {
-                throw new Exception("Could not delete Exam Room from database");
+                throw new Exception("Unable to delete the exam room from database");
             }
 
             return Ok(Mapper.Map<ExamRoomModel>(examRoom));

@@ -1,1 +1,235 @@
-﻿<h1>patient detail</h1>
+﻿<div class="row">
+    <div class="col-lg-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading"> {{patient.PatientID ? 'Edit' : 'Add'}} Patient</div>
+            <div class="panel-body">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patientFirstName">First Name</label>
+                                <input type="text" class="form-control" id="patientFirstName"
+                                       placeholder="Patient First Name" ng-model="patient.FirstName">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patient.LastName">Last Name</label>
+                                <input type="text" class="form-control" id="patientLastName"
+                                       placeholder="Patient Last Name" ng-model="patient.LastName">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                    </div><!-- end row -->
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patientTelephone">Telephone</label>
+                                <input type="tel" class="form-control" id="patientTelephone"
+                                       placeholder="Telephone" ng-model="patient.Telephone">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patientEmail">Email Address</label>
+                                <input type="email" class="form-control" id="patientEmail"
+                                       placeholder="Email Address" ng-model="patient.Email">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patientBirthdate">Birthdate</label>
+                                <input type="datetime" class="form-control" id="patientBirthdate"
+                                       placeholder="Birthdate (MM/DD/YYYY)" ng-model="patient.Birthdate">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patientBloodType">Blood Type</label>
+                                <select ng-model="patient.BloodType" class="form-control">
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patientAddress1">Address 1</label>
+                                <input type="text" class="form-control" id="patientAddress1"
+                                       placeholder="Address 1" ng-model="patient.Address1">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patientAddress2">Address 2</label>
+                                <input type="text" class="form-control" id="patientAddress2"
+                                       placeholder="Address 2 (Optional)" ng-model="patient.Address2">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="patientCity">City</label>
+                                <input type="text" class="form-control" id="patientCity"
+                                       placeholder="City" ng-model="patient.City">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label" for="patientState">State</label>
+                                <select ng-model="patient.State" class="form-control">
+                                    <option value="Alabama">AL</option>
+                                    <option value="Alaska">AK</option>
+                                    <option value="Arizona">AZ</option>
+                                    <option value="Arkansas">AR</option>
+                                    <option value="Calafornia">CA</option>
+                                    <option value="Colorado">CO</option>
+                                    <option value="Connecticut">CT</option>
+                                    <option value="Delaware">DE</option>
+                                    <option value="Florida">FL</option>
+                                    <option value="Georgia">GA</option>
+                                    <option value="Hawaii">HI</option>
+                                    <option value="Idaho">ID</option>
+                                    <option value="Illinois">IL</option>
+                                    <option value="Indiana">IN</option>
+                                    <option value="Iowa">IA</option>
+                                    <option value="Kansas">KS</option>
+                                    <option value="Kentucky">KY</option>
+                                    <option value="Louisiana">LA</option>
+                                    <option value="Maine">ME</option>
+                                    <option value="Maryland">MD</option>
+                                    <option value="Massachusetts">MA</option>
+                                    <option value="Michigan">MI</option>
+                                    <option value="Minnesota">MN</option>
+                                    <option value="Mississippi">MS</option>
+                                    <option value="Missouri">MO</option>
+                                    <option value="Montana">MT</option>
+                                    <option value="Nebraska">NE</option>
+                                    <option value="Nevada">NV</option>
+                                    <option value="New Hampshire">NH</option>
+                                    <option value="New Jersey">NJ</option>
+                                    <option value="New Mexico">NM</option>
+                                    <option value="New York">NY</option>
+                                    <option value="North Carolina">NC</option>
+                                    <option value="North Dakota">ND</option>
+                                    <option value="Ohio">OH</option>
+                                    <option value="Oklahoma">OK</option>
+                                    <option value="Oregon">OR</option>
+                                    <option value="Pennsylvania">PA</option>
+                                    <option value="Rhode Island">RI</option>
+                                    <option value="South Carolina">SC</option>
+                                    <option value="South Dakota">SD</option>
+                                    <option value="Tennessee">TN</option>
+                                    <option value="Texas">TX</option>
+                                    <option value="Utah">UT</option>
+                                    <option value="Vermont">VT</option>
+                                    <option value="Virginia">VA</option>
+                                    <option value="Washington">WA</option>
+                                    <option value="West Virginia">WV</option>
+                                    <option value="Wisconsin">WI</option>
+                                    <option value="Wyoming">WY</option>
+                                </select>
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label" for="patientZip">Zip</label>
+                                <input type="text" class="form-control" id="patientZip"
+                                       placeholder="Zip" ng-model="patient.Zip">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                    </div><!-- end row -->
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <button class="btn btn-success btn-sm pull-right" ng-click="savePatient()">
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                            <button class="btn btn-danger btn-sm pull-right" ui-sref="app.patients.grid">
+                                <i class="fa fa-remove fa-fw"></i> Cancel
+                            </button>
+                        </div><!-- end column -->
+                    </div><!-- end row -->
+                </div><!-- end well -->
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Emergency Contacts
+                <button class="btn btn-success btn-xs pull-right" ng-click="addEmergencyContact()">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="ec in patient.EmergencyContacts">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Patients Emergency Contact
+                            <button class="btn btn-success btn-xs pull-right" ng-click="saveEmergencyContact(ec)" ng-show="ec.Edit">
+                                <i class="fa fa-save"></i>
+                            </button>
+                            <button class="btn btn-default btn-xs pull-right" ng-click="ec.Edit = false" ng-show="ec.Edit">
+                                <i class="fa fa-undo"></i>
+                            </button>
+
+                            <button class="btn btn-info btn-xs pull-right" ng-click="ec.Edit = true" ng-hide="ec.Edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                        <div class="panel-body" ng-hide="ec.Edit">
+                            <h4 style="margin-top: 0">{{ec.FirstName}} {{ec.LastName}} <small>{{ec.Relationship}}</small></h4>
+                            <small>P: <strong>{{ec.Telephone}}</strong>, E: <strong>{{ec.Email}}</strong></small>
+                        </div>
+                        <div class="panel-body" ng-show="ec.Edit">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="emergencyContactFirstName">First Name</label>
+                                        <input type="text" class="form-control" id="emergencyContactFirstName"
+                                               placeholder="First Name" ng-model="ec.FirstName">
+                                    </div><!-- end form group -->
+                                </div><!-- end column -->
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="emergencyContactLastName">Last Name</label>
+                                        <input type="text" class="form-control" id="emergencyContactLastName"
+                                               placeholder="Last Name" ng-model="ec.LastName">
+                                    </div><!-- end form group -->
+                                </div><!-- end column -->
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="emergencyContactRelation">Relationship</label>
+                                        <input type="text" class="form-control" id="emergencyContactRelationship"
+                                               placeholder="Relationship" ng-model="ec.Relationship">
+                                    </div><!-- end form group -->
+                                </div><!-- end column -->
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="emergencyContactTelephone">Telephone</label>
+                                        <input type="tel" class="form-control" id="emergencyContactTelephone"
+                                               placeholder="Telephone" ng-model="ec.Telephone">
+                                    </div><!-- end form group -->
+                                </div><!-- end column -->
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label class="control-label" for="emergencyContactEmail">Email Address</label>
+                                        <input type="email" class="form-control" id="emergencyContactEmail"
+                                               placeholder="Email" ng-model="ec.Email">
+                                    </div><!-- end form group -->
+                                </div><!-- end column -->
+                            </div><!-- end row-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
