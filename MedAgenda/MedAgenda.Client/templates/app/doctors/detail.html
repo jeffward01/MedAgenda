@@ -1,44 +1,29 @@
 ﻿<form>
 <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Doctor Specialty
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li><a href="#">Pediatrics</a></li>
-      <li><a href="#">Gastroenterology</a></li>
-      <li><a href="#">General Practitioner</a></li>
-      <li><a href="#">Hematology</a></li>
-      <li><a href="#">Cardiology</a></li>
-      <li><a href="#">Endocrinology</a></li>
-      <li><a href="#">Podiatry</a></li>
-      <li><a href="#">Orthopedics</a></li>
-      <li><a href="#">Neurology</a></li>
-      <li><a href="#">Gynecology/Obstetrics</a></li>
-      <li><a href="#">Urology</a></li>
-      <li><a href="#">Oncology</a></li>
-      <li><a href="#">Immunology/Allergies</a></li>
-      <li><a href="#">Dermatology</a></li>
-      <li><a href="#">Psychiatry</a></li>
-      <li><a href="#">Pain Management</a></li>
-      <li><a href="#">Sports Medicine</a></li>
-      <li><a href="#">Physical Therapy</a></li>
-    </ul>
+   
+    <select id="doctorSpecialty" class="form-control"
+            ng-options="specialty.SpecialtyId as specialty.SpecialtyName for specialty in specialties"
+            ng-model="doctor.SpecialtyId"></select>
   </div>
-</div>
+
+    <button ng-hide="doctor.IsCheckedIn">Check In</button>
+    <button ng-show="doctor.IsCheckedIn">Check Out</button>
+
   <div class="form-group">
     <label for="exampleInputFirstName">First Name</label>
-    <input type="firstName" class="form-control" id="exampleInputFirstName" placeholder="FirstName">
+    <input type="firstName" class="form-control" id="exampleInputFirstName" placeholder="FirstName" ng-model="doctor.FirstName">
   </div>
   <div class="form-group">
     <label for="exampleInputLastName">Last Name</label>
-    <input type="lastName" class="form-control" id="exampleInputLastName" placeholder="LastName">
+    <input type="lastName" class="form-control" id="exampleInputLastName" placeholder="LastName" ng-model="doctor.LastName">
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="doctor.Email">
   </div>
   <div class="form-group">
     <label for="exampleInputTelephone">Telephone</label>
-    <input type="telephone" class="form-control" id="exampleInputTelephone" placeholder="Telephone">
+    <input type="telephone" class="form-control" id="exampleInputTelephone" placeholder="Telephone" ng-model="doctor.Telephone">
   </div>
    <button type="save" class="btn btn-default">Save</button>
   </form>

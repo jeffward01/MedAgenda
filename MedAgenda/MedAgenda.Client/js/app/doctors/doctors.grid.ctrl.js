@@ -1,5 +1,5 @@
-﻿angular.module('app').controller('DoctorGridController', function($rootScope, Doctor) {
-    $scope.doctor = Doctor.query();
+﻿angular.module('app').controller('DoctorsGridController', function($rootScope, Doctor, $scope) {
+    $scope.doctors = Doctor.query();
 
     $scope.deleteDoctor= function(doctor) {
         if(confirm('Are you sure you want to delete this doctor?')) {

@@ -8,7 +8,7 @@
 
         .state('app.doctors', {abstract: true, url: '/doctors', template: '<ui-view/>' })
             .state('app.doctors.grid', { url: '/grid', templateUrl: '/templates/app/doctors/grid.html', controller: 'DoctorsGridController' })
-            .state('app.doctors.detail', { url: '/detail/:id', templateUrl: '/templates/app/doctors/detail.html', controller: 'DoctorsGridController' })
+            .state('app.doctors.detail', { url: '/detail/:id', templateUrl: '/templates/app/doctors/detail.html', controller: 'DoctorsDetailController' })
 
          .state('app.patients', { abstract: true, url: '/patients', template: '<ui-view/>' })
             .state('app.patients.grid', { url: '/grid', templateUrl: '/templates/app/patients/grid.html', controller: 'PatientsGridController' })

@@ -17,6 +17,9 @@ namespace MedAgenda.CORE.Models
         public int SpecialtyID { get; set; }
         public bool Archived { get; set; }
 
+        public int UpcomingAppointmentCount { get; set; }
+
         public DoctorCheckModel DoctorCheck { get; set; }
+        public SpecialtyModel Specialty { get; set; }
     }
 }
