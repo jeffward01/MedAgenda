@@ -1,1 +1,39 @@
-﻿<h1>doctors grid</h1>
+<div>
+    <div ng-hide="doctors.length">
+        <div class="spacer10 hidden-xs-4"></div>
+        <div class="alert alert-info">
+            There are no doctors - please add one
+        </div>
+    </div>
+    <table class="table table-bordered table-condensed table-striped table-hover" ng-show="doctors.length">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Telephone</th>
+                <th>Specialty</th>
+                <th>Appointments Today</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="doctor in doctors">
+                <td>{{doctor.FirstName}} {{doctor.LastName}}</td>
+                <td>{{doctor.Email}}</td>
+                <td>{{doctor.Telephone}}</td>
+                <td>{{doctor.Specialty.SpecialtyName}}</td>
+                <td>{{doctor.UpcomingAppointmentCount}}</td>
+                <td>
+                    <button ng-hide="doctor.IsCheckedIn">Check In</button>
+                    <button ng-show="doctor.IsCheckedIn">Check Out</button>
+                    <a class="btn btn-info btn-xs" ui-sref="app.doctors.detail({id: doctor.DoctorID})">
+                        <i class="fa fa-edit fa-fw"></i>
+                    </a>
+                    <a class="btn btn-danger btn-xs" ng-click="deleteDoctor(doctor);">
+                        <i class="fa fa-remove"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

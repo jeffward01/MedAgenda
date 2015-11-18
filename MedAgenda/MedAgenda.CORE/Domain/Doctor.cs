@@ -26,6 +26,14 @@ namespace MedAgenda.CORE.Domain
         public virtual ICollection<DoctorCheck> DoctorChecks { get; set; }
         public virtual Specialty Specialty { get; set; }
 
+        public int UpcomingAppointmentCount
+        {
+            get
+            {
+                return Appointments.Count(a => !a.CheckoutDateTime.HasValue);
+            }
+        }
+
         public void Update(DoctorModel doctor)
         {           
             FirstName = doctor.FirstName;
