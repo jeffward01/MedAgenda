@@ -95,10 +95,10 @@ namespace MedAgenda.API.Controllers
             {
                 db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw new Exception("Unable to add a Patient Check in");
+                throw new Exception("Unable to add a Patient Check in", e);
             }
 
             patientCheck.PatientCheckID = dbPatientCheck.PatientCheckID;

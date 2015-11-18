@@ -16,6 +16,7 @@ angular.module('app').controller('PatientCheckGridController', function ($rootSc
             function () {
                 alert("Patient logged out!");
                 $scope.PatientChecks.splice($scope.PatientChecks.indexOf(patient), 1);
+
             },
             function () {
                 alert("Error logging out!");

@@ -1,4 +1,5 @@
-﻿angular.module('app').factory('dashboardService', function ($http, $q, apiUrl) {
+angular.module('app').factory('dashboardService', function ($http, $q, apiUrl) {
+    
     var _get = function get() {
         var deferred = $q.defer();
 

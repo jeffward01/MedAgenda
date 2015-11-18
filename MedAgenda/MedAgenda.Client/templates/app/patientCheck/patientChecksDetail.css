@@ -1,0 +1,26 @@
+
+    .select2 > .select2-choice.ui-select-match {
+      /* Because of the inclusion of Bootstrap */
+      height: 29px;
+    }
+    .selectize-control > .selectize-dropdown {
+      top: 36px;
+    }
+
+.PatientArea{
+    margin-top: 50px;
+}
+#CheckinBtn{
+    margin: 0 auto;
+    height: 50px;
+    width: 100px;
+}
+
+#CheckTitle{
+    margin-bottom: 50px;
+}
+.CheckInButtonArea{
+        margin-top: 25px;
+        margin: 0 auto;
+
+}
