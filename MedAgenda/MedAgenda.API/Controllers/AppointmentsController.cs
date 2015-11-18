@@ -24,6 +24,23 @@ namespace MedAgenda.API.Controllers
         {
             return Mapper.Map<IEnumerable<AppointmentModel>>(db.Appointments);
         }
+        // GET: api/appointments/upcoming
+        // Return all upcoming appointments
+        [Route("api/appointments/upcoming")]
+        public IEnumerable<AppointmentModel> GetUpcomingAppointments()
+        {
+            var dbAppointments = db.Appointments.Where(a => !a.CheckoutDateTime.HasValue);
+            return Mapper.Map<IEnumerable<AppointmentModel>>(dbAppointments);
+        }
+
+        // GET: api/appointments/past
+        // Return all past appointments
+        [Route("api/appointments/past")]
+        public IEnumerable<AppointmentModel> GetPastAppointments()
+        {
+            var dbAppointments = db.Appointments.Where(a => a.CheckoutDateTime.HasValue);
+            return Mapper.Map<IEnumerable<AppointmentModel>>(dbAppointments);
+        }
 
         // GET: api/Appointments/5 || Controller Method [1]
         [ResponseType(typeof(AppointmentModel))]
@@ -71,7 +88,7 @@ namespace MedAgenda.API.Controllers
                 }
                 else
                 {
-                    throw new Exception("Unable to update the Appointment in the database");
+                    throw new Exception("Unable to update the appointment in the database");
                 }
             }
 
@@ -97,7 +114,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Unable to add Appointment to database");
+                throw new Exception("Unable to add the appointment to the database");
             }
 
             appointment.AppointmentID = dbAppt.AppointmentID;
@@ -123,7 +140,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Could not delete Appointment from database");
+                throw new Exception("Unable to delete the appointment from the database");
             }
 
 

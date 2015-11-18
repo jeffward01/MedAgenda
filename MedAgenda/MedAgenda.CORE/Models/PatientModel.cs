@@ -14,12 +14,21 @@ namespace MedAgenda.CORE.Models
         public DateTime Birthdate { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
         public string BloodType { get; set; }
         public DateTime CreatedDate { get; set; }
         public int Age { get; set; }
         public bool Archived { get; set; }
        
 
+
+        public string FullName { get; set; }
+
+        public IEnumerable<EmergencyContactModel> EmergencyContacts { get; set; }
 
     }
 

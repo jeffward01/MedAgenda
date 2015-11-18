@@ -14,9 +14,16 @@ namespace MedAgenda.CORE.Models
         public string Email { get; set; }
         public string Telephone { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
         public int SpecialtyID { get; set; }
         public bool Archived { get; set; }
 
-        public DoctorCheckModel DoctorCheck { get; set; }
+        public int UpcomingAppointmentCount { get; set; }
+
+        public SpecialtyModel Specialty { get; set; }
     }
 }

@@ -1,1 +1,51 @@
-﻿<h1>specialties</h1>
+﻿
+<div class="row">
+    <div class="col-sm-6">
+        <!-- column for specialty table -->
+        <div ng-hide="specialties.length">
+            <div class="spacer10 hidden-xs"></div>
+            <div class="alert alert-info">
+                There are no specialties - please add one
+            </div>
+        </div>
+
+        <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="specialties.length">
+            <thead>
+                <tr>
+                    <th>Specialty</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="specialty in specialties">
+                    <td>{{specialty.SpecialtyName}}</td>
+                    <td>
+                        <a class="btn btn-danger btn-xs" ng-click="deleteSpecialty(specialty)">
+                            <i class="fa fa-remove fa-fw"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!-- End column for specialty table -->
+    <!-- column for elements to add new specialty -->
+    <div class="col-sm-6">
+        <div class="spacer5 hidden-xs"></div>
+
+        <!--Specialty form (block any default browser validation) -->
+        <form name="specialtyForm" role="form" ng-submit="saveSpecialty()" novalidate>
+            <div class="form-group"
+                 ng-class="{'has-error': specialtyForm.specialtyName.$invalid && specialtyForm.$submitted }">
+                <label class="control-label" for="specialtyName">Add New Specialty:</label>
+                <input type="text" class="form-control" id="specialtyName" name="specialtyName"
+                       placeholder="Specialty Name" ng-model="specialty.SpecialtyName" required>
+                <span class="help-block" ng-show="specialtyForm.specialtyName.$invalid && specialtyForm.$submitted">
+                    This is a required field
+                </span>
+            </div><!-- end form group -->
+            <button class="btn btn-success btn-sm pull-right" type="submit">
+                <i class="fa fa-save"></i> Save
+            </button>
+        </form><!-- end form -->
+    </div><!-- end column for elements to add new specialty -->
+</div><!-- end row -->

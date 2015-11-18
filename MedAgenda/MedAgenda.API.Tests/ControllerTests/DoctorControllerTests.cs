@@ -47,7 +47,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                 IEnumerable<DoctorModel> doctors = DoctorController.GetDoctors();
 
                 //Assert
-                if (doctors.Count() == 0) Assert.Inconclusive();
+                if (doctors.Count() == 0) Assert.Inconclusive("No archived doctors found");
                 
                 Assert.IsTrue(doctors.Count() > 0);
 
@@ -58,18 +58,66 @@ namespace MedAgenda.API.Tests.ControllerTests
         [TestMethod] //Get Doctor by ID | [1]
         public void GetDoctorReturnDoctor()
         {
-            //Arrange
+            int createdSpecialtyID;
+            int createdDoctorID;
+            //Arrange: create test specialty and doctor
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                IHttpActionResult result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
+
+            // Create a new test doctor, and get its doctor ID
+            using (var doctorController = new DoctorsController())
+            {
+                var doctor = new DoctorModel
+                {
+                    FirstName = "Imdoctor",
+                    LastName = "Hippocrates",
+                    Email = "a@b.com",
+                    Telephone = "555-1212",
+                    CreatedDate = DateTime.Now,
+                    SpecialtyID = createdSpecialtyID,
+                    Archived = false
+                };
+                IHttpActionResult result = doctorController.PostDoctor(doctor);
+                CreatedAtRouteNegotiatedContentResult<DoctorModel> doctorContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<DoctorModel>)result;
+                createdDoctorID = doctorContentResult.Content.DoctorID;
+            }
+
             using (var doctorController = new DoctorsController())
             {
                 //Act
-                IHttpActionResult result = doctorController.GetDoctor(1);
+                IHttpActionResult result = doctorController.GetDoctor(createdDoctorID);
 
                 //Assert
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorModel>));
 
                 OkNegotiatedContentResult<DoctorModel> contentResult = (OkNegotiatedContentResult<DoctorModel>)result;
 
-                Assert.IsTrue(contentResult.Content.DoctorID == 1);
+                Assert.IsTrue(contentResult.Content.DoctorID == createdDoctorID);
+            }
+
+            // Remove the test doctor from the database with actual deletion, not archiving
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
+            {
+                Doctor dbDoctor = db.Doctors.Find(createdDoctorID);
+                db.Doctors.Remove(dbDoctor);                
+                db.SaveChanges();
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                IHttpActionResult result = specialtyController.DeleteSpecialty(createdSpecialtyID);
             }
         }
 
@@ -77,8 +125,22 @@ namespace MedAgenda.API.Tests.ControllerTests
         public void PostDoctorCreateDoctor()
         {
             CreatedAtRouteNegotiatedContentResult<DoctorModel> contentResult;
+            int createdSpecialtyID;
 
             //Arrange
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                IHttpActionResult result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
+
             using (var DoctorController = new DoctorsController())
             {
                 //Create Doctor
@@ -87,7 +149,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                     FirstName = "Alex",
                     LastName = "Smith",
                     Email = "example@example.com",
-                    SpecialtyID = 2,
+                    SpecialtyID = createdSpecialtyID,
                     Telephone = "111-111-1111",
                     CreatedDate = DateTime.Today
                 };
@@ -103,13 +165,20 @@ namespace MedAgenda.API.Tests.ControllerTests
                 Assert.IsTrue(contentResult.Content.DoctorID != 0);                
             }
 
-            using (var SecondDoctorsController = new DoctorsController())
+            // Remove the test doctor from the database with actual deletion, not archiving
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
             {
-                var deleteAppt = contentResult.Content;
-
-                //Delete the Test Doctor
-               IHttpActionResult result = SecondDoctorsController.DeleteDoctor(contentResult.Content.DoctorID);
+                Doctor dbDoctor = db.Doctors.Find(contentResult.Content.DoctorID);
+                db.Doctors.Remove(dbDoctor);
+                db.SaveChanges();
             }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                IHttpActionResult result = specialtyController.DeleteSpecialty(createdSpecialtyID);
+            }
+
         }
 
         [TestMethod] //Update Doctor [3]
@@ -120,7 +189,21 @@ namespace MedAgenda.API.Tests.ControllerTests
             CreatedAtRouteNegotiatedContentResult<DoctorModel> contentResult;
             OkNegotiatedContentResult<DoctorModel> doctorResult;
             OkNegotiatedContentResult<DoctorModel> readContentResult;
+            int createdSpecialtyID;
 
+            //Arrange
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
 
             using (var DoctorController = new DoctorsController())
             {
@@ -130,7 +213,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                     FirstName = "Alex",
                     LastName = "Smith",
                     Email = "example@example.com",
-                    SpecialtyID = 2,
+                    SpecialtyID = createdSpecialtyID,
                     Telephone = "111-111-1111",
                     CreatedDate = DateTime.Today
                 };
@@ -184,21 +267,45 @@ namespace MedAgenda.API.Tests.ControllerTests
                 Assert.IsTrue(readContentResult.Content.FirstName == "John");
             }
 
-            using (var FifthDoctorController = new DoctorsController())
+            // Remove the test doctor from the database with actual deletion, not archiving
+            using (MedAgendaDbContext db = new MedAgendaDbContext())
             {
-                //Delete the Test Doctor
-                result = FifthDoctorController.DeleteDoctor(readContentResult.Content.DoctorID);
+                Doctor dbDoctor = db.Doctors.Find(readContentResult.Content.DoctorID);
+                db.Doctors.Remove(dbDoctor);
+                db.SaveChanges();
             }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
+            }
+
         }
 
         [TestMethod] // Delete Doctor [4]
         public void DeleteDoctor()
         {
             int doctorIDForTest;
+            int createdSpecialtyID;
 
             IHttpActionResult result;
             CreatedAtRouteNegotiatedContentResult<DoctorModel> createdContentResult;
             OkNegotiatedContentResult<DoctorModel> OkcontentResult;
+            
+            //Arrange
+            // Create a new test specialty, and get its specialty ID
+            using (var specialtyController = new SpecialtiesController())
+            {
+                var specialty = new SpecialtyModel
+                {
+                    SpecialtyName = "Very Special Doctor"
+                };
+                result = specialtyController.PostSpecialty(specialty);
+                CreatedAtRouteNegotiatedContentResult<SpecialtyModel> specialtyContentResult =
+                    (CreatedAtRouteNegotiatedContentResult<SpecialtyModel>)result;
+                createdSpecialtyID = specialtyContentResult.Content.SpecialtyID;
+            }
 
             // Create a new test doctor, and get its doctor ID
             using (var DoctorController = new DoctorsController())
@@ -208,7 +315,7 @@ namespace MedAgenda.API.Tests.ControllerTests
                     FirstName = "Alex",
                     LastName = "Smith",
                     Email = "example@example.com",
-                    SpecialtyID = 2,
+                    SpecialtyID = createdSpecialtyID,
                     Telephone = "111-111-1111",
                     CreatedDate = DateTime.Today
                 };
@@ -219,9 +326,9 @@ namespace MedAgenda.API.Tests.ControllerTests
             }
 
             //Call the procedure to delete the doctor, which sets its archived indicator to true
-            using (var docConrtoller = new DoctorsController())
+            using (var docController = new DoctorsController())
             {
-                result = docConrtoller.DeleteDoctor(doctorIDForTest);
+                result = docController.DeleteDoctor(doctorIDForTest);
 
                 // Verify that HTTP result is OK
                 Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<DoctorModel>));
@@ -247,6 +354,12 @@ namespace MedAgenda.API.Tests.ControllerTests
                 Doctor dbDoctor = db.Doctors.Find(doctorIDForTest);
                 db.Doctors.Remove(dbDoctor);
                 db.SaveChanges();
+            }
+
+            // Delete the test specialty
+            using (var specialtyController = new SpecialtiesController())
+            {
+                result = specialtyController.DeleteSpecialty(createdSpecialtyID);
             }
         }
     }

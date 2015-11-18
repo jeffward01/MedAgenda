@@ -70,7 +70,7 @@ namespace MedAgenda.API.Controllers
                 }
                 else
                 {
-                    throw;
+                    throw new Exception("Unable to update the patient check-in");
                 }
             }
 
@@ -97,8 +97,7 @@ namespace MedAgenda.API.Controllers
             }
             catch (Exception e)
             {
-
-                throw new Exception("Unable to add a Patient Check in", e);
+                throw new Exception("Unable to add the patient Check in", e);
             }
 
             patientCheck.PatientCheckID = dbPatientCheck.PatientCheckID;
@@ -125,7 +124,7 @@ namespace MedAgenda.API.Controllers
             catch (Exception)
             {
 
-                throw new Exception("Could not delete Patient Check in from database");
+                throw new Exception("Unable to delete the patient check-in");
             }
             
 

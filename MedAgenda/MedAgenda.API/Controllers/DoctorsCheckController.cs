@@ -67,7 +67,7 @@ namespace MedAgenda.API.Controllers
                 }
                 else
                 {
-                    throw new Exception("Unable to update doctor check-in.");
+                    throw new Exception("Unable to update the doctor check-in");
                 }
             }
 
@@ -95,9 +95,9 @@ namespace MedAgenda.API.Controllers
             }
             catch (Exception e)
             {
-
-                throw new Exception("Unable to add doctor check-in.", e);
+                throw new Exception("Unable to add the doctor check-in.", e);
             }
+
             doctorCheck.DoctorCheckID = dbDoctorCheck.DoctorCheckID;
             return CreatedAtRoute("DefaultApi", new { id = dbDoctorCheck.DoctorCheckID }, doctorCheck);
         }
@@ -120,8 +120,7 @@ namespace MedAgenda.API.Controllers
             }
             catch (Exception)
             {
-
-                throw new Exception("Could not delete doctor check-in.");
+                throw new Exception("Unable to delete the doctor check-in");
             }
            
 

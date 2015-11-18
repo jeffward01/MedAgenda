@@ -15,10 +15,6 @@ namespace MedAgenda.CORE.Models
         public Nullable<DateTime> CheckoutDateTime { get; set; }
 
         public DoctorModel Doctor { get; set; }
-        public SpecialtyModel Specialty { get; set; }
         public ExamRoomModel ExamRoom { get; set; }
-
-
-
     }
 }
