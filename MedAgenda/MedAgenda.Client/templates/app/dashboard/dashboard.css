@@ -9,5 +9,40 @@
 }
 .center{
     text-align: center;
+    margin: 0 auto;
     
+}
+
+      text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #chart1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+#chart1{
+    width: 500px;
+    height: 500px;
+}
+
+
+svg{
+    width: 500px;
+    height: 500px;
+}
+#panel-Age{
+    width: 550px;
+
+}
+.chartCenter{
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
 }

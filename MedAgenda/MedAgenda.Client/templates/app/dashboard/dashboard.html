@@ -130,7 +130,7 @@
                                             <th>Doctor Name</th>
                                             <th>ExamRoom</th>
                                             <th>Check-in Date Time</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -155,7 +155,26 @@
 
             </div>
         </uib-tab>
-        <uib-tab heading="Statistics">Short Labeled Justified content</uib-tab>
+        <uib-tab heading="Statistics">
+
+            <div class="panel panel-success" id="panel-Age">
+                <div class="panel-heading">
+                    <h3 class="panel-title center">Patient Age Demographic</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="center centered center-block" id="chart1">
+                        <svg></svg>
+                    </div>
+                    <span class="center-block center centered">Patient Age Groups</span>
+
+                </div>
+            </div>
+
+
+
+
+
+        </uib-tab>
         <uib-tab heading="Archived Patients/Doctors">
             <uib-accordion close-others="oneAtATime">
                 <uib-accordion-group is-open="status.openAlso">

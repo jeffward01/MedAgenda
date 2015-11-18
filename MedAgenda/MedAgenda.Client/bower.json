@@ -31,7 +31,8 @@
     "toastr": "~2.1.2",
     "angular-bootstrap": "~0.14.3",
     "angular-ui-select2": "~0.0.5",
-    "ui-select": "angular-ui-select#~0.13.2"
+    "ui-select": "angular-ui-select#~0.13.2",
+    "nvd3": "~1.8.1"
   },
   "resolutions": {
     "angular": "^1.2.9"
