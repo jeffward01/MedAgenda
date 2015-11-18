@@ -4,27 +4,26 @@ angular.module('app').controller('PatientCheckGridController', function ($rootSc
     });
 
     $scope.PatientChecks = PatientChecks.query();
-
+  
     $scope.PatientCheckOut = function (patient) {
         //Save Current DateTime
         var currentDate = moment.valueOf();
-        currentDate = moment(currentDate, "YYY-MM-DDTHH:mm:ssZ").toDate();
+        currentDate =  moment(currentDate, "YYY-MM-DDTHH:mm:ssZ").toDate(); 
         patient.CheckOutDateTime = currentDate;
 
         console.log(patient);
         patient.$update(
             function () {
-                toastr.success(patient.Patient.FirstName + " " + patient.Patient.LastName + " has been Logged out!", 'Success!');
-
-
-                $scope.PatientChecks.splice($scope.PatientChecks.indexOf(patient), 1);
+                alert("Patient logged out!");
+         toastr.success(doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + " has been Logged out!", 'Success!');
+ $scope.PatientChecks.splice($scope.PatientChecks.indexOf(patient), 1);
 
             },
             function () {
                 alert("Error logging out!");
-                toastr.danger("Error logging out " +patient.Patient.FirstName + " " + patient.Patient.LastName + ".", 'Failure!');
-
             }
         );
     }
 });
+
+
