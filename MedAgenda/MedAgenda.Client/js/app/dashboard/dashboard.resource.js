@@ -1,6 +1,6 @@
 angular.module('app').factory('Dashboard', function ($resource, apiUrl) {
 
-    return $resource(apiUrl + 'dashboard', {
+    return $resource(apiUrl + '/api/dashboard', {
         update: {
             method: 'GET'
         }

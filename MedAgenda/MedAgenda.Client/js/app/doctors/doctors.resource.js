@@ -1,5 +1,5 @@
-angular.module('app').factory('Doctor', function($resource) {
-    return $resource('http://localhost:7000/api/doctors/:id', { id: '@DoctorID' }, {
+angular.module('app').factory('Doctor', function($resource, apiUrl) {
+    return $resource(apiUrl + 'api/doctors/:id', { id: '@DoctorID' }, {
         update: {
             method: 'PUT'   
         }   
