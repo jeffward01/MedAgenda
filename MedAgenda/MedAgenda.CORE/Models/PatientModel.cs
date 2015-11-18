@@ -25,5 +25,7 @@ namespace MedAgenda.CORE.Models
 
         public string FullName { get; set; }
 
+        public IEnumerable<EmergencyContactModel> EmergencyContacts { get; set; }
+
     }
 }

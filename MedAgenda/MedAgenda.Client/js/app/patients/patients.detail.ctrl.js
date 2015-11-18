@@ -1,6 +1,9 @@
 ﻿angular.module('app').controller('PatientsDetailController', function ($scope, $rootScope, $stateParams, Patient, $state, patientService) {
     $rootScope.$broadcast('change-page-title', { title: 'Patients' });
 
+    $('.dropdown-toggle').dropdown();
+
+
         // If an ID was passed to state, then a tenant is being edited: get the tenant to update
         //  otherwise a tenant is being added: create a new tenant
         if ($stateParams.id) {
@@ -38,7 +41,13 @@
 
         };
 
+        $scope.saveEmergencyContact = function (ec) {
+            // call the $save method, passing in ec.
+        };
+
     
-    
+        $scope.addEmergencyContact = function () {
+            $scope.patient.EmergencyContacts.push({});
+        }
 
 });
