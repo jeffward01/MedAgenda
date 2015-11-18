@@ -119,19 +119,20 @@ angular.module('app').controller('DashboardController', function ($rootScope, $s
                 .duration(250);
             chart.yAxis
                 .axisLabel('Number of Patients in Age Group');
- 
+
             d3.select('#chart1 svg')
                 .datum(CumulativeAges)
                 .call(chart);
             nv.utils.windowResize(chart.update);
             return chart;
         });
+    });
+
+    //Graphics
+   
 
 
 
-
-
-    })
 
 
 

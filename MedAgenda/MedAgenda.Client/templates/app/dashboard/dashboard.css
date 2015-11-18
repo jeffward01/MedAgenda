@@ -1,4 +1,4 @@
-.QuickLookContainer{
+.QuickLookContainer, .PatientAgeGraphContainer{
     margin-top: 40px;
     margin-left: 20px;
 }
@@ -46,3 +46,15 @@ svg{
     margin: 0 auto;
     text-align: center;
 }
+
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
