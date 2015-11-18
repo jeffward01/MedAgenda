@@ -14,7 +14,5 @@ namespace MedAgenda.CORE.Models
         public DateTime CheckinDateTime { get; set; }
         public Nullable<DateTime> CheckoutDateTime { get; set; }
 
-
-
     }
 }

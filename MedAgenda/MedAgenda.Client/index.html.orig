@@ -91,13 +91,17 @@
         <script src="js/app/doctors/doctors.grid.ctrl.js"></script>
         <script src="js/app/patients/patients.detail.ctrl.js"></script>
         <script src="js/app/patients/patients.grid.ctrl.js"></script>
+<<<<<<< HEAD
         <script src="js/app/doctors/doctors.resource.js"></script>
+
+=======
         <script src="js/app/patients/patients.resource.js"></script>
         <script src="js/common/patientService.js"></script>
         <script src="js/app/appointments/past.resource.js"></script>
         <script src="js/app/appointments/upcoming.resource.js"></script>
         <script src="js/app/appointments/appointments.past.ctrl.js"></script>
         <script src="js/app/appointments/appointments.upcoming.ctrl.js"></script>
+>>>>>>> 3b3f8ce9804e4632b6ab91fe071dd72a284f6a85
     </body>
 
 </html>
