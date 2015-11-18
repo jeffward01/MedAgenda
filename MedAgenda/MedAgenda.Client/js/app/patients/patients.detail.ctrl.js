@@ -19,7 +19,7 @@
 
 
             //Validation to ensure no fields are empty
-            if (($('#patientFirstName').val() === "") || ($('#patientLastName').val() === "") || ($('#patientEmailAddress').val() === "") || ($('#patientTelephone').val() === "") || ($('#patientBirthdate').val() === "") || ($('#patientBloodType').val() === "") || ($('#patientAddress1').val() === "") || ($('#patientCity').val() === "") || ($('#patientState').val() === "") || ($('#patientZip').val() === "")) {
+            if (($('#patientFirstName').val() === "") || ($('#patientLastName').val() === "") || ($('#patientEmail').val() === "") || ($('#patientTelephone').val() === "") || ($('#patientBirthdate').val() === "") || ($('#patientBloodType').val() === "") || ($('#patientAddress1').val() === "") || ($('#patientCity').val() === "") || ($('#patientState').val() === "") || ($('#patientZip').val() === "")) {
                 alert("Please input all fields");
                 return false;
             }
@@ -34,7 +34,7 @@
             } else {
                 $scope.patient.$save(successCallback);
             }
-            toastr.success('Patient was added!', 'New patient was saved!');
+            toastr.success('Patient was added!', 'New patient was saved successfuly!');
 
         };
 
