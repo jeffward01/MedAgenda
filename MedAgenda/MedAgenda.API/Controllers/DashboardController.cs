@@ -37,12 +37,10 @@ namespace MedAgenda.API.Controllers
                 DoctorsOnsitePercentage = (int)(0.5f + ((100f * db.DoctorChecks.Count() / db.Doctors.Count()))),
                 ExamRoomsFilledPercentage = (int)(0.5f + ((100f * db.Appointments.Count() / db.ExamRooms.Count()))),
 
-                DoctorsCheckedinCount = db.DoctorChecks.Count(),
-                PatientsCheckedinCount = db.PatientChecks.Count(),
-
+                DoctorsCheckedinCount = db.DoctorChecks.Count(dc => !dc.CheckoutDateTime.HasValue),
+                PatientsCheckedinCount = db.PatientChecks.Count(pc => !pc.CheckoutDateTime.HasValue),
 
                 AveragePatientAge = (int)db.Patients.ToList().Average(p => p.Age),
-
 
                 YoungestPatientAge = db.Patients.ToList().Min(a => a.Age),
                 OldestPatientAge = db.Patients.ToList().Max(a => a.Age),
