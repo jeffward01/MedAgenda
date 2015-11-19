@@ -8,6 +8,12 @@ namespace MedAgenda.CORE.Domain
 {
     public class Doctor
     {
+        public Doctor()
+        {
+            Appointments = new HashSet<Appointment>();
+            DoctorChecks = new HashSet<DoctorCheck>();
+        }
+
         public int DoctorID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

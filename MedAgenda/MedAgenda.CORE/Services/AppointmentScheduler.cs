@@ -12,10 +12,17 @@ namespace MedAgenda.CORE.Services
 {
     public class AppointmentScheduler : IDisposable
     {
-        private MedAgendaDbContext db = new MedAgendaDbContext();
+        private readonly IMedAgendaDbContext db;
 
-        public AppointmentModel CreateAppointment(PatientCheckModel check)
+        public AppointmentScheduler(IMedAgendaDbContext context)
         {
+            db = context;
+        }
+
+        public Appointment CreateAppointment(int patientCheckId)
+        {
+            PatientCheck check = db.PatientChecks.Find(patientCheckId);
+
             Patient dbPatient = db.Patients.Find(check.PatientID);
 
             Specialty preferredSpecialty = db.Specialties.FirstOrDefault(d => d.SpecialtyID == check.SpecialtyID);
@@ -53,7 +60,7 @@ namespace MedAgenda.CORE.Services
 
             db.Appointments.Add(appointment);
            
-            return Mapper.Map<AppointmentModel>(appointment);
+            return appointment;
         }
 
         /// <summary>
@@ -66,7 +73,9 @@ namespace MedAgenda.CORE.Services
             var specialty = db.Specialties.FirstOrDefault(d => d.SpecialtyName == specialtyName);
 
             var doctor = db.Doctors.Where(d => d.SpecialtyID == specialty.SpecialtyID &&
-                                                              d.IsCheckedIn).OrderBy(a => a.UpcomingAppointmentCount).FirstOrDefault();
+                                               d.IsCheckedIn)
+                                   .OrderBy(a => a.UpcomingAppointmentCount)
+                                   .FirstOrDefault();
             return doctor;
         }
 

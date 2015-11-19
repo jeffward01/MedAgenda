@@ -69,6 +69,7 @@
     <Compile Include="Domain\Patient.cs" />
     <Compile Include="Domain\PatientCheck.cs" />
     <Compile Include="Domain\Specialty.cs" />
+    <Compile Include="Infrastructure\IMedAgendaDbContext.cs" />
     <Compile Include="Infrastructure\MedAgendaDbContext.cs" />
     <Compile Include="Migrations\201511121811258_InitialCreate.cs" />
     <Compile Include="Migrations\201511121811258_InitialCreate.Designer.cs">

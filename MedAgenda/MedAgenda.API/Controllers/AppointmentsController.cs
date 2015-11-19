@@ -158,11 +158,10 @@ namespace MedAgenda.API.Controllers
 
             try
             {
-                using (var scheduler = new AppointmentScheduler())
+                using (var scheduler = new AppointmentScheduler(db))
                 {
-                    
-                   AppointmentModel appointment = scheduler.CreateAppointment(check);
-                    return Ok(appointment);
+                   Appointment appointment = scheduler.CreateAppointment(check.PatientCheckID);
+                    return Ok(Mapper.Map<AppointmentModel>(appointment));
                 }
 
             }
