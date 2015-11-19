@@ -26,6 +26,14 @@ namespace MedAgenda.CORE.Domain
         public virtual ICollection<DoctorCheck> DoctorChecks { get; set; }
         public virtual Specialty Specialty { get; set; }
 
+        public bool IsCheckedIn
+        {
+            get
+            {
+                return DoctorChecks.Count(a => !a.CheckoutDateTime.HasValue) > 0;
+            }
+        }
+
         public int UpcomingAppointmentCount
         {
             get

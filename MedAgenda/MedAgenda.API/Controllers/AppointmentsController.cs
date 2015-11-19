@@ -12,6 +12,7 @@ using MedAgenda.CORE.Domain;
 using MedAgenda.CORE.Infrastructure;
 using MedAgenda.CORE.Models;
 using AutoMapper;
+using MedAgenda.CORE.Services;
 
 namespace MedAgenda.API.Controllers
 {
@@ -159,8 +160,11 @@ namespace MedAgenda.API.Controllers
             {
                 using (var scheduler = new AppointmentScheduler())
                 {
-                    scheduler.CreateAppointment(check);
+                    
+                   AppointmentModel appointment = scheduler.CreateAppointment(check);
+                    return Ok(appointment);
                 }
+
             }
             catch (Exception)
             {
