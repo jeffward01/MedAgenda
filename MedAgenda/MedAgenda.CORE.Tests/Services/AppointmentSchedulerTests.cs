@@ -201,7 +201,7 @@ namespace MedAgenda.CORE.Tests.Services
                     ExamRoom = examRoom1,
                     Doctor = juliaSmithSurgeon
                 };
-
+                #endregion
             }
         }
 
