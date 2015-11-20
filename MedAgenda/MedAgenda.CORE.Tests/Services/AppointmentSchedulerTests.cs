@@ -115,5 +115,97 @@ namespace MedAgenda.CORE.Tests.Services
                 }
             }
         }
+
+        [TestMethod]
+        public void Patient16OverDoesNotGetPediatrician()
+        {
+            using (IMedAgendaDbContext db = new TestMedAgendaDbContext())
+            {
+                #region Add a patient over 16
+                Patient patient = db.Patients.Add(new Patient
+                {
+                    PatientID = 1,
+                    Birthdate = DateTime.Now.AddYears(-78),
+                    FirstName = "Old",
+                    LastName = "Man"
+                });
+                #endregion
+
+                #region Add some specialties
+                Specialty pediatricSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = 1,
+                    SpecialtyName = "Pediatrics"
+                });
+
+                Specialty neurologistSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = 2,
+                    SpecialtyName = "Neurologist"
+                });
+
+                Specialty surgeonSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = 3,
+                    SpecialtyName = "Surgeon"
+                });
+                #endregion
+
+                #region Add some doctors
+                Doctor johnSmithPediatrics = db.Doctors.Add(new Doctor
+                {
+                    DoctorID = 1,
+                    FirstName = "John",
+                    LastName = "Smith",
+                    SpecialtyID = pediatricSpecialty.SpecialtyID,
+                    Specialty = pediatricSpecialty
+                });
+
+                Doctor juliaSmithSurgeon = db.Doctors.Add(new Doctor
+                {
+                    DoctorID = 2,
+                    FirstName = "Julia",
+                    LastName = "Smith",
+                    SpecialtyID = surgeonSpecialty.SpecialtyID,
+                    Specialty = surgeonSpecialty
+                });
+                #endregion
+
+                #region Add an Exam Room
+
+                ExamRoom examRoom1 = db.ExamRooms.Add(new ExamRoom
+                {
+                    ExamRoomID = 1,
+                    ExamRoomName = "ExamRoom 1"
+                });
+                #endregion
+
+                #region Check in Doctors
+                // Check in the Pediatrician
+                var johnCheckIn = new DoctorCheck
+                {
+                    DoctorCheckID = 1,
+                    CheckinDateTime = DateTime.Now,
+                    DoctorID = 1,
+                    ExamRoomID = 1,
+                    ExamRoom = examRoom1,
+                    Doctor = johnSmithPediatrics
+                };
+                // Check in the Surgeon
+                var juliaCheckIn = new DoctorCheck
+                {
+                    DoctorCheckID = 2,
+                    CheckinDateTime = DateTime.Now,
+                    DoctorID = 2,
+                    ExamRoomID = 1,
+                    ExamRoom = examRoom1,
+                    Doctor = juliaSmithSurgeon
+                };
+
+            }
+        }
+
     }
+
+
 }
