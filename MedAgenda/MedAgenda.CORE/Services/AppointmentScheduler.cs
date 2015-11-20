@@ -44,7 +44,7 @@ namespace MedAgenda.CORE.Services
 
                 if (doctor == null)
                 {
-                    doctor = findCheckedInDoctor();
+                    doctor = findCheckedInDoctor(dbPatient);
                 }
             }
 
@@ -71,23 +71,43 @@ namespace MedAgenda.CORE.Services
         private Doctor findDoctorBySpecialty(string specialtyName)
         {
             var specialty = db.Specialties.FirstOrDefault(d => d.SpecialtyName == specialtyName);
-
-            var doctor = db.Doctors.Where(d => d.SpecialtyID == specialty.SpecialtyID &&
-                                               d.IsCheckedIn)
-                                   .OrderBy(a => a.UpcomingAppointmentCount)
-                                   .FirstOrDefault();
-            return doctor;
+            Doctor doctor = null;
+            if (specialty != null)
+            {
+                 doctor = db.Doctors.Where(d => d.SpecialtyID == specialty.SpecialtyID &&
+                                                   d.IsCheckedIn)
+                                       .OrderBy(a => a.UpcomingAppointmentCount)
+                                       .FirstOrDefault();
+                return doctor;
+            }
+            else
+            {
+                return doctor;
+            }
         }
 
         /// <summary>
         /// Finds a checked in doctor with the smallest amount of upcoming appointments
         /// </summary>
         /// <returns></returns>
-        private Doctor findCheckedInDoctor()
+        private Doctor findCheckedInDoctor(Patient patient)
         {
-            return db.Doctors.Where(d => d.IsCheckedIn == true)
+            var doctor = db.Doctors.Where(d => d.IsCheckedIn == true)
                              .OrderBy(ac => ac.UpcomingAppointmentCount)
                              .FirstOrDefault();
+
+            if(patient.Age >= 16 && doctor.Specialty.SpecialtyName == "Pediatrics")
+            {
+                 var newDoctor = db.Doctors.Where(d => d.IsCheckedIn == true && d.Specialty.SpecialtyName != "Pediatrics")
+                                             .OrderBy(ac => ac.UpcomingAppointmentCount)
+                                             .FirstOrDefault();
+                if(newDoctor == null)
+                {
+                    return doctor;
+                }
+                return newDoctor;
+            }
+            return doctor;
         }
         
         /// <summary>
@@ -135,7 +155,6 @@ namespace MedAgenda.CORE.Services
            return db.Appointments
                     .Count(ex => ex.ExamRoomID == examRoomID && 
                                  !ex.CheckoutDateTime.HasValue);
-
         }
 
         public void Dispose()

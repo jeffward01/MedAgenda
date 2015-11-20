@@ -100,6 +100,8 @@ namespace MedAgenda.CORE.Tests.Services
                     SpecialtyID = 2,
                     Specialty = armChopOff
                 });
+
+
                 #endregion
 
                 using (var scheduler = new AppointmentScheduler(db))
@@ -129,6 +131,8 @@ namespace MedAgenda.CORE.Tests.Services
                     FirstName = "Old",
                     LastName = "Man"
                 });
+
+               
                 #endregion
 
                 #region Add some specialties
@@ -149,6 +153,22 @@ namespace MedAgenda.CORE.Tests.Services
                     SpecialtyID = 3,
                     SpecialtyName = "Surgeon"
                 });
+                #endregion
+
+                #region Check in a patient
+
+                // Check in a patient
+                PatientCheck patientcheck = db.PatientChecks.Add(new PatientCheck
+                {
+                    PatientCheckID = 1,
+                    PatientID = 1,
+                    Patient = patient,
+                    CheckinDateTime = DateTime.Now,
+                    SpecialtyID = 2,
+                    Specialty = neurologistSpecialty
+                });
+
+
                 #endregion
 
                 #region Add some doctors
@@ -191,6 +211,9 @@ namespace MedAgenda.CORE.Tests.Services
                     ExamRoom = examRoom1,
                     Doctor = johnSmithPediatrics
                 };
+
+                johnSmithPediatrics.DoctorChecks.Add(johnCheckIn);
+                db.DoctorChecks.Add(johnCheckIn);
                 // Check in the Surgeon
                 var juliaCheckIn = new DoctorCheck
                 {
@@ -201,8 +224,25 @@ namespace MedAgenda.CORE.Tests.Services
                     ExamRoom = examRoom1,
                     Doctor = juliaSmithSurgeon
                 };
+
+                juliaSmithSurgeon.DoctorChecks.Add(juliaCheckIn);
+                db.DoctorChecks.Add(juliaCheckIn);
                 #endregion
+
+                using (var scheduler = new AppointmentScheduler(db))
+                {
+                    //ACT
+                    scheduler.CreateAppointment(patientcheck.PatientCheckID);
+
+                    //ASSERT
+                    Assert.IsTrue(db.Appointments.Count() > 0);
+                    var appointment = db.Appointments.First();
+
+                    Assert.IsTrue(appointment.PatientID == 1 && appointment.DoctorID == 2);
+                }
             }
+
+
         }
 
     }
