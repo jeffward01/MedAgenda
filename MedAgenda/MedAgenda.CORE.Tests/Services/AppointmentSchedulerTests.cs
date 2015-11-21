@@ -162,7 +162,7 @@ namespace MedAgenda.CORE.Tests.Services
 
                 int patientID16Over = 1;
 
-                int patientCheckIDOver16 = 1;
+                int patientCheckID16Over = 1;
 
                 int specialtyIDPediatrics = 1;
                 int specialtyIDNeurology = 2;
@@ -192,7 +192,7 @@ namespace MedAgenda.CORE.Tests.Services
                 Specialty neurologistSpecialty = db.Specialties.Add(new Specialty
                 {
                     SpecialtyID = specialtyIDNeurology,
-                    SpecialtyName = "Neurologist"
+                    SpecialtyName = "Neurology"
                 });
 
                 Specialty surgeonSpecialty = db.Specialties.Add(new Specialty
@@ -207,7 +207,7 @@ namespace MedAgenda.CORE.Tests.Services
                 // Check in a patient
                 PatientCheck patientcheck = db.PatientChecks.Add(new PatientCheck
                 {
-                    PatientCheckID = patientCheckIDOver16,
+                    PatientCheckID = patientCheckID16Over,
                     PatientID = patientID16Over,
                     Patient = patient,
                     CheckinDateTime = DateTime.Now,
@@ -308,7 +308,7 @@ namespace MedAgenda.CORE.Tests.Services
 
                 int patientID16Over = 1;
 
-                int patientCheckIDOver16 = 1;
+                int patientCheckID16Over = 1;
 
                 int specialtyIDCardiology = 1;
                 int specialtyIDSurgeon = 2;
@@ -344,7 +344,7 @@ namespace MedAgenda.CORE.Tests.Services
                 // Check in a patient
                 PatientCheck patientcheck = db.PatientChecks.Add(new PatientCheck
                 {
-                    PatientCheckID = patientCheckIDOver16,
+                    PatientCheckID = patientCheckID16Over,
                     PatientID = patientID16Over,
                     Patient = patient,
                     CheckinDateTime = DateTime.Now,
@@ -450,7 +450,7 @@ namespace MedAgenda.CORE.Tests.Services
                 int patientIDSurgeonMoreAppts = 3;
                 int patientIDSurgeonMoreApptsAnother = 4;
 
-                int patientCheckIDOver16 = 1;
+                int patientCheckID16Over = 1;
 
                 int specialtyIDSurgeon = 1;
               
@@ -506,7 +506,7 @@ namespace MedAgenda.CORE.Tests.Services
                 // Check in the patient over 16 with requested specialty surgeon
                 PatientCheck patientcheck = db.PatientChecks.Add(new PatientCheck
                 {
-                    PatientCheckID = patientCheckIDOver16,
+                    PatientCheckID = patientCheckID16Over,
                     PatientID = patientID16Over,
                     Patient = patient,
                     CheckinDateTime = DateTime.Now,
@@ -911,6 +911,224 @@ namespace MedAgenda.CORE.Tests.Services
 
                     Assert.IsTrue(appointment.PatientID == patientID16Over
                                     && appointment.DoctorID == doctorIDGeneralPractice);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void PatientUnder16GetsDoctorWithFewestApptsIfNoPediatricianAndNoGP()
+        {
+            using (IMedAgendaDbContext db = new TestMedAgendaDbContext())
+            {
+                int appointmentIDNeurologistFewerAppts = 1;
+                int appointmentIDSurgeonMoreAppts = 2;
+                int appointmentIDSurgeonMoreApptsAnother = 3;
+
+                int doctorIDSurgeonMoreAppts = 1;
+                int doctorIDNeurologistFewerAppts = 2;
+
+                int doctorCheckIDSurgeonMoreAppts = 1;
+                int doctorCheckIDNeurologistFewerAppts = 2;
+
+                int examRoomIDForTest = 1;
+
+                int patientIDUnder16 = 1;
+                int patientIDNeurologistFewerAppts = 2;
+                int patientIDSurgeonMoreAppts = 3;
+                int patientIDSurgeonMoreApptsAnother = 4;
+
+                int patientCheckIDUnder16 = 1;
+
+                int specialtyIDSurgeon = 1;
+                int specialtyIDNeurology = 2;
+
+                #region Add some patients
+                // Patient under 16
+                Patient patient = db.Patients.Add(new Patient
+                {
+                    PatientID = patientIDUnder16,
+                    Birthdate = DateTime.Now.AddYears(-8),
+                    FirstName = "Young",
+                    LastName = "Ster"
+                });
+
+                // Patients to be used in appointments
+                Patient patientNeurologistFewerAppts = db.Patients.Add(new Patient
+                {
+                    PatientID = patientIDNeurologistFewerAppts,
+                    Birthdate = DateTime.Now.AddYears(-68),
+                    FirstName = "Ima",
+                    LastName = "Patient"
+                });
+
+                Patient patientSurgeonMoreAppts = db.Patients.Add(new Patient
+                {
+                    PatientID = patientIDSurgeonMoreAppts,
+                    Birthdate = DateTime.Now.AddYears(-48),
+                    FirstName = "Ineeda",
+                    LastName = "Doctor"
+                });
+
+                Patient patientSurgeonMoreApptsAnother = db.Patients.Add(new Patient
+                {
+                    PatientID = patientIDSurgeonMoreApptsAnother,
+                    Birthdate = DateTime.Now.AddYears(-58),
+                    FirstName = "Iwanta",
+                    LastName = "Doctor"
+                });
+
+                #endregion
+
+                #region Add some specialties
+
+                Specialty surgeonSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = specialtyIDSurgeon,
+                    SpecialtyName = "Surgeon"
+                });
+
+                Specialty neurologistSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = specialtyIDNeurology,
+                    SpecialtyName = "Neurology"
+                });
+                #endregion
+
+                #region Check in a patient
+
+                // Check in the patient under 16 with requested specialty surgeon
+                PatientCheck patientcheck = db.PatientChecks.Add(new PatientCheck
+                {
+                    PatientCheckID = patientCheckIDUnder16,
+                    PatientID = patientIDUnder16,
+                    Patient = patient,
+                    CheckinDateTime = DateTime.Now,
+                    SpecialtyID = specialtyIDSurgeon,
+                    Specialty = surgeonSpecialty
+                });
+                #endregion
+
+                #region Add some doctors
+
+                // Add a surgeon
+                Doctor johnSmithSurgeonMoreAppts = db.Doctors.Add(new Doctor
+                {
+                    DoctorID = doctorIDSurgeonMoreAppts,
+                    FirstName = "John",
+                    LastName = "Smith",
+                    SpecialtyID = surgeonSpecialty.SpecialtyID,
+                    Specialty = surgeonSpecialty
+                });
+
+                // Add a neurologist
+                Doctor juliaSmithNeurologistFewerAppts = db.Doctors.Add(new Doctor
+                {
+                    DoctorID = doctorIDNeurologistFewerAppts,
+                    FirstName = "Julia",
+                    LastName = "Smith",
+                    SpecialtyID = neurologistSpecialty.SpecialtyID,
+                    Specialty = neurologistSpecialty
+                });
+                #endregion
+
+                #region Add an Exam Room
+
+                ExamRoom examRoom = db.ExamRooms.Add(new ExamRoom
+                {
+                    ExamRoomID = examRoomIDForTest,
+                    ExamRoomName = "ExamRoom 1"
+                });
+                #endregion
+
+                #region Check in Doctors
+                // Check in both doctors
+                var johnSmithSurgeonMoreApptsCheckIn = new DoctorCheck
+                {
+                    DoctorCheckID = doctorCheckIDSurgeonMoreAppts,
+                    CheckinDateTime = DateTime.Now,
+                    DoctorID = doctorIDSurgeonMoreAppts,
+                    ExamRoomID = examRoomIDForTest,
+                    ExamRoom = examRoom,
+                    Doctor = johnSmithSurgeonMoreAppts
+                };
+
+                johnSmithSurgeonMoreAppts.DoctorChecks.Add(johnSmithSurgeonMoreApptsCheckIn);
+                db.DoctorChecks.Add(johnSmithSurgeonMoreApptsCheckIn);
+
+                var juliaSmithNeurologistFewerApptsCheckIn = new DoctorCheck
+                {
+                    DoctorCheckID = doctorCheckIDNeurologistFewerAppts,
+                    CheckinDateTime = DateTime.Now,
+                    DoctorID = doctorIDNeurologistFewerAppts,
+                    ExamRoomID = examRoomIDForTest,
+                    ExamRoom = examRoom,
+                    Doctor = juliaSmithNeurologistFewerAppts
+                };
+
+                juliaSmithNeurologistFewerAppts.DoctorChecks.Add(juliaSmithNeurologistFewerApptsCheckIn);
+                db.DoctorChecks.Add(juliaSmithNeurologistFewerApptsCheckIn);
+                #endregion
+
+                #region Create appointments
+
+
+                // Create 1 appointment for the neurologist, and 2 appointments for the surgeon
+                var juliaNeurologistFewerApptsAppointment = new Appointment
+                {
+                    AppointmentID = appointmentIDNeurologistFewerAppts,
+                    PatientID = patientIDNeurologistFewerAppts,
+                    DoctorID = doctorIDNeurologistFewerAppts,
+                    ExamRoomID = examRoomIDForTest,
+                    CheckinDateTime = DateTime.Now.AddHours(-1),
+                    Doctor = juliaSmithNeurologistFewerAppts,
+                    ExamRoom = examRoom,
+                    Patient = patientNeurologistFewerAppts
+                };
+                juliaSmithNeurologistFewerAppts.Appointments.Add(juliaNeurologistFewerApptsAppointment);
+                db.Appointments.Add(juliaNeurologistFewerApptsAppointment);
+
+                var johnSurgeonMoreApptsAppointment = new Appointment
+                {
+                    AppointmentID = appointmentIDSurgeonMoreAppts,
+                    PatientID = patientIDSurgeonMoreAppts,
+                    DoctorID = doctorIDSurgeonMoreAppts,
+                    ExamRoomID = examRoomIDForTest,
+                    CheckinDateTime = DateTime.Now.AddHours(-2),
+                    Doctor = johnSmithSurgeonMoreAppts,
+                    ExamRoom = examRoom,
+                    Patient = patientSurgeonMoreAppts
+                };
+                johnSmithSurgeonMoreAppts.Appointments.Add(johnSurgeonMoreApptsAppointment);
+                db.Appointments.Add(johnSurgeonMoreApptsAppointment);
+
+                var johnSurgeonMoreApptsAppointmentAnother = new Appointment
+                {
+                    AppointmentID = appointmentIDSurgeonMoreApptsAnother,
+                    PatientID = patientIDSurgeonMoreApptsAnother,
+                    DoctorID = doctorIDSurgeonMoreAppts,
+                    ExamRoomID = examRoomIDForTest,
+                    CheckinDateTime = DateTime.Now.AddHours(-1),
+                    Doctor = johnSmithSurgeonMoreAppts,
+                    ExamRoom = examRoom,
+                    Patient = patientSurgeonMoreApptsAnother
+                };
+                johnSmithSurgeonMoreAppts.Appointments.Add(johnSurgeonMoreApptsAppointmentAnother);
+                db.Appointments.Add(johnSurgeonMoreApptsAppointmentAnother);
+
+                #endregion
+
+                using (var scheduler = new AppointmentScheduler(db))
+                {
+                    //ACT
+                    scheduler.CreateAppointment(patientcheck.PatientCheckID);
+
+                    //ASSERT
+                    Assert.IsTrue(db.Appointments.Count() > 0);
+                    var appointment = db.Appointments.Last();
+
+                    // Verify that the patient is assigned to surgeon with fewer appointments
+                    Assert.IsTrue(appointment.PatientID == patientIDUnder16
+                                    && appointment.DoctorID == doctorIDNeurologistFewerAppts);
                 }
             }
         }
