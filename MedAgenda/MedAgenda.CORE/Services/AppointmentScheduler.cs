@@ -72,18 +72,18 @@ namespace MedAgenda.CORE.Services
         {
             var specialty = db.Specialties.FirstOrDefault(d => d.SpecialtyName == specialtyName);
             Doctor doctor = null;
+
+            // If specialty was found in specialty table, then search for checked-in doctor
+            //   with that specialty with lowest number of upcoming appointments
             if (specialty != null)
             {
                  doctor = db.Doctors.Where(d => d.SpecialtyID == specialty.SpecialtyID &&
                                                    d.IsCheckedIn)
                                        .OrderBy(a => a.UpcomingAppointmentCount)
                                        .FirstOrDefault();
-                return doctor;
-            }
-            else
-            {
-                return doctor;
-            }
+               
+            }           
+            return doctor;
         }
 
         /// <summary>
@@ -96,16 +96,17 @@ namespace MedAgenda.CORE.Services
                              .OrderBy(ac => ac.UpcomingAppointmentCount)
                              .FirstOrDefault();
 
+            // If patient is 16 or over, do not assign a pediatrician unless 
+            //   there are no other checked-in doctors with a different specialty
             if(patient.Age >= 16 && doctor.Specialty.SpecialtyName == "Pediatrics")
             {
                  var newDoctor = db.Doctors.Where(d => d.IsCheckedIn == true && d.Specialty.SpecialtyName != "Pediatrics")
                                              .OrderBy(ac => ac.UpcomingAppointmentCount)
                                              .FirstOrDefault();
-                if(newDoctor == null)
+                if(newDoctor != null)
                 {
-                    return doctor;
-                }
-                return newDoctor;
+                    doctor = newDoctor;
+                }               
             }
             return doctor;
         }
