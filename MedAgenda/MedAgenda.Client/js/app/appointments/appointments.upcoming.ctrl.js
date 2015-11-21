@@ -1,3 +1,11 @@
 ﻿angular.module('app').controller('ApptUpcomingController', function ($rootScope, $scope, Upcoming) {
-    $scope.appointments = Upcoming.query();
+    
+    $scope.load = function () {
+        $scope.loading = true;
+        $scope.appointments = Upcoming.query(function () {
+            $scope.loading = false;
+        });
+    };
+
+    $scope.load();
 });
