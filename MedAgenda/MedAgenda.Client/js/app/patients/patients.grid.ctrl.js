@@ -11,7 +11,7 @@
 
             });
         }
-        toastr.error('Tenant entry was erased!', 'Tenant Erased!');
+        toastr.error('Patient entry was erased!', 'Patient Erased!');
         }
     
 });

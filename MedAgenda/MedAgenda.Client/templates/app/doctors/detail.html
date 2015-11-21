@@ -1,6 +1,69 @@
-﻿<form>
+﻿<div class="row">
+    <div class="col-xs-10 center-margin">
+        <div class="panel panel-primary">
+            <div class="panel-heading"> {{doctor.DoctorID ? 'Edit' : 'Add'}} Doctor</div>
+            <div class="panel-body">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="doctorFirstName">First Name</label>
+                                <input type="text" class="form-control" id="patientFirstName"
+                                       placeholder="Doctor First Name" ng-model="doctor.FirstName">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="doctor.LastName">Last Name</label>
+                                <input type="text" class="form-control" id="doctorLastName"
+                                       placeholder="Doctor Last Name" ng-model="doctor.LastName">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                    </div><!-- end row -->
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="doctorTelephone">Telephone</label>
+                                <input type="tel" class="form-control" id="doctorTelephone"
+                                       placeholder="Telephone" ng-model="doctor.Telephone">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="doctorEmail">Email Address</label>
+                                <input type="email" class="form-control" id="doctorEmail"
+                                       placeholder="Email Address" ng-model="doctor.Email">
+                            </div><!-- end form group -->
+                        </div><!-- end column -->
+                    </div>
+                    <div class="row">
+                        <div class="dropdown col-xs-12">
+                            <label class="control-label" for="doctorFirstName">Specialties</label>
+                            <select id="doctorSpecialty" class="form-control"
+                                    ng-options="specialty.SpecialtyId as specialty.SpecialtyName for specialty in specialties"
+                                    ng-model="doctor.SpecialtyId"></select>
+                        </div>
+                    </div>
+                    <div class="spacer10"></div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <button class="btn btn-success btn-sm pull-right" ng-click="saveDoctor()">
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                            <button class="btn btn-danger btn-sm pull-right" ui-sref="app.doctors.grid">
+                                <i class="fa fa-remove fa-fw"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <form>
 <div class="dropdown">
-   
+
     <select id="doctorSpecialty" class="form-control"
             ng-options="specialty.SpecialtyId as specialty.SpecialtyName for specialty in specialties"
             ng-model="doctor.SpecialtyId"></select>
@@ -21,9 +84,8 @@
     <label for="exampleInputEmail1">Email address</label>
     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="doctor.Email">
   </div>
-  <div class="form-group">
-    <label for="exampleInputTelephone">Telephone</label>
-    <input type="telephone" class="form-control" id="exampleInputTelephone" placeholder="Telephone" ng-model="doctor.Telephone">
-  </div>
    <button type="save" class="btn btn-default">Save</button>
+    <button ng-hide="doctor.IsCheckedIn">Check In</button>
+    <button ng-show="doctor.IsCheckedIn">Check Out</button>
   </form>
+    -->

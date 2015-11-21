@@ -1,5 +1,5 @@
 ﻿angular.module('app').controller('DoctorsGridController', function($rootScope, Doctor, $scope) {
-
+    $rootScope.$broadcast('change-page-title', { title: 'Doctors' });
 
     $scope.load = function () {
         $scope.loading = true;
