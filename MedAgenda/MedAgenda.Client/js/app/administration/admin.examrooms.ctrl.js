@@ -1,10 +1,16 @@
 ﻿angular.module('app').controller('AdminExamController', function ($rootScope, $scope, ExamRoom) {   
 
-    $rootScope.$broadcast('change-page-title', { title: 'Administration: Manage Exam Rooms' });
-
-    $scope.examRooms = ExamRoom.query();
+    $rootScope.$broadcast('change-page-title', { title: 'Administration: Manage Exam Rooms' });   
 
     $scope.examRoom = new ExamRoom();
+
+    // Load exam room table, setting loading indicator while loading
+    $scope.load = function () {
+        $scope.loading = true;
+        $scope.examRooms = ExamRoom.query(function () {
+            $scope.loading = false;
+        });
+    };
 
     // <Save> clicked to save new exam room 
     $scope.saveExamRoom = function () {
@@ -51,5 +57,8 @@
             });
         }
     }
+
+    // After all definitions, load the exam room table
+    $scope.load();
 
 });

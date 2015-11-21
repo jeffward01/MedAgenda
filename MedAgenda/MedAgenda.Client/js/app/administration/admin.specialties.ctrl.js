@@ -2,9 +2,15 @@
 
     $rootScope.$broadcast('change-page-title', { title: 'Administration: Manage Specialties' });
 
-    $scope.specialties = Specialty.query();
-
     $scope.specialty = new Specialty();
+
+    // Load specialty table, setting loading indicator while loading
+    $scope.load = function () {
+        $scope.loading = true;
+        $scope.specialties = Specialty.query(function () {
+            $scope.loading = false;
+        });
+    };
 
     // <Save> clicked to save new specialty 
     $scope.saveSpecialty = function () {
@@ -53,5 +59,8 @@
             });
         }
     }
+
+    // After all definitions, load the specialty table
+    $scope.load();
     
 });
