@@ -48,7 +48,7 @@
                             <td>{{data.selectedPatient.BloodType}}</td>
                             <td>
                                 <ui-select ng-model="newPatientCheckIn.SpecialtyID" theme="select2" style="width: 100%">
-                                    <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.SpecialtyName}}</ui-select-match>
+                                    <ui-select-match placeholder="Select or search a specialty in the list...">{{$select.selected.SpecialtyName}}</ui-select-match>
                                     <ui-select-choices repeat="item.SpecialtyID as item in allSpecialties | filter: $select.search">
                                         <span ng-bind-html="item.SpecialtyName | highlight: $select.search"></span>
                                     </ui-select-choices>
