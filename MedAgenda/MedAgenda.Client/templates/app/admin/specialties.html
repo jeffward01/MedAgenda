@@ -1,7 +1,10 @@
-﻿
-<div class="row">
-    <div class="col-sm-6">
-        <!-- column for specialty table -->
+﻿<div ng-class="{hide: !loading}">
+    <!-- loading mask -->
+    <span us-spinner></span>
+</div>
+<div class="row" ng-class="{hide: loading}">
+    <!-- loaded content -->
+    <div class="col-sm-6"><!-- column for specialty table -->        
         <div ng-hide="specialties.length">
             <div class="spacer10 hidden-xs"></div>
             <div class="alert alert-info">

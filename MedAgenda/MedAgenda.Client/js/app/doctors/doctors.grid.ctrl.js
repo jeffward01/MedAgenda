@@ -13,6 +13,7 @@
         if (confirm('Are you sure you want to delete this doctor?')) {
             Doctor.delete({ id: doctor.DoctorId }, function (data) {
                 $scope.doctor = Doctor.query();
+                toastr.error('Doctor entry was erased!', 'Doctor Erased!');
             });
         }
     };
