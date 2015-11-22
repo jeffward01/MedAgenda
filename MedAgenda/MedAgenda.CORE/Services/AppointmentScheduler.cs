@@ -28,7 +28,10 @@ namespace MedAgenda.CORE.Services
             Specialty preferredSpecialty = db.Specialties.FirstOrDefault(d => d.SpecialtyID == check.SpecialtyID);
 
             Doctor doctor = null;
+            Appointment appointment = null;
 
+            // If patient is under 16, search for pediatrician,
+            //  otherwise look for requested specialty
             if (dbPatient.Age < 16)
             {
                 doctor = findDoctorBySpecialty("Pediatrics");
@@ -38,6 +41,8 @@ namespace MedAgenda.CORE.Services
                 doctor = findDoctorBySpecialty(preferredSpecialty.SpecialtyName);
             }
 
+            // If no doctor found, search for a GP;
+            //  if none found, search for any available doctor
             if (doctor == null)
             {
                 doctor = findDoctorBySpecialty("General Practice");
@@ -48,18 +53,26 @@ namespace MedAgenda.CORE.Services
                 }
             }
 
-            ExamRoom examRoom = examRoomDoctorMatcher(doctor);
-
-            var appointment = new Appointment
+            // If doctor was found, get the exam room for the appointment
+            if (doctor != null)
             {
-                DoctorID = doctor.DoctorID,
-                PatientID = dbPatient.PatientID,
-                ExamRoomID = examRoom.ExamRoomID,
-                CheckinDateTime = check.CheckinDateTime
-            };
+                ExamRoom examRoom = examRoomDoctorMatcher(doctor);
 
-            db.Appointments.Add(appointment);
-           
+                // If exam room was found, create the appointment
+                if (examRoom != null)
+                {
+                    appointment = new Appointment
+                    {
+                        DoctorID = doctor.DoctorID,
+                        PatientID = dbPatient.PatientID,
+                        ExamRoomID = examRoom.ExamRoomID,
+                        CheckinDateTime = check.CheckinDateTime
+                    };
+
+                    db.Appointments.Add(appointment);
+                }
+            } 
+                      
             return appointment;
         }
 
@@ -77,12 +90,12 @@ namespace MedAgenda.CORE.Services
             //   with that specialty with lowest number of upcoming appointments
             if (specialty != null)
             {
-                 doctor = db.Doctors.Where(d => d.SpecialtyID == specialty.SpecialtyID &&
-                                                   d.IsCheckedIn)
-                                       .OrderBy(a => a.UpcomingAppointmentCount)
-                                       .FirstOrDefault();
-               
-            }           
+                doctor = db.Doctors.Where(d => d.SpecialtyID == specialty.SpecialtyID &&
+                                                  d.IsCheckedIn)
+                                      .OrderBy(a => a.UpcomingAppointmentCount)
+                                      .FirstOrDefault();
+
+            }
             return doctor;
         }
 
@@ -112,10 +125,10 @@ namespace MedAgenda.CORE.Services
                     }
                 }
             }
-            
+
             return doctor;
         }
-        
+
         /// <summary>
         /// Finds an exam room based on a doctors preference - or the next available exam room.
         /// </summary>
@@ -124,29 +137,39 @@ namespace MedAgenda.CORE.Services
         private ExamRoom examRoomDoctorMatcher(Doctor doctor)
         {
             var currentCheckin = db.DoctorChecks
-                                   .Where(dc => dc.DoctorID == doctor.DoctorID && 
+                                   .Where(dc => dc.DoctorID == doctor.DoctorID &&
                                                 !dc.CheckoutDateTime.HasValue)
-                                   .LastOrDefault();            
-            // If no checkin records find, look for any exam room
+                                   .LastOrDefault();
+            // If no checkin records found, look for any exam room
             if (currentCheckin == null)
             {
                 return findAvailableExamRoom();
             }
             else
-            // If there are upcoming appointments for preferred exam room,
-            //  find the exam room with the fewest upcoming appointments
+            // Return the preferred exam room if it has no upcoming appointments
             {
-                if (upcomingAppointmentsForExamRoom(currentCheckin.ExamRoomID) > 0)
-                {
-                    return findAvailableExamRoomExclude(currentCheckin.ExamRoomID);
-                }
-                else
+                if (upcomingAppointmentsForExamRoom(currentCheckin.ExamRoomID) == 0)
                 {
                     return currentCheckin.ExamRoom;
                 }
-            }             
+                else
+                {
+                    // Find the exam room with the fewest upcoming appointments,
+                    //  excluding the preferred exam room, but if no exam room found,
+                     //  then search for any available exam room
+                    var examRoom = findAvailableExamRoomExclude(currentCheckin.ExamRoomID);
+                    if (examRoom != null)
+                    {
+                        return examRoom;                        
+                    }
+                    else
+                    {
+                        return findAvailableExamRoom();
+                    }
+                }
+            }
         }
-       
+
         /// <summary>
         /// Find any exam room with least number of upcoming appointments
         /// </summary>
@@ -167,7 +190,7 @@ namespace MedAgenda.CORE.Services
         private ExamRoom findAvailableExamRoomExclude(int examRoomID)
         {
             // exam rooms ordered by number of upcoming appointments
-            var examRooms = db.ExamRooms.Where(e=>e.ExamRoomID != examRoomID)
+            var examRooms = db.ExamRooms.Where(e => e.ExamRoomID != examRoomID)
                     .OrderBy(e => e.Appointments.Count(a => !a.CheckoutDateTime.HasValue));
 
             var examRoom = examRooms.FirstOrDefault();
@@ -184,9 +207,9 @@ namespace MedAgenda.CORE.Services
         /// <returns></returns>
         private int upcomingAppointmentsForExamRoom(int examRoomID)
         {
-           return db.Appointments
-                    .Count(ex => ex.ExamRoomID == examRoomID && 
-                                 !ex.CheckoutDateTime.HasValue);
+            return db.Appointments
+                     .Count(ex => ex.ExamRoomID == examRoomID &&
+                                  !ex.CheckoutDateTime.HasValue);
         }
 
         public void Dispose()
