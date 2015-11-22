@@ -1,4 +1,15 @@
-<div>
+<div ng-class="{hide: !loading}">
+    <!-- loading mask -->
+    <span us-spinner></span>
+</div>
+<div ng-class="{hide: loading}">
+    <!-- loaded content -->
+    <div class="clearfix">
+        <a class="btn btn-success btn-md pull-right" ui-sref="app.doctors.detail">
+            <i class="fa fa-plus"> Add Doctor</i>
+        </a>
+    </div>
+
     <div ng-hide="doctors.length">
         <div class="spacer10 hidden-xs-4"></div>
         <div class="alert alert-info">
@@ -13,7 +24,7 @@
                 <th>Telephone</th>
                 <th>Specialty</th>
                 <th>Appointments Today</th>
-                <th></th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -23,14 +34,18 @@
                 <td>{{doctor.Telephone}}</td>
                 <td>{{doctor.Specialty.SpecialtyName}}</td>
                 <td>{{doctor.UpcomingAppointmentCount}}</td>
-                <td>
-                    <button ng-hide="doctor.IsCheckedIn">Check In</button>
-                    <button ng-show="doctor.IsCheckedIn">Check Out</button>
-                    <a class="btn btn-info btn-xs" ui-sref="app.doctors.detail({id: doctor.DoctorID})">
-                        <i class="fa fa-edit fa-fw"></i>
+                <td>                                  
+                    <a class="btn btn-default btn-xs" ui-sref="app.doctors.detail({ id: doctor.PatientID })">
+                        <i class="fa fa-pencil fa-fw"></i>
                     </a>
-                    <a class="btn btn-danger btn-xs" ng-click="deleteDoctor(doctor);">
-                        <i class="fa fa-remove"></i>
+                    <a class="btn btn-danger btn-xs" ng-click="deleteDoctor(doctor)">
+                        <i class="fa fa-trash-o fa-fw"></i>
+                    </a>
+                    <a class="btn btn-info btn-xs" ng-click="checkInDocotr(doctor)">
+                        <i class="fa fa-check-square-o fa-fw"></i>
+                    </a>
+                    <a class="btn btn-warning btn-xs" ng-click="checkOutDoctor(doctor)">
+                        <i class="fa fa-sign-out fa-fw"></i>
                     </a>
                 </td>
             </tr>

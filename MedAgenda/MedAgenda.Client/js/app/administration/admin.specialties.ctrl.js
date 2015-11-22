@@ -2,9 +2,15 @@
 
     $rootScope.$broadcast('change-page-title', { title: 'Administration: Manage Specialties' });
 
-    $scope.specialties = Specialty.query();
-
     $scope.specialty = new Specialty();
+
+    // Load specialty table, setting loading indicator while loading
+    $scope.load = function () {
+        $scope.loading = true;
+        $scope.specialties = Specialty.query(function () {
+            $scope.loading = false;
+        });
+    };
 
     // <Save> clicked to save new specialty 
     $scope.saveSpecialty = function () {
@@ -18,7 +24,7 @@
         // Save the new specialty in the database
         $scope.specialty.$save(function () {
             toastr.success('Specialty: ' + $scope.specialty.SpecialtyName +
-                ' was added successfully');
+                ' was added successfully', 'Specialty Added');
 
             // Add the new specialty in the displayed list,
             // by allocating a new object for the new specialty and pushing it to the list
@@ -35,7 +41,7 @@
 
         },
         function (error) {            
-            toastr.error(error.data.ExceptionMessage);
+            toastr.error(error.data.ExceptionMessage, 'Error Adding Specialty');
         });
     };
 
@@ -45,13 +51,17 @@
             Specialty.delete({ id: specialtyToDelete.SpecialtyID }, function (data) {
                 var index = $scope.specialties.indexOf(specialtyToDelete);
                 $scope.specialties.splice(index, 1);
-                toastr.success('Specialty: ' +
-                                specialtyToDelete.SpecialtyName + ' was deleted successfully');
+                toastr.error('Specialty: ' +
+                                specialtyToDelete.SpecialtyName + ' was erased!',
+                                    'Specialty Erased!');
             },
             function (error) {
-                toastr.error(error.data.ExceptionMessage);
+                toastr.error(error.data.ExceptionMessage, 'Error Deleting Specialty');
             });
         }
     }
+
+    // After all definitions, load the specialty table
+    $scope.load();
     
 });

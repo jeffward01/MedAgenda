@@ -1,7 +1,10 @@
-﻿
-<div class="row">
-    <div class="col-sm-6">
-        <!-- column for specialty table -->
+﻿<div ng-class="{hide: !loading}">
+    <!-- loading mask -->
+    <span us-spinner></span>
+</div>
+<div class="row" ng-class="{hide: loading}">
+    <!-- loaded content -->
+    <div class="col-sm-6"><!-- column for specialty table -->        
         <div ng-hide="specialties.length">
             <div class="spacer10 hidden-xs"></div>
             <div class="alert alert-info">
@@ -21,7 +24,7 @@
                     <td>{{specialty.SpecialtyName}}</td>
                     <td>
                         <a class="btn btn-danger btn-xs" ng-click="deleteSpecialty(specialty)">
-                            <i class="fa fa-remove fa-fw"></i>
+                            <i class="fa fa-trash-o fa-fw"></i>
                         </a>
                     </td>
                 </tr>

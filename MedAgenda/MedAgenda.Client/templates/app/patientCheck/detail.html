@@ -1,8 +1,8 @@
 <div class="container">
-    <h1 id="CheckTitle"> Patient Check IN</h1>
+    <h1 id="CheckTitle"> Patient Check In</h1>
 
     <div class="form-group">
-        <div class="row">
+        <div class="row clearfix">
         
                 <h2>Locate Patient:</h2>
             
@@ -17,6 +17,10 @@
                     </ui-select>
                 </div>
             </div>
+            <div class="col-md-2 col-lg-2 pull-right">                
+                <a ui-sref="app.patients.detail"><button type="button" class="btn btn-warning">Add New Patient</button></a>        
+            </div>
+
         </div>
 
 
@@ -48,7 +52,7 @@
                             <td>{{data.selectedPatient.BloodType}}</td>
                             <td>
                                 <ui-select ng-model="newPatientCheckIn.SpecialtyID" theme="select2" style="width: 100%">
-                                    <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.SpecialtyName}}</ui-select-match>
+                                    <ui-select-match placeholder="Select or search a specialty in the list...">{{$select.selected.SpecialtyName}}</ui-select-match>
                                     <ui-select-choices repeat="item.SpecialtyID as item in allSpecialties | filter: $select.search">
                                         <span ng-bind-html="item.SpecialtyName | highlight: $select.search"></span>
                                     </ui-select-choices>
