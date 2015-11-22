@@ -25,5 +25,9 @@ namespace MedAgenda.CORE.Models
         public int UpcomingAppointmentCount { get; set; }
 
         public SpecialtyModel Specialty { get; set; }
+
+        public bool IsCheckedIn { get; set; }
+            
     }
+
 }
