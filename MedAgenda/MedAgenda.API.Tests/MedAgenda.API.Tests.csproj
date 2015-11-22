@@ -108,6 +108,11 @@
     <Compile Include="ControllerTests\ExamRoomControllerTest.cs" />
     <Compile Include="ControllerTests\SpecialtyControllerTests.cs" />
     <Compile Include="Infrastructure\BaseTest.cs" />
+    <Compile Include="Infrastructure\TestDbAsyncEnumerable.cs" />
+    <Compile Include="Infrastructure\TestDbAsyncEnumerator.cs" />
+    <Compile Include="Infrastructure\TestDbAsyncQueryProvider.cs" />
+    <Compile Include="Infrastructure\TestDbSet.cs" />
+    <Compile Include="Infrastructure\TestMedAgendaDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

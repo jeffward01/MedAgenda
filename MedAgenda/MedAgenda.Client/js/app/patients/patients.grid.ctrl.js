@@ -13,10 +13,10 @@
             Patient.delete({ id: patient.PatientID }, function (data) {
                 var index = $scope.patients.indexOf(patient)
                 $scope.patients.splice(index, 1);
-
+                toastr.error('Patient entry was erased!', 'Patient Erased!');
             });
         }
-        toastr.error('Tenant entry was erased!', 'Tenant Erased!');
+        
     }
 
     $scope.load();

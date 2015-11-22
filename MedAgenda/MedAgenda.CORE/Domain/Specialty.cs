@@ -9,6 +9,12 @@ namespace MedAgenda.CORE.Domain
 {
     public class Specialty
     {
+        public Specialty()
+        {
+            Doctors = new HashSet<Doctor>();
+            PatientChecks = new HashSet<PatientCheck>();
+        }
+
         public int SpecialtyID { get; set; }
         public string SpecialtyName { get; set; }
 

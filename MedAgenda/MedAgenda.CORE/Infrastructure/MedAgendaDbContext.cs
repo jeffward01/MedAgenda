@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MedAgenda.CORE.Infrastructure
 {
-    public class MedAgendaDbContext : IdentityDbContext
+    public class MedAgendaDbContext : IdentityDbContext, IMedAgendaDbContext
     {
         public MedAgendaDbContext () : base("MedAgenda")
         {

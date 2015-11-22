@@ -12,6 +12,7 @@ using MedAgenda.CORE.Domain;
 using MedAgenda.CORE.Infrastructure;
 using MedAgenda.CORE.Models;
 using AutoMapper;
+using MedAgenda.CORE.Services;
 
 namespace MedAgenda.API.Controllers
 {
@@ -146,6 +147,30 @@ namespace MedAgenda.API.Controllers
 
             return Ok(Mapper.Map<AppointmentModel>(appointment));
         }
+
+        [Route("api/appointments/schedule")]
+        public IHttpActionResult ScheduleAppointment(PatientCheckModel check)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                using (var scheduler = new AppointmentScheduler(db))
+                {
+                   Appointment appointment = scheduler.CreateAppointment(check.PatientCheckID);
+                    return Ok(Mapper.Map<AppointmentModel>(appointment));
+                }
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("Unable to schedule the appointment");
+            }
+        }
+
 
 
 
