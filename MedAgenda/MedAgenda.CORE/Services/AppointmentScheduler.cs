@@ -92,22 +92,27 @@ namespace MedAgenda.CORE.Services
         /// <returns></returns>
         private Doctor findCheckedInDoctor(Patient patient)
         {
-            var doctor = db.Doctors.Where(d => d.IsCheckedIn == true)
+            Doctor doctor = null;
+
+            doctor = db.Doctors.Where(d => d.IsCheckedIn == true)
                              .OrderBy(ac => ac.UpcomingAppointmentCount)
                              .FirstOrDefault();
-
-            // If patient is 16 or over, do not assign a pediatrician unless 
-            //   there are no other checked-in doctors with a different specialty
-            if(patient.Age >= 16 && doctor.Specialty.SpecialtyName == "Pediatrics")
+            if (doctor != null)
             {
-                 var newDoctor = db.Doctors.Where(d => d.IsCheckedIn == true && d.Specialty.SpecialtyName != "Pediatrics")
-                                             .OrderBy(ac => ac.UpcomingAppointmentCount)
-                                             .FirstOrDefault();
-                if(newDoctor != null)
+                // If patient is 16 or over, do not assign a pediatrician unless 
+                //   there are no other checked-in doctors with a different specialty
+                if (patient.Age >= 16 && doctor.Specialty.SpecialtyName == "Pediatrics")
                 {
-                    doctor = newDoctor;
-                }               
+                    var newDoctor = db.Doctors.Where(d => d.IsCheckedIn == true && d.Specialty.SpecialtyName != "Pediatrics")
+                                                .OrderBy(ac => ac.UpcomingAppointmentCount)
+                                                .FirstOrDefault();
+                    if (newDoctor != null)
+                    {
+                        doctor = newDoctor;
+                    }
+                }
             }
+            
             return doctor;
         }
         
@@ -121,27 +126,53 @@ namespace MedAgenda.CORE.Services
             var currentCheckin = db.DoctorChecks
                                    .Where(dc => dc.DoctorID == doctor.DoctorID && 
                                                 !dc.CheckoutDateTime.HasValue)
-                                   .LastOrDefault();
-
-            if (upcomingAppointmentsForExamRoom(currentCheckin.ExamRoomID) > 0)
+                                   .LastOrDefault();            
+            // If no checkin records find, look for any exam room
+            if (currentCheckin == null)
             {
                 return findAvailableExamRoom();
             }
             else
+            // If there are upcoming appointments for preferred exam room,
+            //  find the exam room with the fewest upcoming appointments
             {
-                return currentCheckin.ExamRoom;
-            }
+                if (upcomingAppointmentsForExamRoom(currentCheckin.ExamRoomID) > 0)
+                {
+                    return findAvailableExamRoomExclude(currentCheckin.ExamRoomID);
+                }
+                else
+                {
+                    return currentCheckin.ExamRoom;
+                }
+            }             
         }
-
+       
         /// <summary>
-        /// Find exam room with least number of upcoming appointments
+        /// Find any exam room with least number of upcoming appointments
         /// </summary>
         /// <returns></returns>
         private ExamRoom findAvailableExamRoom()
         {
-            // exam rooms ordered by number of upcoming appointments
-
+            // exam rooms ordered by number of upcoming appointments            
             return db.ExamRooms
+                    .OrderBy(e => e.Appointments.Count(a => !a.CheckoutDateTime.HasValue))
+                    .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Find exam room other than input exam room with least number of upcoming appointments
+        /// </summary>
+        /// <param name="examRoomID"></param>
+        /// <returns></returns>
+        private ExamRoom findAvailableExamRoomExclude(int examRoomID)
+        {
+            // exam rooms ordered by number of upcoming appointments
+            var examRooms = db.ExamRooms.Where(e=>e.ExamRoomID != examRoomID)
+                    .OrderBy(e => e.Appointments.Count(a => !a.CheckoutDateTime.HasValue));
+
+            var examRoom = examRooms.FirstOrDefault();
+
+            return db.ExamRooms.Where(e => e.ExamRoomID != examRoomID)
                     .OrderBy(e => e.Appointments.Count(a => !a.CheckoutDateTime.HasValue))
                     .FirstOrDefault();
         }
