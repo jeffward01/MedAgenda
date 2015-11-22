@@ -1,7 +1,7 @@
 angular.module('app').controller('DoctorCheckDetailController', function ($rootScope, $scope, $compile, patientChecksService, $http, apiUrl, $log, $state, DoctorChecks) {
     
         $rootScope.$broadcast('change-page-title', {
-        title: 'Doctor Check-In'
+        title: 'Doctor Check In'
     });
 
     $scope.data = {

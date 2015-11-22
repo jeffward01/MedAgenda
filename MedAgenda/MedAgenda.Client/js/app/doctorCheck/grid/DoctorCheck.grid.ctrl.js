@@ -24,12 +24,12 @@ angular.module('app').controller('DoctorCheckGridController', function ($rootSco
         console.log(doctor);
         doctor.$update(
             function () {
-                toastr.success(doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + " has been Logged out!", 'Success!');
+                toastr.success(doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + " has been logged out!", 'Success!');
                 $scope.DoctorChecks.splice($scope.DoctorChecks.indexOf(doctor), 1);
 
             },
             function () {
-              toastr.success("Error logging " + doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + ". Please try again."  , 'Failure!');
+              toastr.error("Error logging " + doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + ". Please try again."  , 'Failure!');
 
             }
         );
