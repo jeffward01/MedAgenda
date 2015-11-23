@@ -10,7 +10,7 @@
         </div>
 
         <table class="table table-bordered table-condensed table-responsive table-striped table-hover" ng-show="examRooms.length">
-            <thead>
+            <thead class="table-header">
                 <tr>
                     <th>Exam Room Name</th>
                     <th>Action</th>
@@ -36,7 +36,7 @@
         <form name="examRoomForm" role="form" ng-submit="saveExamRoom()" novalidate>
             <div class="form-group"
                  ng-class="{'has-error': examRoomForm.examRoomName.$invalid && examRoomForm.$submitted }">
-                <label class="control-label" for="examRoomName">Add New Exam Room:</label>
+                <label class="control-label table-header" for="examRoomName">Add New Exam Room:</label>
                 <input type="text" class="form-control" id="examRoomName" name="examRoomName"
                        placeholder="Exam Room Name" ng-model="examRoom.ExamRoomName" required>
                 <span class="help-block" ng-show="examRoomForm.examRoomName.$invalid && examRoomForm.$submitted">
