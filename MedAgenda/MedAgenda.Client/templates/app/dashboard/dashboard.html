@@ -190,7 +190,7 @@
                     <uib-accordion-heading is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
                         Archived Doctors: {{dashboard.ArchivedDoctors.length}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.openAlso, 'glyphicon-chevron-right': !status.openAlso}"></i>
                     </uib-accordion-heading>
-                    <h4>OnSite Doctors</h4>
+                    <h4>Archived Doctors</h4>
                     <div class="row">
                         <div id="PageScan1">
                             <div class="panel panel-primary" ng-repeat="doctor in dashboard.ArchivedDoctors">
@@ -228,7 +228,7 @@
                     <uib-accordion-heading is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
                         Archived Patients: {{dashboard.ArchivedPatients.length}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                     </uib-accordion-heading>
-                    <h4>OnSite Doctors</h4>
+                    <h4>Archived Patients</h4>
                     <div class="row">
                         <div id="PageScan1">
                             <div class="panel panel-primary" ng-repeat="patient in dashboard.ArchivedPatients">
@@ -248,11 +248,11 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>{{patient.DoctorID}}</td>
+                                                <td>{{patient.PatientID}}</td>
                                                 <td>{{patient.Email}}</td>
                                                 <td>{{patient.Telephone | tel}}</td>
                                                 <td>{{patient.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
-                                                <td>{{patient.BloodDype}}</td>
+                                                <td>{{patient.BloodType}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
