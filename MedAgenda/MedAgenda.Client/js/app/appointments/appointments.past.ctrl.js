@@ -1,3 +1,12 @@
 ﻿angular.module('app').controller('ApptPastController', function ($rootScope, $scope, Past) {
-    $scope.appointments = Past.query();
+   
+    $scope.load = function () {
+        $scope.loading = true;
+        $scope.appointments = Past.query(function () {
+            $scope.loading = false;
+        });
+    };
+
+    $scope.load();
+
 });

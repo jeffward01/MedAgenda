@@ -1,6 +1,6 @@
 angular.module('app').controller('PatientCheckGridController', function ($rootScope, $scope, $compile, patientChecksService, $http, apiUrl, $stateParams, PatientChecks) {
     $rootScope.$broadcast('change-page-title', {
-        title: 'Patient Check'
+        title: 'Patient Check Out'
     });
 
     $scope.PatientChecks = PatientChecks.query();

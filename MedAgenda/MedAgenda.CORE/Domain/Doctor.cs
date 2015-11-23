@@ -8,6 +8,12 @@ namespace MedAgenda.CORE.Domain
 {
     public class Doctor
     {
+        public Doctor()
+        {
+            Appointments = new HashSet<Appointment>();
+            DoctorChecks = new HashSet<DoctorCheck>();
+        }
+
         public int DoctorID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -25,6 +31,14 @@ namespace MedAgenda.CORE.Domain
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual ICollection<DoctorCheck> DoctorChecks { get; set; }
         public virtual Specialty Specialty { get; set; }
+
+        public bool IsCheckedIn
+        {
+            get
+            {
+                return DoctorChecks.Count(a => !a.CheckoutDateTime.HasValue) > 0;
+            }
+        }
 
         public int UpcomingAppointmentCount
         {
