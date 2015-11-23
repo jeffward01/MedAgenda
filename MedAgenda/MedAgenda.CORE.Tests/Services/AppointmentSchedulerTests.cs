@@ -155,7 +155,7 @@ namespace MedAgenda.CORE.Tests.Services
                 int doctorIDPediatrics = 1;
                 int doctorIDNeurology = 2;
                 int doctorIDSurgeon = 3;
-                
+
                 int doctorCheckIDPediatrics = 1;
                 int doctorCheckIDNeurology = 2;
                 int doctorCheckIDSurgeon = 3;
@@ -298,7 +298,7 @@ namespace MedAgenda.CORE.Tests.Services
 
                 juliaSmithSurgeon.DoctorChecks.Add(juliaSmithSurgeonCheckIn);
                 db.DoctorChecks.Add(juliaSmithSurgeonCheckIn);
-                
+
                 #endregion
 
                 using (var scheduler = new AppointmentScheduler(db))
@@ -395,7 +395,7 @@ namespace MedAgenda.CORE.Tests.Services
                     SpecialtyID = surgeonSpecialtyReq.SpecialtyID,
                     Specialty = surgeonSpecialtyReq
                 });
-               
+
                 #endregion
 
                 #region Add an Exam Room
@@ -449,6 +449,120 @@ namespace MedAgenda.CORE.Tests.Services
                     // Verify that the patient is assigned to surgeon, not cardiologist
                     Assert.IsTrue(appointment.PatientID == patientID16Over
                                     && appointment.DoctorID == doctorIDSurgeonReq);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Patient16OverGetsPediatricianIfRequestedSpecialtyNotAvailAndNoGPAvailAndNoOtherSpecialtyAvail()
+        {
+            using (IMedAgendaDbContext db = new TestMedAgendaDbContext())
+            {
+                int doctorIDPediatrics = 1;
+
+                int doctorCheckIDPediatrics = 1;
+
+                int examRoomIDForTest = 1;
+
+                int patientID16Over = 1;
+
+                int patientCheckID16Over = 1;
+
+                int specialtyIDPediatrics = 1;
+                int specialtyIDNeurologyReq = 2;
+
+                #region Add a patient over 16
+                Patient patient = db.Patients.Add(new Patient
+                {
+                    PatientID = patientID16Over,
+                    Birthdate = DateTime.Now.AddYears(-78),
+                    FirstName = "Old",
+                    LastName = "Man"
+                });
+
+                #endregion
+
+                #region Add some specialties
+                Specialty pediatricSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = specialtyIDPediatrics,
+                    SpecialtyName = "Pediatrics"
+                });
+
+                Specialty neurologistSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = specialtyIDNeurologyReq,
+                    SpecialtyName = "Neurology"
+                });
+
+                #endregion
+
+                #region Check in a patient
+
+                // Check in a patient with neurology requested as specialty
+                PatientCheck patientcheck = db.PatientChecks.Add(new PatientCheck
+                {
+                    PatientCheckID = patientCheckID16Over,
+                    PatientID = patientID16Over,
+                    Patient = patient,
+                    CheckinDateTime = DateTime.Now,
+                    SpecialtyID = specialtyIDNeurologyReq,
+                    Specialty = neurologistSpecialty
+                });
+
+
+                #endregion
+
+                #region Add some doctors
+                Doctor johnSmithPediatrics = db.Doctors.Add(new Doctor
+                {
+                    DoctorID = doctorIDPediatrics,
+                    FirstName = "John",
+                    LastName = "Smith",
+                    SpecialtyID = pediatricSpecialty.SpecialtyID,
+                    Specialty = pediatricSpecialty
+                });
+
+                #endregion
+
+                #region Add an Exam Room
+
+                ExamRoom examRoom1 = db.ExamRooms.Add(new ExamRoom
+                {
+                    ExamRoomID = examRoomIDForTest,
+                    ExamRoomName = "ExamRoom 1"
+                });
+                #endregion
+
+                #region Check in Doctors
+                // Check in the Pediatrician
+                var johnSmithPediatricsCheckIn = new DoctorCheck
+                {
+                    DoctorCheckID = doctorCheckIDPediatrics,
+                    CheckinDateTime = DateTime.Now,
+                    DoctorID = doctorIDPediatrics,
+                    ExamRoomID = examRoomIDForTest,
+                    ExamRoom = examRoom1,
+                    Doctor = johnSmithPediatrics
+                };
+
+                johnSmithPediatrics.DoctorChecks.Add(johnSmithPediatricsCheckIn);
+                db.DoctorChecks.Add(johnSmithPediatricsCheckIn);
+
+                #endregion
+
+                using (var scheduler = new AppointmentScheduler(db))
+                {
+                    //ACT
+                    scheduler.CreateAppointment(patientcheck.PatientCheckID);
+
+                    //ASSERT
+                    Assert.IsTrue(db.Appointments.Count() > 0);
+                    var appointment = db.Appointments.First();
+
+                    // Verify that the patient is assigned to the pediatrician
+                    Assert.IsTrue(appointment.PatientID == patientID16Over
+                                    && appointment.DoctorID == doctorIDPediatrics);
                 }
             }
         }
@@ -847,7 +961,7 @@ namespace MedAgenda.CORE.Tests.Services
 
             int patientCheckID16Over = 1;
 
-            int specialtyIDSurgeon = 1;           
+            int specialtyIDSurgeon = 1;
             int specialtyIDGeneralPractice = 2;
             int specialtyIDNeurologyReq = 3;
 
@@ -859,7 +973,7 @@ namespace MedAgenda.CORE.Tests.Services
                 {
                     SpecialtyID = specialtyIDSurgeon,
                     SpecialtyName = "Surgeon"
-                });               
+                });
 
                 Specialty generalPracticeSpecialty = db.Specialties.Add(new Specialty
                 {
@@ -1292,7 +1406,7 @@ namespace MedAgenda.CORE.Tests.Services
                 {
                     SpecialtyID = specialtyIDNeurology,
                     SpecialtyName = "Neurology"
-                });               
+                });
 
                 Specialty cardiologySpecialty = db.Specialties.Add(new Specialty
                 {
@@ -1619,12 +1733,11 @@ namespace MedAgenda.CORE.Tests.Services
             }
         }
 
-            [TestMethod]
+        [TestMethod]
         public void ApptInExamRoomWithFewestUpcomingApptsIfUpcomingApptsForPreferredExamRoom()
         {
-
             using (IMedAgendaDbContext db = new TestMedAgendaDbContext())
-            {                              
+            {
                 int appointmentIDExamRoomMoreUpcomingAppts = 1;
                 int appointmentIDExamRoomMoreUpcomingApptsAnother = 2;
                 int appointmentIDExamRoomMoreUpcomingApptsYetAnother = 3;
@@ -1927,14 +2040,14 @@ namespace MedAgenda.CORE.Tests.Services
                 docSurgeon.Appointments.Add(upcomingAppointmentFewerAnother);
                 examRoomFewerUpcomingAppts.Appointments.Add(upcomingAppointmentFewerAnother);
                 db.Appointments.Add(upcomingAppointmentFewerAnother);
-               
+
                 var upcomingAppointmentPreferredExamRoom = new Appointment
                 {
                     AppointmentID = appointmentIDUpcomingExamRoomPreferred,
                     PatientID = patientIDExamRoomPreferred,
                     DoctorID = doctorIDSurgeonReq,
                     ExamRoomID = examRoomIDPreferred,
-                    CheckinDateTime = DateTime.Now.AddHours(-2),                   
+                    CheckinDateTime = DateTime.Now.AddHours(-2),
                     Doctor = docSurgeon,
                     ExamRoom = examRoomPreferred,
                     Patient = patientExamRoomPreferred
@@ -1961,9 +2074,149 @@ namespace MedAgenda.CORE.Tests.Services
             }
         }
 
-    }
+        [TestMethod]
+        public void ApptNotReturnedIfNoCheckedInDoctors()
+        {
+            using (IMedAgendaDbContext db = new TestMedAgendaDbContext())
+            {
+                int doctorIDNeurology = 1;
+                int doctorIDSurgeonReq = 2;
 
+                int doctorCheckIDNeurology = 1;
+                int doctorCheckIDSurgeonReq = 2;
+
+                int examRoomIDForTest = 1;
+
+                int patientID16Over = 1;
+
+                int patientCheckID16Over = 1;
+
+                int specialtyIDNeurology = 1;
+                int specialtyIDSurgeonReq = 2;
+
+                #region Add a patient over 16
+                Patient patient = db.Patients.Add(new Patient
+                {
+                    PatientID = patientID16Over,
+                    Birthdate = DateTime.Now.AddYears(-78),
+                    FirstName = "Old",
+                    LastName = "Man"
+                });
+
+                #endregion
+
+                #region Add some specialties
+
+                Specialty neurologistSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = specialtyIDNeurology,
+                    SpecialtyName = "Neurology"
+                });
+
+                Specialty surgeonSpecialty = db.Specialties.Add(new Specialty
+                {
+                    SpecialtyID = specialtyIDSurgeonReq,
+                    SpecialtyName = "Surgeon"
+                });
+                #endregion
+
+                #region Check in a patient
+
+                // Check in a patient
+                PatientCheck patientcheck = db.PatientChecks.Add(new PatientCheck
+                {
+                    PatientCheckID = patientCheckID16Over,
+                    PatientID = patientID16Over,
+                    Patient = patient,
+                    CheckinDateTime = DateTime.Now,
+                    SpecialtyID = specialtyIDSurgeonReq,
+                    Specialty = surgeonSpecialty
+                });
+
+
+                #endregion
+
+                #region Add some doctors
+
+                Doctor neurologyDoctor = db.Doctors.Add(new Doctor
+                {
+                    DoctorID = doctorIDNeurology,
+                    FirstName = "Bob",
+                    LastName = "Smith",
+                    SpecialtyID = neurologistSpecialty.SpecialtyID,
+                    Specialty = neurologistSpecialty
+                });
+
+                Doctor juliaSmithSurgeon = db.Doctors.Add(new Doctor
+                {
+                    DoctorID = doctorIDSurgeonReq,
+                    FirstName = "Julia",
+                    LastName = "Smith",
+                    SpecialtyID = surgeonSpecialty.SpecialtyID,
+                    Specialty = surgeonSpecialty
+                });
+                #endregion
+
+                #region Add an Exam Room
+
+                ExamRoom examRoom1 = db.ExamRooms.Add(new ExamRoom
+                {
+                    ExamRoomID = examRoomIDForTest,
+                    ExamRoomName = "ExamRoom 1"
+                });
+                #endregion
+
+                #region Check in Doctors
+
+                // Check in and out the neurologist
+                var neurologistCheckIn = new DoctorCheck
+                {
+                    DoctorCheckID = doctorCheckIDNeurology,
+                    CheckinDateTime = DateTime.Now.AddHours(-1),
+                    CheckoutDateTime = DateTime.Now,
+                    DoctorID = doctorIDNeurology,
+                    ExamRoomID = examRoomIDForTest,
+                    ExamRoom = examRoom1,
+                    Doctor = neurologyDoctor
+                };
+
+                neurologyDoctor.DoctorChecks.Add(neurologistCheckIn);
+                db.DoctorChecks.Add(neurologistCheckIn);
+
+                // Check in and out the Surgeon
+                var juliaSmithSurgeonCheckIn = new DoctorCheck
+                {
+                    DoctorCheckID = doctorCheckIDSurgeonReq,
+                    CheckinDateTime = DateTime.Now.AddHours(-4),
+                    CheckoutDateTime = DateTime.Now.AddHours(-2),
+                    DoctorID = doctorIDSurgeonReq,
+                    ExamRoomID = examRoomIDForTest,
+                    ExamRoom = examRoom1,
+                    Doctor = juliaSmithSurgeon
+                };
+
+                juliaSmithSurgeon.DoctorChecks.Add(juliaSmithSurgeonCheckIn);
+                db.DoctorChecks.Add(juliaSmithSurgeonCheckIn);
+
+                #endregion
+
+                using (var scheduler = new AppointmentScheduler(db))
+                {
+                    //ACT
+                    scheduler.CreateAppointment(patientcheck.PatientCheckID);
+
+                    //ASSERT
+                    Assert.IsTrue(db.Appointments.Count() == 0);
+
+                }
+            }
+
+        }
+
+    }
 }
+
+
 
 
 
