@@ -1,4 +1,9 @@
-<div>
+<div ng-class="{hide: !loading}">
+    <!-- loading mask -->
+    <span us-spinner></span>
+</div>
+<div ng-class="{hide: loading}">
+    <!-- loaded content -->
     <div ng-hide="doctors.length">
         <div class="spacer10 hidden-xs-4"></div>
         <div class="alert alert-info">
