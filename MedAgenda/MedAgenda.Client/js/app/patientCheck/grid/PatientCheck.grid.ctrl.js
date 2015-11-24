@@ -19,7 +19,7 @@ angular.module('app').controller('PatientCheckGridController', function ($rootSc
                 $scope.PatientChecks.splice($scope.PatientChecks.indexOf(patient), 1);
             },
             function () {
-                alert("Error logging out!");
+                alert("Error checking out!");
             }
         );
     }
