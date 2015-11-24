@@ -165,9 +165,9 @@ namespace MedAgenda.API.Controllers
                 }
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("Unable to schedule the appointment");
+                throw new Exception("Unable to schedule the appointment", e);
             }
         }
 

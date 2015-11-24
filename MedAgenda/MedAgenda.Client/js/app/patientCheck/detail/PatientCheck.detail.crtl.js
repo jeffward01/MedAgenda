@@ -31,16 +31,29 @@ angular.module('app').controller('PatientCheckDetailController', function ($root
         currentDate = moment(currentDate, "YYY-MM-DDTHH:mm:ssZ").toDate();
         $scope.newPatientCheckIn.CheckinDateTime = currentDate;
         $scope.newPatientCheckIn.PatientID = $scope.data.selectedPatient.PatientID;
-        if($scope.newPatientCheckIn.$save()){
 
-        //Success Message
-        toastr.success($scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName +  " has been checked in!", 'Success!');    
-                $state.go('app.dashboard');
-    
-        } else{
-                  toastr.danger($scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName + " was not checked in!", 'Failure!');    
-  
-        }
+        $scope.newPatientCheckIn.$save(
+            function (data) {
+                toastr.success($scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName + " has been checked in!", 'Success!');
 
-    }
+                $http.post(apiUrl + 'api/appointments/schedule', JSON.stringify(data), {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(
+                    function (response) {
+                        //Success Message
+                        toastr.success("An appointment was successfully created for " + $scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName + "!", 'Success!');
+                        $state.go('app.dashboard');
+                    },
+                    function (err) {
+                        toastr.error("Appointment could not be created for " + $scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName + "!", 'Failure!');
+                    }
+                );
+            },
+            function (err) {
+                toastr.error($scope.data.selectedPatient.FirstName + " " + $scope.data.selectedPatient.LastName + " was not checked in!", 'Failure!');
+            }
+        );
+    };
 });
