@@ -24,7 +24,7 @@ angular.module('app').controller('DoctorCheckGridController', function ($rootSco
         console.log(doctor);
         doctor.$update(
             function () {
-                toastr.success(doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + " has been logged out!", 'Success!');
+                toastr.success(doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + " has been checked out!", 'Success!');
                 $scope.DoctorChecks.splice($scope.DoctorChecks.indexOf(doctor), 1);
 
             },

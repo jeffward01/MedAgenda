@@ -70,6 +70,8 @@ namespace MedAgenda.CORE.Services
                     };
 
                     db.Appointments.Add(appointment);
+
+                    db.SaveChanges();
                 }
             } 
                       
@@ -90,7 +92,8 @@ namespace MedAgenda.CORE.Services
             //   with that specialty with lowest number of upcoming appointments
             if (specialty != null)
             {
-                doctor = db.Doctors.Where(d => d.SpecialtyID == specialty.SpecialtyID &&
+                //TODO: Replace this with stored procedure
+                doctor = db.Doctors.ToList().Where(d => d.SpecialtyID == specialty.SpecialtyID &&
                                                   d.IsCheckedIn)
                                       .OrderBy(a => a.UpcomingAppointmentCount)
                                       .FirstOrDefault();
@@ -107,7 +110,8 @@ namespace MedAgenda.CORE.Services
         {
             Doctor doctor = null;
 
-            doctor = db.Doctors.Where(d => d.IsCheckedIn == true)
+            //TODO: Replace this with stored procedure
+            doctor = db.Doctors.ToList().Where(d => d.IsCheckedIn == true)
                              .OrderBy(ac => ac.UpcomingAppointmentCount)
                              .FirstOrDefault();
             if (doctor != null)
@@ -116,7 +120,8 @@ namespace MedAgenda.CORE.Services
                 //   there are no other checked-in doctors with a different specialty
                 if (patient.Age >= 16 && doctor.Specialty.SpecialtyName == "Pediatrics")
                 {
-                    var newDoctor = db.Doctors.Where(d => d.IsCheckedIn == true && d.Specialty.SpecialtyName != "Pediatrics")
+                    //TODO: Replace this with stored procedure
+                    var newDoctor = db.Doctors.ToList().Where(d => d.IsCheckedIn == true && d.Specialty.SpecialtyName != "Pediatrics")
                                                 .OrderBy(ac => ac.UpcomingAppointmentCount)
                                                 .FirstOrDefault();
                     if (newDoctor != null)
@@ -136,7 +141,7 @@ namespace MedAgenda.CORE.Services
         /// <returns></returns>
         private ExamRoom examRoomDoctorMatcher(Doctor doctor)
         {
-            var currentCheckin = db.DoctorChecks
+            var currentCheckin = db.DoctorChecks.ToList()
                                    .Where(dc => dc.DoctorID == doctor.DoctorID &&
                                                 !dc.CheckoutDateTime.HasValue)
                                    .LastOrDefault();
