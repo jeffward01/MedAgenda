@@ -29,7 +29,7 @@ angular.module('app').controller('DoctorCheckGridController', function ($rootSco
 
             },
             function () {
-              toastr.error("Error logging " + doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + ". Please try again."  , 'Failure!');
+              toastr.error("Error checking " + doctor.Doctor.FirstName + " " + doctor.Doctor.LastName + " out. Please try again."  , 'Failure!');
 
             }
         );
