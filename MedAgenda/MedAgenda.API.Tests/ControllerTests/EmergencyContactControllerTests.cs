@@ -31,6 +31,8 @@ namespace MedAgenda.API.Tests.ControllerTests
                 //Act: Call the GetEmergencyContact Method
                 IEnumerable<EmergencyContactModel> emergencyContacts = EmergencyContactController.GetEmergencyContacts();
 
+                if(!emergencyContacts.Any()) Assert.Inconclusive();
+
                 //Assert
                 Assert.IsTrue(emergencyContacts.Count() > 0);
             }

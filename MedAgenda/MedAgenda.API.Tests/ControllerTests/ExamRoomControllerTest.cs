@@ -27,6 +27,8 @@ namespace MedAgenda.API.Tests.ControllerTests
                 //Act: Call the Get ExamRoom Method
                 IEnumerable<ExamRoomModel> examRooms = ExamRoomController.GetExamRooms();
 
+                if(!examRooms.Any()) Assert.Inconclusive();
+
                 //Assert
                 Assert.IsTrue(examRooms.Count() > 0);
             }

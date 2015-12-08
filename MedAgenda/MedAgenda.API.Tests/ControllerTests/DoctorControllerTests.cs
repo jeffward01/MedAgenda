@@ -28,6 +28,8 @@ namespace MedAgenda.API.Tests.ControllerTests
                 //Act: Call the GetDoctors Method
                 IEnumerable<DoctorModel> doctors = DoctorController.GetDoctors();
 
+                if (!doctors.Any()) Assert.Inconclusive();
+
                 //Assert
                 Assert.IsTrue(doctors.Count() > 0);
 
